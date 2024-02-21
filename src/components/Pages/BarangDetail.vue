@@ -1,63 +1,213 @@
 <template>
     <div>
-        <div>
+        <div class=" animate-fade items-center justify-center ">
+            <div class="flex flex-wrap">
+                <div class="w-2/12">
+                    <!-- Hai -->
+                    hai
+                </div>
+                <div class="w-8/12">
+                    <div class="flex flex-wrap">
+                        <div class="w-3/12">
+                            Gambar
+                        </div>
+                        <div class="w-9/12 font-bold">
+                            {{ dataBarang.nama_barang }}
+                        </div>
+                        <div class="w-full mt-2 text-sm">
+                            {{ dataBarang.deskripsi }}
+                        </div>
+                        <div class="w-full mt-2">
+                            Rp. {{ dataBarang.harga }}
+                        </div>
+                        
 
-        </div>
-        <div class="container animate-fade items-center justify-center ">
-            <p>{{ $route.params.id }} ||||||||||||||||||||||| <span>Total harga adalah {{ totalHarga }}</span> </p>
-            
+                        <div class="w-full">
+                            Variant Tersedia :
+                        </div>
 
-            <p>{{ dataBarang.nama_barang }}</p>
+                        <div class="w-6/12">Hot</div>
 
-            <p>Rp. {{ dataBarang.harga }}</p>
+                        <div class="w-6/12">Cold</div>
 
-            <div>
-                {{ dataBarang.deskripsi }}
+                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+
+                        <div class="w-full">
+                            <span><b>Ukuran Cup : </b></span>
+                            <div class="flex flex-wrap">
+                                <div class="w-3/12">
+                                    Regular
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp.6000
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input type="radio" name="cup" id="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+
+                        <div class="w-full">
+                            <span><b>Ice Cube : </b></span>
+                            <div class="flex flex-wrap">
+                                <div class="w-3/12">
+                                    Normal
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp.0
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input type="radio" name="ice_cube" id="">
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap">
+                                <div class="w-3/12">
+                                    Less
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp.0
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input type="radio" name="ice_cube" id="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+
+                        <div class="w-full ">
+                            <span><b>Espresso : </b></span>
+                            <div class="flex flex-wrap">
+                                <div class="w-3/12">
+                                    Normal
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp.0
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input type="radio" name="espresso" id="">
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap">
+                                <div class="w-3/12">
+                                    1 Shot
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp. 6000
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input type="radio" name="espresso" id="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+
+                        <div class="w-full ">
+                            <span><b>Sweetness : </b></span>
+                            <div class="flex flex-wrap">
+                                <div class="w-3/12">
+                                    Normal
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp.0
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input type="radio" name="sweetness" id="">
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap">
+                                <div class="w-3/12">
+                                    Less
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp. 6000
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input type="radio" name="sweetness" id="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+
+                        <div class="w-full ">
+                            <span v-if="showMilk.length > 0"><b>{{ showMilk[0].kategori }}</b></span>
+
+                            <div class="flex flex-wrap" v-for="(item, index) in showMilk" :key="index">
+                                <div class="w-3/12">
+                                    {{ item.nama_topping }}
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp. {{ item.harga }}
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input 
+                                        type="radio" 
+                                        name="Milk" 
+                                        :id="'radio_' + index" v-model="selectedMilk" 
+                                        :value="item.nama_topping" @change="changeTotalSemua"
+                                        
+                                    /> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+
+                        <div class="w-full ">
+                            <span v-if="showSyrup.length > 0"> <b>{{ showSyrup[0].kategori }}</b></span>
+
+                            <div class="flex flex-wrap" v-for="item in showSyrup" :key="item.id">
+                                <div class="w-3/12">
+                                    {{ item.nama_topping }}
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp. {{ item.harga }}
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input 
+                                        type="checkbox" 
+                                        name="syrup" v-model="checkedSyrup" 
+                                        :value="item.nama_topping" @change="changeTotalSemua"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+
+                        <div class="w-full ">
+                            <span v-if="showSyrup.length > 0"><b>{{ showTopping[0].kategori }}</b></span>
+
+                            <div class="flex flex-wrap" v-for="item in showTopping" :key="item.id">
+                                <div class="w-3/12">
+                                    {{ item.nama_topping }}
+                                </div>
+                                <div class="w-8/12 text-right">
+                                    Rp. {{ item.harga }}
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input 
+                                        type="checkbox" 
+                                        name="topping" v-model="checkedTopping" 
+                                        :value="item.nama_topping" 
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-2/12"> 
+                    <p class="sticky top-0">Total Harga : {{ totalHarga }}</p>
+                </div>
+
             </div>
-
-            <br />
-
-
-            <br />
-
-            <h2 v-if="showMilk.length > 0">Kategori : {{ showMilk[0].kategori }}</h2>
-
-            <div>SelectedMilk : {{ selectedMilk }}</div>
-            <div v-for="(item, index) in showMilk" :key="index">
-                <p>
-                    <input type="radio" name="Milk" :id="'radio_' + index" v-model="selectedMilk" :value="item.nama_topping" @change="changeTotalSemua"> 
-                    {{ item.nama_topping }}
-                </p>
-                
-                <p>{{ item.harga }}</p>
-                <p>{{ item.kategori }}</p>
-            </div>
-
-            <br />
-
-            <h2 v-if="showSyrup.length > 0">Kategori : {{ showSyrup[0].kategori }}</h2>
-
-            <p>Checked Syrup : {{ checkedSyrup }} </p>
-
-            <div v-for="item in showSyrup" :key="item.id">
-                <p><input type="checkbox" name="syrup" v-model="checkedSyrup" :value="item.nama_topping" @change="changeTotalSemua">{{ item.nama_topping }}</p>
-                <p>{{ item.nama_topping }}</p>
-                <p>{{ item.harga }}</p>
-                <p>{{ item.kategori }}</p>
-            </div>
-
-            <br />
-
-            <p>Checked Topping : {{ checkedTopping }} </p>
-
-            <h2 v-if="showTopping.length > 0">Kategori : {{ showTopping[0].kategori }}</h2>
-
-            <div v-for="item in showTopping" :key="item.id">
-                <p><input type="checkbox" name="topping" v-model="checkedTopping" :value="item.nama_topping">{{ item.nama_topping }}</p>
-                <p>{{ item.harga }}</p>
-                <p>{{ item.kategori }}</p>
-            </div>
-
 
             <button>Pesan Sekarang?</button>
 

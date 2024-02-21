@@ -2,7 +2,7 @@
     <!-- By https://tailwindcomponents.com/component/responsive-bottom-navigation -->
     <div class="w-full h-screen">
         <!-- <section id="bottom-navigation" class="md:hidden block fixed inset-x-0 bottom-0 z-10 bg-white shadow"> // if shown only tablet/mobile-->
-        <section id="bottom-navigation" class="border-t block animate-flip-up fixed inset-x-0 bottom-0 z-10 bg-white shadow">
+        <section id="bottom-navigation" class="border-t block animate-flip-up fixed inset-x-0 bottom-0 z-0 bg-white shadow">
             <div id="tabs" class="flex justify-between">
                 <router-link to="/home" class="w-full focus:text-teal-500 hover:text-teal-500 justify-center inline-block text-center pt-2 pb-1">
                     <svg width="25" height="25" viewBox="0 0 42 42" class="inline-block mb-1">
