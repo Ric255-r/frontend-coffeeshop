@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="hello container text-center animate-flip-up">
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -35,6 +35,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods: {
+    before: function(el){
+      el.className = "animate-fade-left";
+    }
   }
 }
 </script>
