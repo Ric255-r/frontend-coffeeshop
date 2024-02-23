@@ -152,7 +152,7 @@
                                         name="Milk" 
                                         :id="'radio_' + index" v-model="selectedMilk" 
                                         :value="item.nama_topping" @change="changeTotalSemua"
-                                        
+                                        :checked="isMilkSelected(item.nama_topping, dataBarang.nama_barang)"
                                     /> 
                                 </div>
                             </div>
@@ -183,7 +183,7 @@
                         <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
 
                         <div class="w-full ">
-                            <span v-if="showSyrup.length > 0"><b>{{ showTopping[0].kategori }}</b></span>
+                            <span v-if="showTopping.length > 0"><b>{{ showTopping[0].kategori }}</b></span>
 
                             <div class="flex flex-wrap" v-for="item in showTopping" :key="item.id">
                                 <div class="w-3/12">
@@ -238,7 +238,7 @@ export default {
             selectedIceCube: null,
             selectedCup: null,
             selectedSweetness: null,
-            selectedMilk: 'None',
+            selectedMilk: '',
             allObj : {
                 "id_barang": this.$route.params.id,
                 "nama_barang": null,
@@ -252,13 +252,14 @@ export default {
             },
             hargaAwal: 0,
             totalHarga: 0,
+            cartObj: [],
         }
     },
     components: {
         NavbarBottom
     },
     mounted: function(){
-        
+
         let token = localStorage.getItem('token');
 
         axios.get(`http://localhost:5500/apiBrg/barang/${this.params}`, {
@@ -273,13 +274,58 @@ export default {
             this.dataBarang = response.data.dataBarang;
             this.dataTopping = response.data.dataTopping;
             this.hargaAwal = response.data.dataBarang.harga;
-        }).catch((error) => {
-            if(error.response.status == 401){
-                this.$router.push('/');
-            }
 
-            alert("gagal");
-            console.warn(error);
+            if(localStorage.getItem("cart") !== null){
+                let ls = JSON.parse(localStorage.getItem("cart"));
+
+                const cariIndex = ls.findIndex((item) => item.id_barang == this.params);
+
+                let totalMilk = 0;
+                let totalSyrup = 0;
+
+                if(cariIndex !== -1){
+                    // Rumus Perhitungan Susu
+                    // Tanpa looping. langsung tembak ke index yg udh dicari
+                    this.selectedMilk = ls[cariIndex].milk;
+                    for(let i = 0; i < this.dataTopping.length; i++){
+                        if(this.dataTopping[i].nama_topping == ls[cariIndex].milk){
+                            totalMilk = this.dataTopping[i].harga;
+                        }
+                    }
+                    // End Rumus Susu
+
+                    // Ini Cara Buat Checkbox KeCheck pas Mounted/Refresh.
+                    // Setengah Mati Cari ini.. Ternyata Checkbox ga perlu pake :checked
+                    // Cukup pakai v-model saja dia udh bs buat checked.
+                    this.checkedSyrup = ls
+                                        .filter(item => item.id_barang == this.params)
+                                        .map(item => item.syrup)
+                                        .flat();
+                    // Flat bakal return jadi satu biji array yg digabung
+                    // Kalo loop biasa kan dia bakal pecah berdasarkan index
+                    // Kalo ini stelah dimap, lalu diflat, jadinya bentuk awal array lagi.
+
+                    for (let i = 0; i < this.dataTopping.length; i++) {
+                        if(this.checkedSyrup.includes(this.dataTopping[i].nama_topping)){
+                            totalSyrup += this.dataTopping[i].harga;
+                        }
+                    }
+                    
+                    console.log(this.hargaAwal);
+                }
+
+                this.totalHarga = this.hargaAwal + totalMilk + totalSyrup;
+            }
+        }).catch((error) => {
+            if (error.response && error.response.status == 401) {
+                this.$router.push('/');
+            } else if (error.response) {
+                // If response exists but status is not 401
+                console.warn("Request failed with status:", error.response.status);
+            } else {
+                // If there is no response object
+                console.error("Request failed without a response:", error.message);
+            }
         });
     },
     computed: {
@@ -295,7 +341,9 @@ export default {
             // console.log("Computed Topping Terpnggil");
             return this.dataTopping.filter((item) => item.kategori == 'Topping');
 
-        }
+        },
+
+
     },
     methods: {
         changeMilk: function(){
@@ -321,9 +369,13 @@ export default {
             }
 
             if(existsObjIndex !== -1){
+                cartObj[existsObjIndex].id_barang = this.params;
+                cartObj[existsObjIndex].nama_barang= this.dataBarang.nama_barang;
                 cartObj[existsObjIndex].milk = this.selectedMilk;
+                // Tambahan
+                cartObj[existsObjIndex].syrup = this.checkedSyrup;
             }else{
-                cartObj.push({...this.allObj, id_barang: this.params, milk: this.selectedMilk});
+                cartObj.push({...this.allObj, id_barang: this.params, milk: this.selectedMilk, nama_barang: this.dataBarang.nama_barang});
             }
 
             let dataTopping = this.dataTopping;
@@ -336,7 +388,7 @@ export default {
                     totalMilk = dataTopping[i].harga;
                 }
             }
-            
+
             localStorage.setItem("cart", JSON.stringify(cartObj));
 
             return totalMilk;
@@ -375,6 +427,9 @@ export default {
                 }
 
                 // ubah balik arrSyrup yg bentuk set, ke bentuk array
+                cartObj[existsObjIndex].id_barang = this.params;
+                cartObj[existsObjIndex].nama_barang= this.dataBarang.nama_barang;
+                cartObj[existsObjIndex].milk = this.selectedMilk;
                 cartObj[existsObjIndex].syrup = [...arrSyrup];
             }else{
                 cartObj.push({...this.allObj, id_barang: this.params, syrup: this.checkedSyrup})
@@ -400,6 +455,13 @@ export default {
             localStorage.setItem("cart", JSON.stringify(cartObj));
 
             return total;
+        },
+        isMilkSelected: function(milk, nama_brg){
+            let cart = JSON.parse(localStorage.getItem("cart"));
+
+            // console.log(cart && cart.some(item => item.milk == milk && item.nama_barang == nama_brg));
+            // ini kondisi and. cek kalo cart ada dan cart.some returns true, maka true.. kekbiasa
+            return cart && cart.some(item => item.milk == milk && item.nama_barang == nama_brg);
         },
         changeTotalSemua: function(){
             this.totalHarga = this.hargaAwal + this.changeMilk() + this.changeSyrup();
