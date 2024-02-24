@@ -154,6 +154,7 @@
                                         :value="item.nama_topping" @change="changeTotalSemua"
                                         :checked="isMilkSelected(item.nama_topping, dataBarang.nama_barang)"
                                     /> 
+                                    <!-- Checkpoint sebelum hapus v-bind -->
                                 </div>
                             </div>
                         </div>
