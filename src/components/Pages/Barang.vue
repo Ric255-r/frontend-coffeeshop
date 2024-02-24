@@ -40,12 +40,15 @@
 
             </div>
         </div>
+
+        <BubbleCartVue ></BubbleCartVue>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 import CarouselBrgVue from './CarouselBrg.vue'
+import BubbleCartVue from './BubbleCart.vue'
 
 export default {
     name: 'barang-component',
@@ -55,7 +58,8 @@ export default {
         }
     },
     components: {
-        CarouselBrgVue
+        CarouselBrgVue,
+        BubbleCartVue
     },
     mounted: function(){
         let token = localStorage.getItem('token');
@@ -86,3 +90,9 @@ export default {
     }
 }
 </script>
+
+<!-- <style scoped>
+    div {
+        border: 1px solid black;
+    }
+</style> -->

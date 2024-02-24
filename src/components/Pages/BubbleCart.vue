@@ -1,0 +1,52 @@
+<template>
+    <div v-if="totalHarga.length > 0" class="sticky bottom-[4rem]">
+        <div class="flex flex-wrap">
+            <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 hidden lg:block md:block sm:block">
+
+            </div>
+            <div class="lg:w-8/12 md:w-8/12 sm:w-8/12 py-2 w-full bg-green-600 cursor-pointer rounded-full" @click="handleClick">
+                <div class="flex flex-wrap">
+                    <div class="w-2/12">
+                        Logo
+                    </div>
+                    <div class="w-8/12">
+                        Checkout
+                    </div>
+                    <div class="w-2/12">
+                        Rp. {{ showTotal }}
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 hidden lg:block md:block sm:block">
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "bubble-cart",
+    data: function(){
+        return {
+            totalHarga: JSON.parse(localStorage.getItem("totalHarga")) || []
+        }
+    },
+    computed: {
+        showTotal: function(){
+            let total = 0;
+
+            for(let i = 0; i < this.totalHarga.length; i++){
+                total += this.totalHarga[i].totalHarga;
+            }
+
+            return total;
+        }
+    },
+    methods: {
+        handleClick: function(){
+            this.$router.push('/checkout');
+        }
+    }
+}
+</script>

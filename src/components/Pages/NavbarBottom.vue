@@ -1,6 +1,6 @@
 <template>
     <!-- By https://tailwindcomponents.com/component/responsive-bottom-navigation -->
-    <div class="w-full h-screen">
+    <div class="w-full py-[30px]">
         <!-- <section id="bottom-navigation" class="md:hidden block fixed inset-x-0 bottom-0 z-10 bg-white shadow"> // if shown only tablet/mobile-->
         <section id="bottom-navigation" class="border-t block animate-flip-up fixed inset-x-0 bottom-0 z-0 bg-white shadow">
             <div id="tabs" class="flex justify-between">

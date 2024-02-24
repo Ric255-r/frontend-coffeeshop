@@ -5,6 +5,7 @@ import HomeView from '@/views/HomeView.vue'
 import store from './store'
 import Pesanan from '@/components/Pages/Pesanan.vue'
 import BarangDetail from '@/components/Pages/BarangDetail.vue'
+import Checkout from '@/components/Pages/Checkout.vue'
 
 const routes = [
   {
@@ -40,6 +41,14 @@ const routes = [
     path: '/detailCoffee/:id',
     name: 'BarangDetail',
     component: BarangDetail,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: Checkout,
     meta: {
       requiresAuth: true
     }
