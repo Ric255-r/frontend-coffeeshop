@@ -272,11 +272,13 @@
 
             <button>Pesan Sekarang?</button>
 
+            <!-- Ksh Key utk Force update component -->
+            <BubbleCartVue :key="componentKey"></BubbleCartVue>
+            <NavbarBottom></NavbarBottom>
+            
         </div>
 
-        <!-- Ksh Key utk Force update component -->
-        <BubbleCartVue :key="componentKey"></BubbleCartVue>
-        <NavbarBottom></NavbarBottom>
+
 
     </div>
 

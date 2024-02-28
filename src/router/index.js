@@ -6,6 +6,7 @@ import store from './store'
 import Pesanan from '@/components/Pages/Pesanan.vue'
 import BarangDetail from '@/components/Pages/BarangDetail.vue'
 import Checkout from '@/components/Pages/Checkout.vue'
+import Payment from '@/components/Pages/Payment.vue'
 
 const routes = [
   {
@@ -49,6 +50,14 @@ const routes = [
     path: '/checkout',
     name: 'checkout',
     component: Checkout,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/payment/:id',
+    name: 'payment',
+    component: Payment,
     meta: {
       requiresAuth: true
     }
