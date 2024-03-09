@@ -2,33 +2,57 @@
     <div>
         <div class=" animate-fade items-center justify-center ">
             <div class="flex flex-wrap">
-                <div class="w-2/12">
+                <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
                     <!-- Hai -->
                     hai
                 </div>
-                <div class="w-8/12">
+                <div class="lg:w-8/12 lg:px-0 md:w-8/12 md:px-0 w-full px-2">
                     <div class="flex flex-wrap">
-                        <div class="w-3/12">
-                            Gambar
+                        <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya">
+                            <div class="wrappernya py-5">
+                                <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
+                                    <img :src="loadGbr(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
+                                </div>
+                                <!-- Mesti Load 2x biar kesannnya Infinite Looping Carouselnya -->
+                                <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
+                                    <img :src="loadGbr(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="w-9/12 font-bold">
-                            {{ dataBarang.nama_barang }}
+
+                        <div class="lg:w-9/12 lg:pl-2 md:w-9/12 md:pl-2 w-full">
+                            <div class="flex flex-wrap">
+                                <div class="w-full lg:pt-1 font-bold capitalize">
+                                    {{ dataBarang.nama_barang }}
+                                </div>
+                            </div>
+                            <div class="w-full mt-2 text-sm capitalize">
+                                {{ dataBarang.deskripsi }} Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum odio impedit quidem doloribus nobis magnam, sequi, quasi possimus asperiores iusto porro est facilis molestiae. Placeat ut tenetur expedita deserunt. Asperiores?
+                                Blanditiis accusamus rerum temporibus maxime? Accusamus provident officia tenetur sapiente repellat at minus optio rerum vero culpa sequi, nam expedita natus eos itaque ut facilis voluptates necessitatibus quia quasi nihil!
+                                Animi inventore blanditiis reprehenderit enim pariatur laboriosam, facilis placeat maiores assumenda ducimus molestias excepturi nisi quos. Dolorum, autem sapiente sunt vel ut nostrum officiis, iusto tenetur, repellendus eligendi veniam harum?
+                            </div>
+                            <div class="w-full mt-2 text-right">
+                                <b>Rp. {{ dataBarang.harga }}</b>
+                            </div>
                         </div>
-                        <div class="w-full mt-2 text-sm">
-                            {{ dataBarang.deskripsi }}
-                        </div>
-                        <div class="w-full mt-2">
-                            Rp. {{ dataBarang.harga }}
-                        </div>
-                        
+
+                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+
 
                         <div class="w-full">
-                            Variant Tersedia :
+                            <b>Variant Tersedia :</b>
+                            <div class="flex flex-wrap mt-3">
+
+                                <div class="lg:w-auto w-6/12">
+                                    <button class="bg-red-600 text-white py-[15px] lg:px-[100px] w-full rounded" @click="handleVariant('hot')">Hot</button>
+                                </div>
+
+                                <div class="lg:w-auto lg:ml-3 w-6/12">
+                                    <button class="bg-cyan-600 text-white py-[15px] lg:px-[100px] w-full ml-1 rounded" @click="handleVariant('cold')">Cold</button>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="w-6/12">Hot</div>
-
-                        <div class="w-6/12">Cold</div>
 
                         <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
 
@@ -264,13 +288,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-2/12"> 
+                <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block"> 
                     <p class="sticky top-0">Total Harga : {{ totalHarga }}</p>
                 </div>
 
             </div>
-
-            <button>Pesan Sekarang?</button>
 
             <!-- Ksh Key utk Force update component -->
             <BubbleCartVue :key="componentKey"></BubbleCartVue>
@@ -289,6 +311,7 @@
 import NavbarBottom from './NavbarBottom.vue';
 import axios from 'axios'
 import BubbleCartVue from './BubbleCart.vue'
+import { initFlowbite } from 'flowbite';
 
 export default {
     name: 'barang-detail',
@@ -304,6 +327,7 @@ export default {
             selectedCup: null,
             selectedSweetness: null,
             selectedMilk: '',
+            selectedVariant: '',
             allObj : {
                 "id_barang": this.$route.params.id,
                 "nama_barang": null,
@@ -319,14 +343,21 @@ export default {
             hargaAwal: 0,
             totalHarga: 0,
             sumAll: 0,
-            componentKey: 0
+            componentKey: 0,
+            widthCarousel: '',
+            translateCarousel: ''
         }
     },
     components: {
         NavbarBottom,
-        BubbleCartVue
+        BubbleCartVue,
+
     },
     mounted: function(){
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize()
+
+        initFlowbite()
 
         let token = localStorage.getItem('token');
 
@@ -342,6 +373,12 @@ export default {
             this.dataBarang = response.data.dataBarang;
             this.dataTopping = response.data.dataTopping;
             this.hargaAwal = response.data.dataBarang.harga;
+
+            // Buat Nyesuain length gbr carousel
+            // this.lengthCarousel = `calc(-${this.dataBarang.gambar.length} * 10rem)`;
+            // this.lengthCarousel = `calc(-2 * 20rem)`;
+            this.translateCarousel = `calc(-${this.dataBarang.gambar.length} * ${this.widthCarousel})`;
+
 
             let totalCup = 0;
             let totalMilk = 0;
@@ -441,6 +478,35 @@ export default {
         }
     },
     methods: {
+        handleVariant: function(variant){
+            this.selectedVariant = variant;
+
+            console.log(this.selectedVariant);
+        },
+        handleResize: function(){
+            if(window.innerWidth < 800){
+                this.widthCarousel = '20rem';
+            }else{
+                this.widthCarousel = '10rem';
+            }
+        },
+
+        loadGbr: function(gambar){
+            // cek jika databarang.gambar ada atau ngga
+            if(this.dataBarang.gambar){
+                // Cek jika ini adalah array atau bkn
+                if(Array.isArray(this.dataBarang.gambar)){
+                    console.log("ini array")
+                    return `http://localhost:5500/apiBrg/images/${gambar}`;
+                }else{
+                    console.log("ini bkn array");
+                    return [this.dataBarang.gambar.toString()]
+                }
+            }else{
+                // Kalo dataBarang.gbr itu undefined
+                return [];
+            }
+        },
         changeCup: function(){
             // Penjelasan Rinci di changeMilk
             if(localStorage.getItem("cart") === null){
@@ -769,8 +835,35 @@ export default {
 }
 </script>
 
-<!-- <style scoped>
-div {
+<style scoped>
+/* div {
     border: 1px solid red;
+}  */
+
+.brands-listnya {
+    overflow: hidden;
 }
-</style> -->
+
+.wrappernya {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: v-bind('widthCarousel');
+
+    justify-items: stretch;
+}
+
+@keyframes scroll {
+    /* Ini Sesuaikan dgn Banyak Gbr Asli  */
+    /* Argumen pertama itu jlh length gbr, argumen ke2 itu size colnya */
+    /* Aku pindahkan dia ke mounted vue biar dinamis */
+    to {
+        translate: v-bind('translateCarousel');
+    }
+}
+
+
+.wrappernya {
+    animation: scroll 10s linear infinite;
+}
+
+</style>

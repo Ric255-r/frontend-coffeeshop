@@ -19,7 +19,7 @@
             <!-- <li class="splide__slide">Slide 03</li> -->
         </ul>
     </div>
-</div>
+  </div>
 </template>
 
 
