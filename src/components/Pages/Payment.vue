@@ -127,10 +127,33 @@ export default {
             dataBeli: [],
         };
     },
+    beforeRouteLeave(to, from, next) {
+        if (from.name === 'payment') { // ambil dari name router.js
+            let r = confirm("Apakah Yakin Ingin Membatalkan?");
+
+            if(r == true){
+                axios.delete(`http://localhost:5500/apiJual/cancelTransaction/${this.id}`)
+                .then((res) => {
+                    console.log(res);
+                    next();
+                })
+                .catch((err) => {
+                    console.warn(err)
+                    next(false); // Mencegah Navigasi
+                    return false; // Harus tambah return supaya navigasiny d cekal
+
+                });
+            }else{
+                next(false); // Mencegah Navigasi
+                return false; // Harus tambah return supaya navigasiny d cekal
+            }
+        } else {
+            next();
+        }
+    },
     mounted: function () {
         // Fungsi Modal
         // initFlowbite();
-
         const $buttonElement = document.querySelector('#button');
         const $modalElement = document.querySelector('#modal');
         const $closeButton1 = document.querySelector('#closeButton');

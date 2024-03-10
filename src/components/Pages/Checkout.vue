@@ -61,12 +61,19 @@
                                         <td class="py-4">Rp. {{ item.harga }}</td>
                                         <td class="py-4">
                                             <div class="flex items-center">
-                                                <button class="border rounded-md py-2 px-4 mr-2">-</button>
-                                                <span class="text-center w-8">1</span>
-                                                <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                                <button 
+                                                    class="border rounded-md py-2 px-4 mr-2"
+                                                    @click="handleMinus(index, item.qty == null ? 1 : item.qty)">-</button>
+
+                                                <span class="text-center w-8">{{ item.qty == null ? 1 :  item.qty }}</span>
+                                                <button 
+                                                    class="border rounded-md py-2 px-4 ml-2" 
+                                                    @click="handlePlus(index, item.qty == null ? 1 : item.qty)">
+                                                +
+                                                </button>
                                             </div>
                                         </td>
-                                        <td class="py-4">Rp {{ showCart.harga[index].totalHarga }}</td>
+                                        <td class="py-4">Rp {{ showCart.harga[index].totalSeluruh }}</td>
                                     </tr>
                                     <!-- More product rows -->
 
@@ -134,7 +141,8 @@ export default {
             dataCart: JSON.parse(localStorage.getItem('cart')) || [],
             dataBarang: [],
             dataTotal: JSON.parse(localStorage.getItem('totalHarga')) || [],
-            dataNota: ''
+            dataNota: '',
+            quantity: 0
         }
     },
     computed: {
@@ -166,6 +174,7 @@ export default {
                     'syrup': this.dataCart[i].syrup,
                     'topping': this.dataCart[i].topping,
                     'variant': this.dataCart[i].variant,
+                    'qty': this.dataCart[i].qty
                 };
             }
 
@@ -193,6 +202,35 @@ export default {
         this.getBrgNota();
     },
     methods: {
+        handlePlus: function(index, qty){
+            let dataCart = this.dataCart;
+            let dataTotal = this.dataTotal;
+            
+            dataCart[index].qty = qty + 1;
+            dataTotal[index].totalSeluruh = dataTotal[index].totalHarga * dataCart[index].qty; 
+
+            console.log(dataCart);
+
+            localStorage.setItem('cart', JSON.stringify(dataCart));
+            localStorage.setItem('totalHarga', JSON.stringify(dataTotal));
+        },
+        handleMinus: function(index, qty){
+            let dataCart = this.dataCart;
+            let dataTotal = this.dataTotal;
+
+            dataCart[index].qty = qty - 1;
+
+            if(dataCart[index].qty == 0){
+                // Buat Hapus
+                dataCart.splice(index, 1);
+                dataTotal.splice(index, 1);
+            }else{
+                dataTotal[index].totalSeluruh = dataTotal[index].totalHarga * dataCart[index].qty; 
+            }
+
+            localStorage.setItem('cart', JSON.stringify(dataCart));
+            localStorage.setItem('totalHarga', JSON.stringify(dataTotal));
+        },
         getBrgNota: async function(){
             let token = localStorage.getItem('token');
 

@@ -37,7 +37,7 @@ export default {
             let total = 0;
 
             for(let i = 0; i < this.totalHarga.length; i++){
-                total += this.totalHarga[i].totalHarga;
+                total += this.totalHarga[i].totalSeluruh;
             }
 
             return total;
