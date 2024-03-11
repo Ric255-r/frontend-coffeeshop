@@ -11,11 +11,11 @@
                         <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya">
                             <div class="wrappernya py-5">
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbr(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
+                                    <img :src="loadGbrCarousel(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
                                 </div>
                                 <!-- Mesti Load 2x biar kesannnya Infinite Looping Carouselnya -->
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbr(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
+                                    <img :src="loadGbrCarousel(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
                                 </div>
                             </div>
 
@@ -293,17 +293,39 @@
 
                         <div class="flex flex-wrap" v-if="handleSubTotal()">
                             <div class="w-full">
-                                <p class="">Subtotal : {{ handleSubTotal().totalHarga }}</p>
+                                <div class="cursor-pointer mt-1" v-for="(item, index) in loadSameProducts()" :key="index" >
+                                    <div class="flex flex-wrap mt-2 rounded group/item hover:bg-slate-100"
+                                        v-if="item.id_barang == dataBarang.id" 
+                                        :style="`border: ${selectedProducts === index ? `1px solid black` : `none`}`">
+
+                                        <div class="flex flex-wrap" @click="handleSelectedProducts(index)">
+                                            <div class="lg:w-2/12 md:w-2/12 w-4/12 text-center flex items-center justify-center">
+                                                <img :src="loadGbr(dataBarang.gambar[0])" alt="" class="object-cover h-[50px] w-[50px] rounded-lg">
+                                            </div>
+                                            
+                                            <div class="lg:w-9/12 md:w-9/12 w-8/12 capitalize text-[10px]">
+                                                <p>{{ dataBarang.nama_barang }}</p>
+                                                <p>{{ 'Summary : ' + item.ukuran_cup + ', ' + item.milk + ', ' +  item.espresso + ', ' + item.ice_cube +  ', ' + item.sweetness + ', ' + item.variant + ', ' + item.syrup + ', ' + item.topping }}</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="lg:w-1/12 invisible group-hover/item:visible hover:bg-slate-400 hover:cursor-auto" @click="handleHapus(index)">
+                                            <i class="fas fa-trash"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="w-full">
-                                Ingin Menambah Variant Lain?
+                            <div class="w-full text-[10px] font-bold text-right">
+                                <p class="">Subtotal : {{ handleSubTotal() }}</p>
                             </div>
 
-                            <div class="w-full">
+                            <div class="w-full text-right mt-1">
+                                <span class="text-[10px] pr-3">Add New?</span>
                                 <button 
-                                    class="bg-cyan-400 px-3 rounded w-full"
-                                    @click="handleTambahBaru">Tambah</button>
+                                    class="bg-cyan-400 rounded-full h-[30px] w-[30px]"
+                                    @click="handleTambahBaru"><i class="fas fa-plus-circle"></i></button>
                             </div>
                         </div>
 
@@ -371,13 +393,12 @@ export default {
             componentKey: 0,
             widthCarousel: '',
             translateCarousel: '',
-            selectedProducts: -1 // buat pilih product yg sama, dgn variant yg berbeda
+            selectedProducts: -1, // buat pilih product yg sama, dgn variant yg berbeda
         }
     },
     components: {
         NavbarBottom,
         BubbleCartVue,
-
     },
     mounted: function(){
         window.addEventListener('resize', this.handleResize);
@@ -416,6 +437,8 @@ export default {
                 let ls = JSON.parse(localStorage.getItem("cart"));
 
                 const cariIndex = ls.findIndex((item) => item.id_barang == this.params);
+
+                this.selectedProducts = cariIndex;
 
                 if(cariIndex !== -1){
                     // Rumus Perhitungan Cup & Susu
@@ -469,8 +492,9 @@ export default {
                     // End Rumus Topping
                 }
             }
-
-            this.totalHarga = this.hargaAwal + totalEspresso + totalCup + totalMilk + totalSyrup + totalTopping;
+            // kemungkinan g kepake lg, udh digantikan sm handleSubTotal. kedepanny akan coba rombak
+            this.totalHarga = this.hargaAwal + totalEspresso + totalCup + totalMilk + totalSyrup + totalTopping;        
+            console.log(this.totalHarga);
         }).catch((error) => {
             if (error.response && error.response.status == 401) {
                 this.$router.push('/');
@@ -504,35 +528,137 @@ export default {
         }
     },
     methods: {
+        handleDataKosong: function(){
+            this.selectedCup = '';
+            this.selectedIceCube = '';
+            this.selectedExpresso = '';
+            this.selectedSweetness = '';
+            this.selectedMilk = '';
+            this.checkedSyrup = [];
+            this.checkedTopping = [];
+
+            this.componentKey += 1;
+        },
+        handleHapus: function(index){
+            // alert("Trigger Handle Hapus");
+            let cartObj = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = JSON.parse(localStorage.getItem('totalHarga')) || [];
+
+            cartObj.splice(index, 1);
+            total.splice(index, 1);
+
+            let resetIndex;
+
+            for (let i = 0; i < cartObj.length; i++) {
+                if(cartObj[i].id_barang == this.params){
+                    resetIndex = i;
+                    // break; 
+                    // kalo d break, dia bkl ambil index pertama klo ktemu, kalo g d break, ambil index terakhir
+                    // jd kalo mw ambil data terakhir, g ush d break. kecuali mw ambil data pertamakali;
+                }
+            }
+            console.log(`ini reset index ${resetIndex} ini selectedProduct ${this.selectedProducts}`)
+
+            localStorage.setItem('cart', JSON.stringify(cartObj));
+            localStorage.setItem('totalHarga', JSON.stringify(total));
+
+            if(resetIndex === undefined){
+                this.selectedProducts = -1;
+                this.handleDataKosong();
+
+            }else{
+                this.handleSelectedProducts(resetIndex);
+            }
+
+            if(JSON.parse(localStorage.getItem('cart') == 0)){
+                this.handleDataKosong();
+            }
+        },
+        handleSelectedProducts: function(index){
+            // alert("Trigger SelectedProduct");
+
+            let cartObj = JSON.parse(localStorage.getItem('cart')) || [];
+            let existsObjIndex;
+
+            let cekExists = cartObj.some((item) => item.id_barang == this.params);
+            // alert(cekExists);
+
+            if(!cekExists){
+                // Cek apkh this.params ad di array LS atau ngga
+                existsObjIndex = -1;
+            }else{
+                // cek apkh argumen yg dilempar null atau bkn
+                if(index !== null){
+                    existsObjIndex = index;
+                }else{
+                    existsObjIndex = -1;
+                }
+            }
+
+            // alert(existsObjIndex);
+
+            if(cartObj[existsObjIndex]){
+                this.selectedMilk = cartObj[existsObjIndex].milk;
+                this.selectedCup = cartObj[existsObjIndex].ukuran_cup;
+                this.checkedSyrup = cartObj[existsObjIndex].syrup;
+                this.checkedTopping = cartObj[existsObjIndex].topping;
+                this.selectedExpresso = cartObj[existsObjIndex].espresso;
+                this.selectedIceCube = cartObj[existsObjIndex].ice_cube;
+                this.selectedSweetness = cartObj[existsObjIndex].sweetness;
+
+                this.selectedProducts = index;
+            }else{
+                console.warn("Data Kosong");
+                this.handleDataKosong();
+            }
+
+            this.componentKey += 1;
+        },
         handleTambahBaru: function(){
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let totalHarga = JSON.parse(localStorage.getItem('totalHarga')) || [];
             let filter = cart.filter((item) => item.id_barang == this.params);
 
             if(filter){
-                this.selectedCup = '';
-                this.selectedIceCube = '';
-                this.selectedExpresso = '';
-                this.selectedSweetness = '';
-                this.selectedMilk = '';
-                this.checkedSyrup = [];
-                this.checkedTopping = [];
+                this.handleDataKosong(); // pas add new, kosongkan data
 
                 let newCart = [...cart];
+                let newTotalHarga = [...totalHarga];
+
                 newCart.push({
                     ...this.allObj,
+                    'nama_barang' : this.dataBarang.nama_barang
                 });
-                localStorage.setItem('cart', JSON.stringify(newCart));
 
+                newTotalHarga.push({
+                    id_barang: this.params,
+                    totalHarga: this.hargaAwal,
+                    totalSeluruh: this.hargaAwal // buat akumulasi qty * totalharga
+                });
+
+                localStorage.setItem('cart', JSON.stringify(newCart));
+                localStorage.setItem('totalHarga', JSON.stringify(newTotalHarga));
+
+                // Ambil Index terakhir dari data
                 let cart2 = JSON.parse(localStorage.getItem('cart')) || [];
                 let filter2 = cart2.map((item) => item.id_barang);
                 let lastIndex = filter2.lastIndexOf(this.params);
                 
                 this.selectedProducts = lastIndex;
+                this.componentKey += 1;
             }
         },
         handleSubTotal: function(){
             let total = JSON.parse(localStorage.getItem('totalHarga')) || [];
-            return total.find((item) => item.id_barang == this.params);
+            let arrSubtotal = 0;
+            
+            for (let i = 0; i < total.length; i++) {
+                if(total[i].id_barang == this.params){
+                    arrSubtotal += total[i].totalSeluruh;
+                }
+            }
+
+            return arrSubtotal;
         },
         handleVariant: function(variant){
             this.selectedVariant = variant;
@@ -545,8 +671,10 @@ export default {
                 this.widthCarousel = '10rem';
             }
         },
-
-        loadGbr: function(gambar){
+        loadGbr: function(img){
+            return `http://localhost:5500/apiBrg/images/${img}`
+        },
+        loadGbrCarousel: function(gambar){
             // cek jika databarang.gambar ada atau ngga
             if(this.dataBarang.gambar){
                 // Cek jika ini adalah array atau bkn
@@ -562,10 +690,14 @@ export default {
                 return [];
             }
         },
+        loadSameProducts: function(){
+            let la = JSON.parse(localStorage.getItem('cart')) || [];
+            return la;
+        },
         changeCup: function(){
             // Penjelasan Rinci di changeMilk. itu original, ak g bkl ubah
             // Aku ringkas jadi changeProcedure. krn kurleb semuany.
-            this.changeProcedure();
+            // this.changeProcedure();
 
             if(localStorage.getItem("cart") === null){
                 localStorage.setItem("cart", JSON.stringify([this.allObj]));
@@ -584,7 +716,7 @@ export default {
             return totalCup;
         },
         changeEspresso: function(){
-            this.changeProcedure();
+            // this.changeProcedure();
 
             if(localStorage.getItem("cart") === null){
                 localStorage.setItem("cart", JSON.stringify([this.allObj]));
@@ -610,17 +742,23 @@ export default {
             cart = localStorage.getItem("cart");
             let cartObj = JSON.parse(cart) || [];
             let existsObjIndex = -1;
-            // the logic in these loop are if the same obj.id_barang exists then replace it
-            // but if obj.id_barang does not exists then push the key value with same structure
-            // to localstorage
 
-            // logika cariIndex. ini cara konvensional. bisa pakai findIndex 
-            for (let i = 0; i < cartObj.length; i++) {
-                if(cartObj[i].id_barang === this.params) {
-                    existsObjIndex = i;
-                    break;
+            // Ketika user mau tambahkan produk yg sama dgn variant berbeda.
+            if(this.selectedProducts !== -1){
+                existsObjIndex = this.selectedProducts;
+            }else{
+                // the logic in these loop are if the same obj.id_barang exists then replace it
+                // but if obj.id_barang does not exists then push the key value with same structure
+                // to localstorage
+                // logika cariIndex. ini cara konvensional. bisa pakai findIndex 
+                for (let i = 0; i < cartObj.length; i++) {
+                    if(cartObj[i].id_barang === this.params) {
+                        existsObjIndex = i;
+                        break;
+                    }
                 }
             }
+            
 
             if(existsObjIndex !== -1){
                 cartObj[existsObjIndex].id_barang = this.params;
@@ -664,11 +802,11 @@ export default {
             let cartObj = JSON.parse(cart) || [];
             let existsObjIndex = -1;
 
-            // Cari Indexnya
-            for(let i = 0; i < cartObj.length; i++){
-                if(cartObj[i].id_barang == this.params){
-                    existsObjIndex = i;
-                }
+            // Ketika User mau tambah produk yg sama dgn variant lain
+            if(this.selectedProducts !== -1){
+                existsObjIndex = this.selectedProducts;
+            }else{
+                existsObjIndex = cartObj.findIndex((item) => item.id_barang == this.params);
             }
 
             // Ini kalau ada indexnya 
@@ -731,8 +869,15 @@ export default {
             let cartObj = JSON.parse(localStorage.getItem("cart")) || [];
 
             // Cari Indexnya
-            const existsObjIndex = cartObj.findIndex(item => item.id_barang == this.params);
 
+            let existsObjIndex = -1;
+
+            if(this.selectedProducts !== -1){
+                existsObjIndex = this.selectedProducts;
+            }else{
+                existsObjIndex = cartObj.findIndex((item) => item.id_barang == this.params);
+            }
+            
             // Kalo Ga ad, buat array object baru di LS, kalo ad bakal update
             if(existsObjIndex !== -1){
                 // Update
@@ -795,13 +940,23 @@ export default {
         // },
 
         changeProcedure: function(){
+            // alert("Trigger ChangeProcedure");
+
             if(localStorage.getItem("cart") === null){
                 localStorage.setItem("cart", JSON.stringify([this.allObj]));
             }
 
             let cartObj = JSON.parse(localStorage.getItem("cart")) || [];
 
-            const existsObjIndex = cartObj.findIndex((item) => item.id_barang == this.params);
+            let existsObjIndex = -1;
+
+            if(this.selectedProducts !== -1){
+                existsObjIndex = this.selectedProducts;
+            }else{
+                existsObjIndex = cartObj.findIndex((item) => item.id_barang == this.params);
+            }
+
+            // alert(`ini existsobj ${existsObjIndex}, ini selected ${this.selectedProducts}`);
 
             if(existsObjIndex !== -1){
                 cartObj[existsObjIndex].id_barang = this.params;
@@ -832,6 +987,7 @@ export default {
             this.changeProcedure(); // cmn buat store ke LS aja pas Changes.
 
             // Rumus Total Semua
+            // Original
             this.totalHarga = this.hargaAwal + this.changeCup() + this.changeEspresso() + this.changeMilk() + this.changeSyrup() + this.changeTopping();
             // console.log(this.totalHarga);
 
@@ -842,7 +998,13 @@ export default {
                 totalSeluruh: this.totalHarga // buat akumulasi qty * totalharga
             }
 
-            let index = items.findIndex((item) => item.id_barang === newItem.id_barang);
+            let index = -1;
+
+            if(this.selectedProducts !== -1){
+                index = this.selectedProducts;
+            }else{
+                index = items.findIndex((item) => item.id_barang === newItem.id_barang);
+            }
 
             // Note : totalHarga itu harga produk plus topping
             // totalSeluruh itu totalsemuabelanjaan
