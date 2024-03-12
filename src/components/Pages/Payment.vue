@@ -1,15 +1,24 @@
 <template>
-    <div>
+    <div class="poppins-regular">
         <div class="flex flex-wrap">
-            <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 hidden lg:block md:block sm:block">
+            <div class="lg:w-2/12 md:w-1/12 sm:w-1/12 hidden lg:block md:block sm:block">
 
             </div>
-            <div class="lg:w-8/12 md:w-8/12 sm:w-8/12 py-2 w-full">
+            <div class="lg:w-8/12 md:w-10/12 sm:w-10/12 py-2 w-full lg:px-0 md:px-0 px-2">
+
+                <div class="flex flex-wrap">
+                    <div class="w-full">
+                        Payment Summary : 
+                    </div>
+                </div>
+
+                <div class="w-full bg-gray-100 h-[7px] mt-2 mb-2"></div>
+
                 <div class="flex flex-wrap mb-2" v-for="(item, index) in dataBeli" :key="index">
-                    <div class="w-1/12 pl-5">
+                    <div class="lg:w-1/12 md:w-2/12 sm:w-2/12 w-2/12">
                         <img :src="getImg(item.gambar)" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
                     </div>
-                    <div class="w-11/12">
+                    <div class="lg:w-11/12 md:w-10/12 sm:w-10/12 w-10/12 pl-2">
                         <div class="flex flex-wrap">
                             <div class="w-full font-bold mb-1">
                                 {{ item.nama_barang }}
@@ -36,18 +45,20 @@
                                 Milk : {{ item.milk }}
                             </div>
                             <div class="w-full text-right font-bold">
-                                Total : {{ item.harga_akhir }}
+                                Qty : {{item.qty}} * {{ item.harga_akhir }} = Rp.{{ item.harga_seluruh }}
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="w-full bg-gray-100 h-[7px] mt-2 mb-2"></div>
 
                 <div class="flex flex-wrap ">
                     <div class="w-full text-[14px] text-gray-600">
                         Cek Ringkasan Belanjamu
                     </div>
                     <div class="w-8/12 mt-2">
-                        Total Harga ({{ dataBeli.length }}) Item
+                        Total Harga 
                     </div>
                     <div class="w-4/12 text-right">
                         Rp. {{ subtotal }}
@@ -72,7 +83,7 @@
                     <button id="button" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Show modal</button>
                 </div>
             </div>
-            <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 hidden lg:block md:block sm:block">
+            <div class="lg:w-2/12 md:w-1/12 sm:w-1/12 hidden lg:block md:block sm:block">
 
             </div>
         </div>
@@ -207,7 +218,7 @@ export default {
             let subtotal = 0;
 
             for (let i = 0; i < this.dataBeli.length; i++) {
-                subtotal += this.dataBeli[i].harga_akhir
+                subtotal += this.dataBeli[i].harga_seluruh
             }
 
             return subtotal;

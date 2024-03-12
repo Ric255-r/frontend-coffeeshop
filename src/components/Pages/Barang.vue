@@ -12,18 +12,34 @@
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block ">
 
             </div>
+
+
+        </div>
+
+        <div class="flex flex-wrap mt-2 mb-2">
+            <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
+
+            </div>
+            <div class="lg:w-8/12 md:w-8/12 w-full">
+                Choose Your Favourite : 
+            </div>
+
+            <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
+
+            </div>
         </div>
 
         <div class="flex flex-wrap mb-3" v-for="(item, index) in dataBarang" :key="index">
+
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
 
             </div>
             
-            <div class="lg:w-2/12 md:w-2/12 w-4/12 text-center flex items-center justify-center">
+            <div class="lg:w-1/12 md:w-1/12 w-4/12 text-center flex items-center justify-center">
                 <img :src="getImg(item.gambar[0])" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
             </div>
 
-            <div class="lg:w-6/12 md:w-6/12 w-8/12 lg:pl-2 md:pl-2 pt-1" >
+            <div class="lg:w-7/12 md:w-7/12 w-8/12 lg:pl-2 md:pl-2 pt-1" >
                 <div class="font-bold">
                     <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">{{ item.nama_barang }}</router-link>
                 </div>

@@ -8,13 +8,13 @@
     </SplideSlide>
   </Splide> -->
   <div class="splide">
-    <div class="splide__track">
+    <div class="splide__track" style="border-radius: 1.5rem;">
         <ul class="splide__list">
             <li class="splide__slide">
-                <img class="max-w-full h-auto" :src="require('@/assets/milklatte-banner.jpg')" alt="Sample 1">
+                <img class="max-w-full h-auto lg:px-0 px-2" :src="require('@/assets/milklatte-banner.jpg')" alt="Sample 1">
             </li>
             <li class="splide__slide">
-                <img class="max-w-full h-auto" :src="require('@/assets/coffee-bread.jpg')" alt="Sample 2">
+                <img class="max-w-full h-auto lg:px-0 px-2" :src="require('@/assets/coffee-bread.jpg')" alt="Sample 2">
             </li>
             <!-- <li class="splide__slide">Slide 03</li> -->
         </ul>
@@ -57,9 +57,15 @@ export default {
         gap: '1rem',
         autoplay: true,
         // heightRatio: 0.2,
-        height: '168px'
+        height: '168px',
     });
     splide.mount();
   }
 };
 </script>
+
+<style>
+.splide__slide {
+  border-radius: 50px;
+}
+</style>

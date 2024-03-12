@@ -4,12 +4,11 @@
             <div class="flex flex-wrap">
                 <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
                     <!-- Hai -->
-                    hai
                 </div>
                 <div class="lg:w-8/12 lg:px-0 md:w-8/12 md:px-0 w-full px-2">
                     <div class="flex flex-wrap">
                         <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya">
-                            <div class="wrappernya py-5">
+                            <div class="wrappernya lg:py-2 md:py-2 sm:py-2 py-1">
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
                                     <img :src="loadGbrCarousel(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
                                 </div>
@@ -21,7 +20,7 @@
 
                         </div>
 
-                        <div class="lg:w-9/12 lg:pl-2 md:w-9/12 md:pl-2 w-full">
+                        <div class="lg:w-9/12 lg:pl-2 md:w-9/12 md:pl-2 w-full lg:mt-0 md:mt-0 sm:mt-0 mt-2">
                             <div class="flex flex-wrap">
                                 <div class="w-full lg:pt-1 font-bold capitalize">
                                     {{ dataBarang.nama_barang }}
@@ -83,7 +82,7 @@
                             <span><b>Ice Cube : </b></span>
                             <div class="flex flex-wrap">
                                 <div class="w-3/12">
-                                    Normal
+                                    LESS
                                 </div>
                                 <div class="w-8/12 text-right">
 
@@ -93,7 +92,7 @@
                                         type="radio" 
                                         name="ice_cube" 
                                         id="" 
-                                        :value="'Normal'"
+                                        :value="'LESS'"
                                         v-model="selectedIceCube"
                                         @change="changeTotalSemua"
                                     />
@@ -102,7 +101,7 @@
 
                             <div class="flex flex-wrap">
                                 <div class="w-3/12">
-                                    Less
+                                    MORE
                                 </div>
                                 <div class="w-8/12 text-right">
 
@@ -112,7 +111,7 @@
                                         type="radio" 
                                         name="ice_cube" 
                                         id="" 
-                                        :value="'Less'"
+                                        :value="'MORE'"
                                         v-model="selectedIceCube"
                                         @change="changeTotalSemua"
                                     />
@@ -131,7 +130,7 @@
                                         type="radio" 
                                         name="ice_cube" 
                                         id="" 
-                                        :value="'No_Ice'"
+                                        :value="'NONE'"
                                         v-model="selectedIceCube"
                                         @change="changeTotalSemua"
                                     />
@@ -154,7 +153,7 @@
                                     <input 
                                         type="radio" name="espresso" 
                                         :id="'rbEspresso0'" v-model="selectedExpresso" 
-                                        :value="'Normal'" @change="changeTotalSemua"
+                                        :value="'0'" @change="changeTotalSemua"
                                     />
                                 </div>
                             </div>
@@ -193,7 +192,7 @@
                                         type="radio" 
                                         name="sweetness" 
                                         id="" 
-                                        :value="'Normal'"
+                                        :value="'NORMAL'"
                                         v-model="selectedSweetness"
                                         @change="changeTotalSemua"
                                     />
@@ -212,7 +211,7 @@
                                         type="radio" 
                                         name="sweetness" 
                                         id="" 
-                                        :value="'Less'"
+                                        :value="'LESS'"
                                         v-model="selectedSweetness"
                                         @change="changeTotalSemua"
                                     />

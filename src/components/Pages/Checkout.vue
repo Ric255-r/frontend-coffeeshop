@@ -2,9 +2,9 @@
     <div>
         <!-- Template By JaxStone -->
         <!-- https://tailwindflex.com/@jaxstone/checkout-page-template -->
-        <div class="bg-gray-100 h-screen py-8">
+        <div class="h-screen py-8" :style="styleBg">
             <div class="container mx-auto px-4">
-                <h1 class="text-2xl font-semibold mb-4 text-center">Pesanan Sementara</h1>
+                <h1 class="text-2xl font-semibold mb-4 text-center text-gray-800">Pesanan Sementara</h1>
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="md:w-full">
                         <div class="bg-white rounded-lg shadow-md p-6 mb-[100px]" style="overflow-x: auto;">
@@ -142,7 +142,9 @@ export default {
             dataBarang: [],
             dataTotal: JSON.parse(localStorage.getItem('totalHarga')) || [],
             dataNota: '',
-            quantity: 0
+            quantity: 0,
+            styleBg: ''
+
         }
     },
     computed: {
@@ -200,8 +202,18 @@ export default {
     },
     mounted: function(){
         this.getBrgNota();
+
+        window.addEventListener('resize', this.handleResize)
+        this.handleResize();
     },
     methods: {
+        handleResize: function(){
+            if(window.innerWidth < 1000){
+                this.styleBg = 'background: linear-gradient(to top,  #FFFFFF 65%, #057a55 35%)'
+            }else{
+                this.styleBg = 'background: linear-gradient(to top,  #FFFFFF 65%, #057a55 35%)'
+            }
+        },
         handlePlus: function(index, qty){
             let dataCart = this.dataCart;
             let dataTotal = this.dataTotal;
@@ -279,6 +291,8 @@ export default {
                     data.append('milk', dataCart[i].milk);
                     data.append('topping', JSON.stringify(dataCart[i].topping));
                     data.append('syrup', JSON.stringify(dataCart[i].syrup));
+                    data.append('espresso', dataCart[i].espresso);
+                    data.append('qty', dataCart[i].qty == null ? 1 : dataCart[i].qty);
 
                     const element = await axios.post(`http://localhost:5500/apiJual/detailPenjualan/`, data , {
                         headers: {
