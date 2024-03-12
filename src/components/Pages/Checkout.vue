@@ -24,7 +24,7 @@
                                                 <img class="h-16 w-16 mr-4 lg:block md:block sm:block hidden" src="https://via.placeholder.com/150" alt="Product image">
                                                 <span>
                                                     <span class="font-semibold">
-                                                        {{ item.nama_barang }} <br />
+                                                        <router-link :to="{ name: 'BarangDetail', params: { id: item.id_barang},  query: { productOrder: index } }">{{ item.nama_barang }}</router-link> <br />
                                                     </span> 
                                                     <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.ukuran_cup">
                                                         Ukuran Cup : {{ item.ukuran_cup }} <br />
@@ -176,7 +176,8 @@ export default {
                     'syrup': this.dataCart[i].syrup,
                     'topping': this.dataCart[i].topping,
                     'variant': this.dataCart[i].variant,
-                    'qty': this.dataCart[i].qty
+                    'qty': this.dataCart[i].qty,
+                    'id_barang': this.dataCart[i].id_barang
                 };
             }
 

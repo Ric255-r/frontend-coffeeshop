@@ -81,6 +81,25 @@
                             <span><b>Ice Cube : </b></span>
                             <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
+                                    Normal
+                                </div>
+                                <div class="w-8/12 text-right">
+
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input 
+                                        type="radio" 
+                                        name="ice_cube" 
+                                        id="" 
+                                        :value="'NORMAL'"
+                                        v-model="selectedIceCube"
+                                        @change="changeTotalSemua"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap mt-2">
+                                <div class="w-3/12">
                                     LESS
                                 </div>
                                 <div class="w-8/12 text-right">
@@ -223,6 +242,25 @@
                         <div class="w-full mt-10">
                             <span v-if="showMilk.length > 0"><b>{{ showMilk[0].kategori }}</b></span>
 
+                            <div class="flex flex-wrap mt-2">
+                                <div class="w-3/12">
+                                    Normal
+                                </div>
+                                <div class="w-8/12 text-right">
+
+                                </div>
+                                <div class="w-1/12 text-center">
+                                    <input 
+                                        type="radio" 
+                                        name="Milk" 
+                                        id="radio_-1" 
+                                        :value="'NORMAL'"
+                                        v-model="selectedMilk"
+                                        @change="changeTotalSemua"
+                                    />
+                                </div>
+                            </div>
+
                             <div class="flex flex-wrap mt-2" v-for="(item, index) in showMilk" :key="index">
                                 <div class="w-3/12">
                                     {{ item.nama_topping }}
@@ -330,7 +368,13 @@
                         <div class="flex flex-wrap" v-else>
                             <div class="w-full">
                                 <p class="">Subtotal : 0</p>
-                                test, mau tambah tombol add kalo dia masih kosong. 
+                                <p class="text-right">
+                                    <button 
+                                        class="bg-cyan-400 rounded-full h-[30px] w-[30px]"
+                                        @click="handleTambahBaru"><i class="fas fa-plus-circle"></i>
+                                    </button>
+                                </p>
+                                
                             </div>
                         </div>
 
@@ -341,7 +385,44 @@
             </div>
 
             <!-- Ksh Key utk Force update component -->
-            <BubbleCartVue :key="componentKey"></BubbleCartVue>
+            <BubbleCartVue :key="componentKey" class="hidden lg:block md:block"></BubbleCartVue>
+
+            <div class="flex flex-wrap text-white lg:hidden md:hidden block sticky bottom-[53px] bg-white py-2">
+                
+                <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
+                    <button class="rounded-full bg-red-500 w-[30px] h-[30px]"><i class="fas fa-minus"></i></button>
+                </div>
+                <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-2/12 block lg:hidden md:hidden text-black mt-1">
+                    <input type="number" name="" id="" value="1" class="w-full rounded text-center">
+                </div>
+                <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
+                    <button class="rounded-full bg-green-300 w-[30px] h-[30px]"><i class="fas fa-plus"></i></button>
+                </div>
+                
+                <div class="lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12 mt-3 cursor-pointer" >
+                    <div class="flex flex-wrap">
+                        <div class="w-full text-center">
+                            <span class="py-3 px-9 rounded-lg border-red-600 bg-transparent text-black hover:bg-green-400 hover:text-white" style="border: 1px solid green;" @click="handleTambahBaru">Add To Cart</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12 mt-3 cursor-pointer ">
+                    <div class="flex flex-wrap">
+                        <div class="w-full notification">
+                            <router-link to="/checkout" class="bg-green-600 py-3 px-9 rounded-lg hover:bg-green-900">
+                                <span>Go To Cart</span>
+                                <span :class="lengthCart > 0 ? ' badge' : ' hidden'">{{ lengthCart }}</span>
+
+                            </router-link>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 hidden lg:block md:block sm:block">
+
+                </div> -->
+            </div>
+
             <NavbarBottom></NavbarBottom>
             
         </div>
@@ -361,6 +442,13 @@ import BubbleCartVue from './BubbleCart.vue';
 
 export default {
     name: 'barang-detail',
+    props: {
+        // ini diambil dari queryString yg dipass lewat checkout.vue
+        productOrder: {
+            type: String,
+            default: "-1"
+        }
+    },
     data: function(){
         return {
             params : this.$route.params.id,
@@ -368,11 +456,11 @@ export default {
             dataTopping: [],
             checkedSyrup: [],
             checkedTopping: [],
-            selectedExpresso: null,
-            selectedIceCube: null,
-            selectedCup: null,
-            selectedSweetness: null,
-            selectedMilk: '',
+            selectedExpresso: "0",
+            selectedIceCube: "NORMAL",
+            selectedCup: "R",
+            selectedSweetness: "NORMAL",
+            selectedMilk: 'NORMAL',
             selectedVariant: '',
             allObj : {
                 "id_barang": this.$route.params.id,
@@ -393,6 +481,7 @@ export default {
             widthCarousel: '',
             translateCarousel: '',
             selectedProducts: -1, // buat pilih product yg sama, dgn variant yg berbeda
+            lengthCart: 0
         }
     },
     components: {
@@ -435,9 +524,21 @@ export default {
             if(localStorage.getItem("cart") !== null){
                 let ls = JSON.parse(localStorage.getItem("cart"));
 
+                // Menu Responsive. buat check cartlength
+                this.lengthCart = ls.length;
+
                 const cariIndex = ls.findIndex((item) => item.id_barang == this.params);
 
-                this.selectedProducts = cariIndex;
+                //this.Productorder ini diambil dari props yang dipass oleh checkout.vue
+                // bentuknya adalah queryString. jadi klo mw akses di child component ttp pake props
+                // tapi pass dari komponent utama ke child itu pake query di router-link
+                if(this.productOrder != -1){
+                    this.selectedProducts = parseInt(this.productOrder);
+                }else{
+                    // Ini code original sblm tambah this.productOrder;
+                    this.selectedProducts = cariIndex;
+                }
+
 
                 if(cariIndex !== -1){
                     // Rumus Perhitungan Cup & Susu
@@ -528,11 +629,11 @@ export default {
     },
     methods: {
         handleDataKosong: function(){
-            this.selectedCup = '';
-            this.selectedIceCube = '';
-            this.selectedExpresso = '';
-            this.selectedSweetness = '';
-            this.selectedMilk = '';
+            this.selectedCup = 'R';
+            this.selectedIceCube = 'NORMAL';
+            this.selectedExpresso = '0';
+            this.selectedSweetness = 'NORMAL';
+            this.selectedMilk = 'NORMAL';
             this.checkedSyrup = [];
             this.checkedTopping = [];
 
@@ -569,7 +670,10 @@ export default {
                 this.handleSelectedProducts(resetIndex);
             }
 
-            if(JSON.parse(localStorage.getItem('cart') == 0)){
+            let cekLength = JSON.parse(localStorage.getItem('cart')).length;
+            this.lengthCart = cekLength;
+
+            if(cekLength == 0){
                 this.handleDataKosong();
             }
         },
@@ -586,7 +690,7 @@ export default {
                 // Cek apkh this.params ad di array LS atau ngga
                 existsObjIndex = -1;
             }else{
-                // cek apkh argumen yg dilempar null atau bkn
+                // cek apkh argumen index yg dilempar null atau bkn
                 if(index !== null){
                     existsObjIndex = index;
                 }else{
@@ -626,7 +730,13 @@ export default {
 
                 newCart.push({
                     ...this.allObj,
-                    'nama_barang' : this.dataBarang.nama_barang
+                    'nama_barang' : this.dataBarang.nama_barang,
+                    'espresso' : this.selectedExpresso,
+                    'ice_cube' : this.selectedIceCube,
+                    'milk' : this.selectedMilk,
+                    'sweetness' : this.selectedSweetness,
+                    'ukuran_cup' : this.selectedCup,
+                    'variant' : this.selectedVariant
                 });
 
                 newTotalHarga.push({
@@ -645,6 +755,8 @@ export default {
                 
                 this.selectedProducts = lastIndex;
                 this.componentKey += 1;
+                this.lengthCart = cart2.length;
+                // this.handleDataKosong();
             }
         },
         handleSubTotal: function(){
@@ -1020,6 +1132,8 @@ export default {
             // https://michaelnthiessen.com/force-re-render/
             this.componentKey += 1;
             this.handleSubTotal(); //ini subtotal utk produk + topping dimenu brg detail.
+            // Pas ubah topping, tampilkan length cart jg
+            this.lengthCart = items.length;
         }
     }
 }
@@ -1055,5 +1169,45 @@ export default {
 .wrappernya {
     animation: scroll 10s linear infinite;
 }
+
+/* Buat Hilangkan Arrow di INput Number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Buat Notif Button */
+.notification {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -20px;
+  right: -5px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+
+/* End Buat Notif */
+
+
+/* div {
+    border: 1px solid black;
+} */
 
 </style>

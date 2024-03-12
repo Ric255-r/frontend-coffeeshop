@@ -44,7 +44,10 @@ const routes = [
     component: BarangDetail,
     meta: {
       requiresAuth: true
-    }
+    },
+    props: (route) => ({
+      productOrder: route.query.productOrder
+    })
   },
   {
     path: '/checkout',
