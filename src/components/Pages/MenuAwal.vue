@@ -53,7 +53,7 @@ export default {
             this.dataUser = res.data;
             console.log(res);
         }).catch((err) => {
-            alert("Error");
+            alert("Error Authentikasi");
             console.warn(err);
         })
     },

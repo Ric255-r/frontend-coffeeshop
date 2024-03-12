@@ -35,8 +35,10 @@
 
             </div>
             
-            <div class="lg:w-1/12 md:w-1/12 w-4/12 text-center flex items-center justify-center">
-                <img :src="getImg(item.gambar[0])" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
+            <div class="lg:w-1/12 md:w-1/12 w-4/12 text-center flex items-center justify-center">   
+                <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
+                    <img :src="getImg(item.gambar[0])" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
+                </router-link>
             </div>
 
             <div class="lg:w-7/12 md:w-7/12 w-8/12 lg:pl-2 md:pl-2 pt-1" >
@@ -50,8 +52,16 @@
                     Rp. {{ item.harga }}
                 </div>
 
+                <div class="text-right">
+                    <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
+                        <i class="fas fa-plus-circle text-green-600"></i>
+                    </router-link>
+                </div>
+
 
             </div>
+
+
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
 
             </div>

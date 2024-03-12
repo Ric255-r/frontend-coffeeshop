@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="poppins-regular">
         <div class=" animate-fade items-center justify-center ">
             <div class="flex flex-wrap">
                 <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
@@ -22,43 +22,42 @@
 
                         <div class="lg:w-9/12 lg:pl-2 md:w-9/12 md:pl-2 w-full lg:mt-0 md:mt-0 sm:mt-0 mt-2">
                             <div class="flex flex-wrap">
-                                <div class="w-full lg:pt-1 font-bold capitalize">
+                                <div class="w-full lg:pt-1 font-bold capitalize text-[30px] lg:pl-2 md:pl-2">
                                     {{ dataBarang.nama_barang }}
                                 </div>
                             </div>
-                            <div class="w-full mt-2 text-sm capitalize">
+                            <div class="w-full mt-2 text-sm capitalize lg:pl-2 md:pl-2">
                                 {{ dataBarang.deskripsi }} Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum odio impedit quidem doloribus nobis magnam, sequi, quasi possimus asperiores iusto porro est facilis molestiae. Placeat ut tenetur expedita deserunt. Asperiores?
-                                Blanditiis accusamus rerum temporibus maxime? Accusamus provident officia tenetur sapiente repellat at minus optio rerum vero culpa sequi, nam expedita natus eos itaque ut facilis voluptates necessitatibus quia quasi nihil!
-                                Animi inventore blanditiis reprehenderit enim pariatur laboriosam, facilis placeat maiores assumenda ducimus molestias excepturi nisi quos. Dolorum, autem sapiente sunt vel ut nostrum officiis, iusto tenetur, repellendus eligendi veniam harum?
+                                Blanditiis accusamus rerum temporibus maxime?m?
                             </div>
                             <div class="w-full mt-2 text-right">
                                 <b>Rp. {{ dataBarang.harga }}</b>
                             </div>
                         </div>
 
-                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+                        <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
 
-                        <div class="w-full">
+                        <div class="w-full mt-5">
                             <b>Variant Tersedia :</b>
                             <div class="flex flex-wrap mt-3">
 
                                 <div class="lg:w-auto w-6/12">
-                                    <button class="bg-red-600 text-white py-[15px] lg:px-[100px] w-full rounded" @click="handleVariant('hot')">Hot</button>
+                                    <button class="bg-red-600 hover:bg-red-400 text-white py-[15px] lg:px-[100px] w-full rounded" @click="handleVariant('hot')">Hot</button>
                                 </div>
 
                                 <div class="lg:w-auto lg:ml-3 w-6/12">
-                                    <button class="bg-cyan-600 text-white py-[15px] lg:px-[100px] w-full ml-1 rounded" @click="handleVariant('cold')">Cold</button>
+                                    <button class="bg-cyan-600 hover:bg-cyan-400 text-white py-[15px] lg:px-[100px] w-full ml-1 rounded" @click="handleVariant('cold')">Cold</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+                        <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full">
+                        <div class="w-full mt-10">
                             <span v-if="showCup.length > 0"><b>Ukuran Cup : </b></span>
 
-                            <div class="flex flex-wrap" v-for="(item, index) in showCup" :key="index">
+                            <div class="flex flex-wrap mt-2" v-for="(item, index) in showCup" :key="index">
                                 <div class="w-3/12">
                                     {{ item.nama_topping }}
                                 </div>
@@ -76,11 +75,11 @@
                             </div>
                         </div>
 
-                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+                        <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full">
+                        <div class="w-full mt-10">
                             <span><b>Ice Cube : </b></span>
-                            <div class="flex flex-wrap">
+                            <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
                                     LESS
                                 </div>
@@ -99,7 +98,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-wrap">
+                            <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
                                     MORE
                                 </div>
@@ -118,7 +117,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-wrap">
+                            <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
                                     No Ice
                                 </div>
@@ -138,11 +137,11 @@
                             </div>
                         </div>
 
-                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+                        <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full ">
+                        <div class="w-full mt-10">
                             <span><b>Espresso : </b></span>
-                            <div class="flex flex-wrap">
+                            <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
                                     Normal
                                 </div>
@@ -158,9 +157,9 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-wrap" v-for="(item, index) in showEspresso" :key="index">
+                            <div class="flex flex-wrap mt-2" v-for="(item, index) in showEspresso" :key="index">
                                 <div class="w-3/12">
-                                    {{ item.nama_topping }}
+                                    {{ item.nama_topping }} Shot
                                 </div>
                                 <div class="w-8/12 text-right">
                                     Rp. {{ item.harga }}
@@ -176,11 +175,11 @@
                             </div>
                         </div>
 
-                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+                        <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full ">
+                        <div class="w-full mt-10">
                             <span><b>Sweetness : </b></span>
-                            <div class="flex flex-wrap">
+                            <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
                                     Normal
                                 </div>
@@ -199,7 +198,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-wrap">
+                            <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
                                     Less
                                 </div>
@@ -219,12 +218,12 @@
                             </div>
                         </div>
 
-                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+                        <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full ">
+                        <div class="w-full mt-10">
                             <span v-if="showMilk.length > 0"><b>{{ showMilk[0].kategori }}</b></span>
 
-                            <div class="flex flex-wrap" v-for="(item, index) in showMilk" :key="index">
+                            <div class="flex flex-wrap mt-2" v-for="(item, index) in showMilk" :key="index">
                                 <div class="w-3/12">
                                     {{ item.nama_topping }}
                                 </div>
@@ -242,12 +241,12 @@
                             </div>
                         </div>
 
-                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+                        <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full ">
+                        <div class="w-full mt-10">
                             <span v-if="showSyrup.length > 0"> <b>{{ showSyrup[0].kategori }}</b></span>
 
-                            <div class="flex flex-wrap" v-for="item in showSyrup" :key="item.id">
+                            <div class="flex flex-wrap mt-2" v-for="item in showSyrup" :key="item.id">
                                 <div class="w-3/12">
                                     {{ item.nama_topping }}
                                 </div>
@@ -264,12 +263,12 @@
                             </div>
                         </div>
 
-                        <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div>
+                        <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full ">
+                        <div class="w-full mt-10 mb-3">
                             <span v-if="showTopping.length > 0"><b>{{ showTopping[0].kategori }}</b></span>
 
-                            <div class="flex flex-wrap" v-for="item in showTopping" :key="item.id">
+                            <div class="flex flex-wrap mt-2" v-for="item in showTopping" :key="item.id">
                                 <div class="w-3/12">
                                     {{ item.nama_topping }}
                                 </div>
