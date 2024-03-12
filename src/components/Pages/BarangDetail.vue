@@ -330,6 +330,7 @@
                         <div class="flex flex-wrap" v-else>
                             <div class="w-full">
                                 <p class="">Subtotal : 0</p>
+                                test, mau tambah tombol add kalo dia masih kosong. 
                             </div>
                         </div>
 
