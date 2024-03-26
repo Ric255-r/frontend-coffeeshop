@@ -7,6 +7,12 @@ import Pesanan from '@/components/Pages/Pesanan.vue'
 import BarangDetail from '@/components/Pages/BarangDetail.vue'
 import Checkout from '@/components/Pages/Checkout.vue'
 import Payment from '@/components/Pages/Payment.vue'
+import DashboardAdmin from '@/components/Admin/Dashboard.vue'
+import Barang from '@/components/Admin/InputBarang.vue'
+import OrderList from '@/components/Admin/OrderList.vue'
+import PenjualanList from '@/components/Admin/Penjualan.vue'
+import DashboardComponent from '@/components/Admin/DashboardComponent.vue'
+
 
 const routes = [
   {
@@ -64,7 +70,50 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  }
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: DashboardAdmin,
+    meta : {
+      requiresAuth: true
+    },
+    children: [
+      {
+        path: '',
+        name: 'dashboard-component',
+        component: DashboardComponent,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'barang',
+        name: 'barang',
+        component: Barang,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'order',
+        name: 'order',
+        component: OrderList,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'penjualan',
+        name: 'penjualan',
+        component: PenjualanList,
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
+  },
+
 ]
 
 const router = createRouter({

@@ -80,7 +80,11 @@
                 </div>
 
                 <div class="flex justify-center p-4">
-                    <button id="button" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Show modal</button>
+                    <button id="button" type="button" 
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                        Pay
+                
+                    </button>
                 </div>
             </div>
             <div class="lg:w-2/12 md:w-1/12 sm:w-1/12 hidden lg:block md:block sm:block">
@@ -96,7 +100,7 @@
                     <!-- Modal header -->
                     <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
                         <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
-                            Terms of Service
+                            Payment
                         </h3>
                         <button id="closeButton" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
@@ -104,18 +108,23 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-6 space-y-6">
-                        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
-                        </p>
-                        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
-                        </p>
+                        <form action="" method="post" @submit.prevent="submitBukti">
+                            <div class="flex flex-wrap">
+                                <div class="w-full">
+                                    <label for="">Upload Bukti Pembayaran</label>
+                                    <input type="file" name="payment" id="payment" v-on:change="handleBukti" class="w-full mt-2">
+                                </div>
+                                <div class="w-full">
+                                    <button type="submit" class="bg-green-600 rounded w-full py-3 mt-3">Submit Bukti Pembayaran</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <!-- Modal footer -->
-                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <!-- <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                         <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
                         <button type="button" id="footerClose" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">Decline</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -136,6 +145,8 @@ export default {
         return {
             id: this.$route.params.id,
             dataBeli: [],
+            buktiGbr: null,
+            token: localStorage.getItem('token') || ""
         };
     },
     beforeRouteLeave(to, from, next) {
@@ -242,6 +253,40 @@ export default {
 
             return `http://localhost:5500/apiBrg/images/${gbrPertama}`
         },
+        handleBukti: function(e){
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+
+            this.buktiGbr = files[0];
+        },
+        submitBukti: function(){
+            if(this.buktiGbr != null){
+                console.log(this.buktiGbr);
+
+                let formData = new FormData();
+                formData.append('buktiByr', this.buktiGbr);
+
+                axios.post(`http://localhost:5500/apiJual/finalizeTransaction/${this.id}`, formData, {
+                    headers: {
+                        Authorization: 'Bearer ' + this.token,
+                        "Content-Type" : "multipart/form-data"
+                    }
+                }).then((res) => {
+                    alert("Sukses Bayar");
+                    console.log(res);
+                    // gk bs pake push router
+                    window.location.href = '/home';
+
+                    localStorage.removeItem('cart');
+                    localStorage.removeItem('totalHarga');
+                }).catch((err) => {
+                    alert("Gagal Bayar");
+                    console.warn(err);
+                })
+            }else{
+                alert("Gagal Sumbit")
+            }
+        }
     }
 };
 </script>

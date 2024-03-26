@@ -399,18 +399,23 @@
                     <button class="rounded-full bg-green-300 w-[30px] h-[30px]"><i class="fas fa-plus"></i></button>
                 </div>
                 
-                <div class="lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12 mt-3 cursor-pointer" >
+                <div :class="`lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12 mt-3 cursor-pointer ${toggleAddBtn == false ? ' hidden' : ''}`" >
                     <div class="flex flex-wrap">
                         <div class="w-full text-center">
-                            <span class="py-3 px-9 rounded-lg border-red-600 bg-transparent text-black hover:bg-green-400 hover:text-white" style="border: 1px solid green;" @click="handleTambahBaru">Add To Cart</span>
+                            <span 
+                            class="py-3 px-9 rounded-lg border-red-600 bg-transparent text-black hover:bg-green-400 hover:text-white" 
+                            style="border: 1px solid green;" @click="handleTambahBaru">
+                                Add New?
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12 mt-3 cursor-pointer ">
+                <div :class="`${toggleAddBtn == false ? 'lg:w-8/12 md:w-8/12 sm:w-8/12 w-8/12' : 'lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12'} mt-3 cursor-pointer `">
                     <div class="flex flex-wrap">
                         <div class="w-full notification">
-                            <router-link to="/checkout" class="bg-green-600 py-3 px-9 rounded-lg hover:bg-green-900">
+                            <router-link to="/checkout" 
+                                :class="`bg-green-600 py-3 rounded-lg hover:bg-green-900 ${toggleAddBtn == false ? '': ' px-10'}`" :style="`${toggleAddBtn == false ? 'display: inline-block; width: 100%;' : ''}`">
                                 <span>Go To Cart</span>
                                 <span :class="lengthCart > 0 ? ' badge' : ' hidden'">{{ lengthCart }}</span>
 
@@ -476,12 +481,12 @@ export default {
             },
             hargaAwal: 0,
             totalHarga: 0,
-            sumAll: 0,
             componentKey: 0,
             widthCarousel: '',
             translateCarousel: '',
             selectedProducts: -1, // buat pilih product yg sama, dgn variant yg berbeda
-            lengthCart: 0
+            lengthCart: 0,
+            toggleAddBtn: false
         }
     },
     components: {
@@ -527,20 +532,35 @@ export default {
                 // Menu Responsive. buat check cartlength
                 this.lengthCart = ls.length;
 
-                const cariIndex = ls.findIndex((item) => item.id_barang == this.params);
+                let cariIndex = ls.findIndex((item) => item.id_barang == this.params);
 
                 //this.Productorder ini diambil dari props yang dipass oleh checkout.vue
                 // bentuknya adalah queryString. jadi klo mw akses di child component ttp pake props
                 // tapi pass dari komponent utama ke child itu pake query di router-link
-                if(this.productOrder != -1){
-                    this.selectedProducts = parseInt(this.productOrder);
+                if(this.productOrder != "-1"){
+                    let array = ls.map((item, index) => {
+                        if(item.id_barang == this.params){
+                            return index;
+                        }
+                    });
+
+                    if(array.includes(parseInt(this.productOrder))){
+                        cariIndex = parseInt(this.productOrder);
+                        this.selectedProducts = cariIndex;
+                    }else{
+                        this.$router.push('/home');
+                        return; // biar dia g jalanin code dibawahny. jd abis router push, stop
+                    }
+
+                    console.log(array);
                 }else{
                     // Ini code original sblm tambah this.productOrder;
                     this.selectedProducts = cariIndex;
                 }
 
-
                 if(cariIndex !== -1){
+                    // buat trigger btn addtocart pas menu responsive
+                    this.toggleAddBtn = true;
                     // Rumus Perhitungan Cup & Susu
                     // Tanpa looping. langsung tembak ke index yg udh dicari
                     this.selectedMilk = ls[cariIndex].milk;
@@ -548,6 +568,8 @@ export default {
                     this.selectedExpresso = ls[cariIndex].espresso;
                     this.selectedIceCube = ls[cariIndex].ice_cube;
                     this.selectedSweetness = ls[cariIndex].sweetness;
+
+                    console.log(cariIndex)
 
                     for(let i = 0; i < this.dataTopping.length; i++){
                         if(this.dataTopping[i].nama_topping == ls[cariIndex].milk){
@@ -1067,7 +1089,7 @@ export default {
                 existsObjIndex = cartObj.findIndex((item) => item.id_barang == this.params);
             }
 
-            // alert(`ini existsobj ${existsObjIndex}, ini selected ${this.selectedProducts}`);
+            alert(`ini existsobj ${existsObjIndex}, ini selected ${this.selectedProducts}`);
 
             if(existsObjIndex !== -1){
                 cartObj[existsObjIndex].id_barang = this.params;
@@ -1091,7 +1113,10 @@ export default {
                 });
             }
 
+            this.toggleAddBtn = true;
+
             localStorage.setItem("cart", JSON.stringify(cartObj));
+
         },
 
         changeTotalSemua: function(){
@@ -1116,6 +1141,7 @@ export default {
             }else{
                 index = items.findIndex((item) => item.id_barang === newItem.id_barang);
             }
+
 
             // Note : totalHarga itu harga produk plus topping
             // totalSeluruh itu totalsemuabelanjaan
@@ -1209,5 +1235,4 @@ input[type=number] {
 /* div {
     border: 1px solid black;
 } */
-
 </style>
