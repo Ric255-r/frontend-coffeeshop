@@ -3,8 +3,9 @@
     <div class="flex flex-wrap pt-5">
       <!-- Ini Lebih Baik Pakai Modal -->
       <div class="w-6/12">
-        <button @click="handleMode('insert')" class="pr-2" :class="`${modeCrud == 'insert' ? ' underline': ''}`">Insert Data</button>
-        <button @click="handleMode('update')" :class="`${modeCrud == 'update' ? ' underline': ''}`">Update Data</button>
+        <button @click="handleMode('showAll')" :class="`pr-2 ${modeCrud == 'showAll' ? ' underline': ''}`">Data Utama</button>
+        <button @click="handleMode('insert')"  :class="`pr-2 ${modeCrud == 'insert' ? ' underline': ''}`">Insert Data</button>
+        <button @click="handleMode('update')" :class="`pr-2 ${modeCrud == 'update' ? ' underline': ''}`">Update Data</button>
 
       </div>
       <div class="w-6/12 text-right">
@@ -15,7 +16,73 @@
       </div>
     </div>
 
-    <form action="" method="post" @submit.prevent="postBarang" v-if="modeCrud == 'insert'">
+    <div class="pt-5 animate-fade-left flex flex-wrap" v-if="modeCrud == 'showAll'">
+      <div class="w-full mt-2">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">      
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="px-6 py-3">
+                  No.
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Nama Barang
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Deskripsi
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Harga
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Gambar 
+                </th>
+                <th colspan="2" scope="col" class="text-center px-6 py-3">
+                  Aksi 
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <template v-for="(item, index) in dataBarang" :key="index">
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" width="5%">
+                    {{ index + 1 }}
+                  </th>
+                  <td class="px-6 py-4">
+                    {{ item.nama_barang }}
+                  </td>
+                  <td class="px-6 py-4">
+                    {{ item.deskripsi }}
+                  </td>
+                  <td class="px-6 py-4">
+                    Rp. {{ item.harga }}
+                  </td>
+                  <td class="px-6 py-4 text-center items-center justify-center">
+                    <img 
+                      :src="`http://localhost:5500/apiBrg/images/${item.gambar[0]}`" 
+                      :alt="``"
+                      height="50" width="50" />
+                  </td>
+                  <td class="px-6 py-4">
+                    <button @click="handleMode('update', item.id)" type="button" class="bg-blue-600 py-2 px-2 rounded-lg text-white">Update</button>
+                  </td>
+                  <td class="px-6 py-4">
+                    <button @click="deleteBarang(item.id)" type="button" class="bg-red-600 py-2 px-2 rounded-lg text-white">Delete</button>
+                  </td>
+
+                </tr>
+                
+              </template>
+
+            </tbody>
+          </table>
+        </div>
+
+        <ConfirmDialog></ConfirmDialog>
+      </div>
+    </div>
+
+    <form class="pt-5 animate-fade-left" action="" method="post" @submit.prevent="postBarang" v-if="modeCrud == 'insert'">
       <div class="flex flex-wrap">
         <div class="w-full">
           <label for="" style="font-size: 20px;">Input Data Menu</label>
@@ -47,7 +114,7 @@
       </div>
     </form>
 
-    <form action="" method="post" @submit.prevent="postBarang" v-if="modeCrud == 'update'">
+    <form class="pt-5 animate-fade-left" action="" method="post" @submit.prevent="postBarang" v-if="modeCrud == 'update'">
       <div class="flex flex-wrap">
         <div class="w-full">
           <label for="" style="font-size: 20px;">Update Data Menu</label>
@@ -94,6 +161,8 @@
 
 <script>
 import axios from 'axios'
+import ConfirmDialog from 'primevue/confirmdialog';
+import { toast } from 'vue3-toastify'
 
 export default {
   name: 'input-barang',
@@ -104,13 +173,13 @@ export default {
         deskripsi: '',
         gambar: [],
         token: localStorage.getItem("token") || "",
-        modeCrud: 'insert',
+        modeCrud: 'showAll',
         dataBarang : [],
         selectedId: ''
       }
   },
   components: {
-
+    ConfirmDialog
   },
   mounted: function(){
     this.getDataBrg();
@@ -128,7 +197,7 @@ export default {
       let url = "";
       if(this.modeCrud == "insert"){
         url = `http://localhost:5500/apiBrg/barang`
-      }else{
+      }else if(this.modeCrud == "update"){
         url = `http://localhost:5500/apiBrg/barang/${this.selectedId}`
       }
 
@@ -145,6 +214,9 @@ export default {
         this.harga = 0;
         this.deskripsi = '';
         this.gambar = [];
+        this.selectedId = '';
+
+        this.getDataBrg();
       }).catch((err) => {
         alert("Gagal");
         console.warn(err);
@@ -156,17 +228,18 @@ export default {
     changeGambar: function(event){
       this.gambar = event.target.files;
     },
-    handleMode: function(mode){
-      if(mode === 'insert'){
-        this.modeCrud = 'insert';
-      }else{
-        this.modeCrud = 'update'
-      }
-
+    handleMode: function(mode, idUpdate = null){
+      this.modeCrud = mode
       this.nama_barang = '';
       this.harga = 0;
       this.deskripsi = '';
       this.gambar = [];
+
+      if(idUpdate && mode == "update"){
+        this.selectedId = idUpdate;
+        this.handleChangeBrg();
+        window.scrollTo(0,0); //bikin dia di scroll paling awal
+      }
     },
     getDataBrg: async function(){
       try {
@@ -202,6 +275,46 @@ export default {
           }
         });
       }
+    },
+    deleteBarang: function(id){
+      console.log(id);
+      this.$confirm.require({
+        message: "Anda Yakin Ingin Menghapus?",
+        header: "Confirmation",
+        icon: 'fas fa-exclamation-triangle',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        rejectLabel: 'Cancel',
+        acceptLabel: 'Proses',
+        accept: () => {
+          axios.delete(`http://localhost:5500/apiBrg/barang/${id}`, {
+            headers: {
+              Authorization: 'Bearer ' + this.token
+            }
+          }).then((res) => {
+            toast("Berhasil Hapus", {
+              autoClose: 1500,
+              type: 'success'
+            });
+
+            console.log(res);
+
+            this.getDataBrg();
+          }).catch((err) => {
+            toast("Gagal Hapus ", {
+              autoClose: 1500,
+              type: 'error'
+            });
+
+            console.warn(err);
+          });
+        },
+        reject: () => {
+          toast("Batal Hapus", {
+            autoClose: 1500,
+          });
+        }
+
+      });
     }
   },
 
