@@ -238,7 +238,7 @@ export default {
       if(idUpdate && mode == "update"){
         this.selectedId = idUpdate;
         this.handleChangeBrg();
-        window.scrollTo(0,0); //bikin dia di scroll paling awal
+        window.scrollTo(0,0); //bikin dia di scroll paling awall
       }
     },
     getDataBrg: async function(){
