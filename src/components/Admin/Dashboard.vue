@@ -49,36 +49,36 @@ export default {
     menuLoop: function(){
       const menu = [
         {
-            name: "Dashboard", 
-            link: '/admin',
-            icon: 'fas fa-bars'
+          name: "Dashboard", 
+          link: '/admin',
+          icon: 'fas fa-bars'
         },
         {
-            name: "Order List", 
-            link: '/admin/order',
-            icon: 'fas fa-user'
+          name: "Order List", 
+          link: '/admin/order',
+          icon: 'fas fa-user'
         },
         {
-            name: "Penjualan", 
-            link: '/admin/penjualan',
-            icon: 'fas fa-message'
+          name: "Penjualan", 
+          link: '/admin/penjualan',
+          icon: 'fas fa-message'
         },
         {
-            name: "Input Data Menu", 
-            link: '/admin/barang',
-            icon: 'fas fa-analytics',
-            margin: true
+          name: "Input Data Menu", 
+          link: '/admin/barang',
+          icon: 'fas fa-analytics',
+          margin: true
         },
         {
-            name: "File Manager", 
-            link: '/',
-            icon: 'fas fa-file'
+          name: "File Manager", 
+          link: '/',
+          icon: 'fas fa-file'
         },
         {
-            name: "Data User",
-            link: '/admin/user',
-            icon: 'fas fa-user',
-            margin: true
+          name: "Data User",
+          link: '/admin/daftaruser',
+          icon: 'fas fa-user',
+          margin: true
         },
         // {
         //     name: "Saved",

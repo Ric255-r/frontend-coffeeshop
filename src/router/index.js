@@ -12,6 +12,7 @@ import Barang from '@/components/Admin/InputBarang.vue'
 import OrderList from '@/components/Admin/OrderList.vue'
 import PenjualanList from '@/components/Admin/Penjualan.vue'
 import DashboardComponent from '@/components/Admin/DashboardComponent.vue'
+import DaftarUser from '@/components/Admin/DaftarUser.vue'
 
 
 const routes = [
@@ -107,6 +108,14 @@ const routes = [
         path: 'penjualan',
         name: 'penjualan',
         component: PenjualanList,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'daftaruser',
+        name: 'daftar-user',
+        component: DaftarUser,
         meta: {
           requiresAuth: true
         }
