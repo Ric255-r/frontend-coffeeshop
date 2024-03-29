@@ -1,7 +1,14 @@
 <template>
-  <div class="w-full">
-    <div>Penjualan 6 Bulan Terakhir</div>
-    <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
+  <div class="flex flex-wrap">
+    <div class="w-6/12">
+      <div>Penjualan 6 Bulan Terakhir</div>
+      <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
+    </div>
+
+    <div class="w-6/12">
+      Hai
+    </div>
+
   </div>
 
 </template>

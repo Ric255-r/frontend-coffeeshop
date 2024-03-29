@@ -387,16 +387,22 @@
             <!-- Ksh Key utk Force update component -->
             <BubbleCartVue :key="componentKey" class="hidden lg:block md:block"></BubbleCartVue>
 
+            <!-- Menu Responsive -->
+
             <div class="flex flex-wrap text-white lg:hidden md:hidden block sticky bottom-[53px] bg-white py-2">
                 
                 <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
-                    <button class="rounded-full bg-red-500 w-[30px] h-[30px]"><i class="fas fa-minus"></i></button>
+                    <button @click="handleMinus()" class="rounded-full bg-red-500 w-[30px] h-[30px]" >
+                        <i class="fas fa-minus"></i>
+                    </button>
                 </div>
                 <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-2/12 block lg:hidden md:hidden text-black mt-1">
-                    <input type="number" name="" id="" value="1" class="w-full rounded text-center">
+                    <input type="number" name="" id="idQtyResp" v-model="qty" class="w-full rounded text-center">
                 </div>
                 <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
-                    <button class="rounded-full bg-green-300 w-[30px] h-[30px]"><i class="fas fa-plus"></i></button>
+                    <button @click="handlePlus()" class="rounded-full bg-green-300 w-[30px] h-[30px]">
+                        <i class="fas fa-plus"></i>
+                    </button>
                 </div>
                 
                 <div :class="`lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12 mt-3 cursor-pointer ${toggleAddBtn == false ? ' hidden' : ''}`" >
@@ -477,7 +483,8 @@ export default {
                 "variant": null,
                 "ice_cube": null,
                 "sweetness": null,
-                "espresso": null
+                "espresso": null,
+                "qty": 1 // ini pas onchangeTopping. changeProcedure.
             },
             hargaAwal: 0,
             totalHarga: 0,
@@ -486,7 +493,8 @@ export default {
             translateCarousel: '',
             selectedProducts: -1, // buat pilih product yg sama, dgn variant yg berbeda
             lengthCart: 0,
-            toggleAddBtn: false
+            toggleAddBtn: false,
+            qty: 0, // ini pada saat event handleTambahBaru
         }
     },
     components: {
@@ -568,6 +576,7 @@ export default {
                     this.selectedExpresso = ls[cariIndex].espresso;
                     this.selectedIceCube = ls[cariIndex].ice_cube;
                     this.selectedSweetness = ls[cariIndex].sweetness;
+                    this.qty = ls[cariIndex].qty;
 
                     console.log(cariIndex)
 
@@ -686,6 +695,7 @@ export default {
 
             if(resetIndex === undefined){
                 this.selectedProducts = -1;
+                this.toggleAddBtn = false; // utk toggle btn di menu responsive
                 this.handleDataKosong();
 
             }else{
@@ -750,6 +760,8 @@ export default {
                 let newCart = [...cart];
                 let newTotalHarga = [...totalHarga];
 
+                this.qty = 1;
+
                 newCart.push({
                     ...this.allObj,
                     'nama_barang' : this.dataBarang.nama_barang,
@@ -758,7 +770,8 @@ export default {
                     'milk' : this.selectedMilk,
                     'sweetness' : this.selectedSweetness,
                     'ukuran_cup' : this.selectedCup,
-                    'variant' : this.selectedVariant
+                    'variant' : this.selectedVariant,
+                    'qty': this.qty
                 });
 
                 newTotalHarga.push({
@@ -1144,7 +1157,7 @@ export default {
 
 
             // Note : totalHarga itu harga produk plus topping
-            // totalSeluruh itu totalsemuabelanjaan
+            // totalSeluruh itu buat akumulasi qty * totalharga
             if(index !== -1){
                 items[index].totalHarga = this.totalHarga;
                 items[index].totalSeluruh = this.totalHarga;
@@ -1160,7 +1173,96 @@ export default {
             this.handleSubTotal(); //ini subtotal utk produk + topping dimenu brg detail.
             // Pas ubah topping, tampilkan length cart jg
             this.lengthCart = items.length;
-        }
+        },
+        handlePlus: function(){
+            
+            this.qty = this.qty += 1;
+            this.changeTotalSemua(); // utk trigger totalHarga
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || []
+            let cartTotal = JSON.parse(localStorage.getItem('totalHarga')) || [];
+
+            let hitung = this.totalHarga * this.qty;
+
+            // console.log(this.selectedProducts);
+            let resetIndex = this.selectedProducts;
+
+            if(cart.length == 0  && this.selectedProducts == -1){
+                resetIndex = 0;
+            }
+
+            // ini ceritanya cartnya udah masuk lewat ketrigger oleh this.changeTotalSemua()
+            if(cart.length > 0 && this.selectedProducts == -1){
+                for (let i = 0; i < cart.length; i++) {
+                    if(cart[i].id_barang == this.params){
+                        resetIndex = i;
+                        // break; 
+                        // kalo d break, dia bkl ambil index pertama klo ktemu, kalo g d break, ambil index terakhir
+                        // jd kalo mw ambil data terakhir, g ush d break. kecuali mw ambil data pertamakali;
+                    }
+                }
+            }
+
+            this.handleSelectedProducts(resetIndex);
+
+            cart[resetIndex].qty = this.qty;
+            cartTotal[resetIndex].totalSeluruh = hitung;
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            localStorage.setItem("totalHarga", JSON.stringify(cartTotal));
+
+
+            // console.log(this.totalHarga * this.qty);
+            // console.log(this.qty);
+
+        },
+
+        handleMinus: function(){
+            if(this.qty == 1){
+                this.qty = 0;
+                this.changeTotalSemua(); // utk trigger totalHarga\
+                this.handleHapus(this.selectedProducts);
+            }else{
+                this.qty = this.qty -= 1;
+                this.changeTotalSemua(); // utk trigger totalHarga
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || []
+                let cartTotal = JSON.parse(localStorage.getItem('totalHarga')) || [];
+
+                let hitung = this.totalHarga * this.qty;
+
+                // console.log(this.selectedProducts);
+                let resetIndex = this.selectedProducts;
+
+                if(cart.length == 0  && this.selectedProducts == -1){
+                    resetIndex = 0;
+                }
+
+                // ini ceritanya cartnya udah masuk lewat ketrigger oleh this.changeTotalSemua()
+                if(cart.length > 0 && this.selectedProducts == -1){
+                    for (let i = 0; i < cart.length; i++) {
+                        if(cart[i].id_barang == this.params){
+                            resetIndex = i;
+                            // break; 
+                            // kalo d break, dia bkl ambil index pertama klo ktemu, kalo g d break, ambil index terakhir
+                            // jd kalo mw ambil data terakhir, g ush d break. kecuali mw ambil data pertamakali;
+                        }
+                    }
+                }
+
+                cart[resetIndex].qty = this.qty;
+                cartTotal[resetIndex].totalSeluruh = hitung;
+
+                localStorage.setItem("cart", JSON.stringify(cart));
+                localStorage.setItem("totalHarga", JSON.stringify(cartTotal));
+
+
+                // console.log(this.totalHarga * this.qty);
+                // console.log(this.qty);
+            }
+
+
+        },
     }
 }
 </script>

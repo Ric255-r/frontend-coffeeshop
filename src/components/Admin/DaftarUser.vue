@@ -48,6 +48,9 @@
                 <td class="px-6 py-4">
                   {{ item.roles }}
                 </td>
+                <td class="px-6 py-4">
+                  <button type="button" class="bg-red-600 py-2 px-2 rounded-lg text-white">Delete</button>
+                </td>
 
               </tr>
             </template>
@@ -99,7 +102,7 @@ export default {
         console.warn(err);
         return null
       }
-    }
+    },
   }
 }
 </script>
