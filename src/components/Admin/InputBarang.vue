@@ -9,10 +9,14 @@
 
       </div>
       <div class="w-6/12 text-right">
+        <label>
+            <a @click="visibleDialog = true" class="py-2 px-2 rounded bg-blue-600">Import Via Excel ? </a>
+        </label>
+        <!-- Ini klo mw buat button tanpa "choose file"
         <label for="excel">
             <a class="py-2 px-2 rounded bg-blue-600">Import Via Excel ? </a>
         </label>
-        <input type="file" name="" id="excel" class="hidden">
+        <input type="file" name="" id="excel" class="hidden"> -->
       </div>
     </div>
 
@@ -155,6 +159,18 @@
         </div>
       </div>
     </form>
+
+    <Dialog v-model:visible="visibleDialog" modal header="Input File Excel" :style="{ width: '25rem' }">
+      <div class="flex flex-wrap">
+        <div class="w-full">Import File Anda</div>
+        <div class="w-full mt-2">
+          <input type="file" name="" id="" @change="handleFileChange">
+        </div>
+        <div class="w-full mt-2">
+          <button @click="submitExcel" class="w-full bg-green-600 rounded px-2 py-2">Submit</button>
+        </div>
+      </div>
+    </Dialog>
   </div>
 
 </template>
@@ -163,6 +179,7 @@
 import axios from 'axios'
 import ConfirmDialog from 'primevue/confirmdialog';
 import { toast } from 'vue3-toastify'
+import Dialog from 'primevue/dialog';
 
 export default {
   name: 'input-barang',
@@ -175,11 +192,14 @@ export default {
         token: localStorage.getItem("token") || "",
         modeCrud: 'showAll',
         dataBarang : [],
-        selectedId: ''
+        selectedId: '',
+        visibleDialog: false,
+        fileExcel: null
       }
   },
   components: {
-    ConfirmDialog
+    ConfirmDialog,
+    Dialog
   },
   mounted: function(){
     this.getDataBrg();
@@ -315,6 +335,36 @@ export default {
         }
 
       });
+    },
+    handleFileChange: function(event){
+      this.fileExcel = event.target.files[0];
+    },
+    submitExcel: function(){
+      let formData = new FormData();
+      formData.append('fileExcel', this.fileExcel)
+
+      axios.post(`http://localhost:5500/apiBrg/importDataBarang`, formData, {
+        headers : {
+          Authorization: 'Bearer ' + this.token
+        }
+      }).then((res) => {
+        toast("Berhasil Upload Data", {
+          autoClose: 1800,
+          type: 'success'
+        });
+        console.log(res);
+        this.visibleDialog = false;
+        this.getDataBrg();
+
+      }).catch((err) => {
+        toast("Gagal Upload File", {
+          autoClose: 1500,
+          type: 'error'
+        });
+        
+        console.warn(err);
+      });
+
     }
   },
 

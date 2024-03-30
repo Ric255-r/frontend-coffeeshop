@@ -10,11 +10,11 @@
                         <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya">
                             <div class="wrappernya lg:py-2 md:py-2 sm:py-2 py-1">
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full h-full object-cover rounded">
                                 </div>
                                 <!-- Mesti Load 2x biar kesannnya Infinite Looping Carouselnya -->
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item)" alt="..." class="pl-1 w-full h-full object-cover rounded">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full h-full object-cover rounded">
                                 </div>
                             </div>
 
@@ -336,7 +336,7 @@
 
                                         <div class="flex flex-wrap" @click="handleSelectedProducts(index)">
                                             <div class="lg:w-2/12 md:w-2/12 w-4/12 text-center flex items-center justify-center">
-                                                <img :src="loadGbr(dataBarang.gambar[0])" alt="" class="object-cover h-[50px] w-[50px] rounded-lg">
+                                                <img :src="loadGbr(dataBarang.gambar[0], dataBarang.source_data)" alt="" class="object-cover h-[50px] w-[50px] rounded-lg">
                                             </div>
                                             
                                             <div class="lg:w-9/12 md:w-9/12 w-8/12 capitalize text-[10px]">
@@ -449,6 +449,7 @@
 import NavbarBottom from './NavbarBottom.vue';
 import axios from 'axios';
 import BubbleCartVue from './BubbleCart.vue';
+// import {toast} from 'vue3-toastify';
 // import { initFlowbite } from 'flowbite';
 
 export default {
@@ -740,6 +741,7 @@ export default {
                 this.selectedExpresso = cartObj[existsObjIndex].espresso;
                 this.selectedIceCube = cartObj[existsObjIndex].ice_cube;
                 this.selectedSweetness = cartObj[existsObjIndex].sweetness;
+                this.qty = cartObj[existsObjIndex].qty;
 
                 this.selectedProducts = index;
             }else{
@@ -817,15 +819,22 @@ export default {
                 this.widthCarousel = '10rem';
             }
         },
-        loadGbr: function(img){
+        loadGbr: function(img, srcData){
+            if(srcData == 'import'){
+                return img;
+            }
             return `http://localhost:5500/apiBrg/images/${img}`
         },
-        loadGbrCarousel: function(gambar){
+        loadGbrCarousel: function(gambar, srcData){
             // cek jika databarang.gambar ada atau ngga
             if(this.dataBarang.gambar){
                 // Cek jika ini adalah array atau bkn
                 if(Array.isArray(this.dataBarang.gambar)){
                     // console.log("ini array")
+                    if(srcData == 'import'){
+                        return gambar;
+                    }
+
                     return `http://localhost:5500/apiBrg/images/${gambar}`;
                 }else{
                     // console.log("ini bkn array");
@@ -1114,7 +1123,10 @@ export default {
                 cartObj[existsObjIndex].espresso = this.selectedExpresso;
                 cartObj[existsObjIndex].ice_cube = this.selectedIceCube;
                 cartObj[existsObjIndex].sweetness = this.selectedSweetness;
+                cartObj[existsObjIndex].qty = this.qty;
             }else{
+                this.qty = 1;
+
                 cartObj.push({
                     ...this.allObj, 
                     id_barang: this.params, 
@@ -1122,7 +1134,8 @@ export default {
                     ice_cube: this.selectedIceCube,
                     sweetness: this.selectedSweetness,
                     ukuran_cup: this.selectedCup,
-                    espresso: this.selectedExpresso
+                    espresso: this.selectedExpresso,
+                    qty: this.qty
                 });
             }
 
@@ -1218,16 +1231,61 @@ export default {
         },
 
         handleMinus: function(){
-            if(this.qty == 1){
-                this.qty = 0;
-                this.changeTotalSemua(); // utk trigger totalHarga\
-                this.handleHapus(this.selectedProducts);
+            let cart = JSON.parse(localStorage.getItem('cart')) || []
+            let cartTotal = JSON.parse(localStorage.getItem('totalHarga')) || [];
+
+            // Buat Cegah Minus
+            if(this.qty <= 1){
+                this.changeTotalSemua(); // utk trigger totalHarga
+
+                let resetIndex;
+                let lengthItemYgSama = 0;
+                let editMode = false;
+
+                for (let i = 0; i < cart.length; i++) {
+                    if(cart[i].id_barang == this.params){
+                        resetIndex = i;
+                        lengthItemYgSama++;
+                        // break; 
+                        // kalo d break, dia bkl ambil index pertama klo ktemu, kalo g d break, ambil index terakhir
+                        // jd kalo mw ambil data terakhir, g ush d break. kecuali mw ambil data pertamakali;
+                    }
+                }
+
+                if(this.productOrder != "-1"){
+                    editMode = true;
+                }
+
+                if(editMode == true){
+                    this.handleHapus(this.selectedProducts);
+                    this.qty = 0;
+                    this.$router.push('/checkout');
+                }else{
+                    // Logika supaya klo ad 2 item yang sama, lalu mau di kurangi
+                    if(resetIndex != undefined && lengthItemYgSama > 1){
+                        // Opsi Pertama, Bikin dia select indexnya ke index yang pertama
+                        // jadi misalkan ada 2 index(0, 1) berisi 2item,  3 item. 
+                        // 3 item ddikurang sampai habis, nanti piindah ke index pertama dengan qty nya berisi 2
+                        // this.handleHapus(this.selectedProducts);
+                        // this.handleSelectedProducts(resetIndex);
+
+                        // toast(`Berpindah Ke Urutan Item : ${resetIndex}`, {
+                        //     autoClose: 1800,
+                        //     type: 'success'
+                        // });
+
+                        // Opsi Kedua, pentalkan dia ke halaman checkout dgn router.push
+                        this.handleHapus(this.selectedProducts);
+                        this.$router.push('/checkout');
+
+                    }else{
+                        this.handleHapus(this.selectedProducts);
+                        this.qty = 0;
+                    }
+                }
             }else{
                 this.qty = this.qty -= 1;
                 this.changeTotalSemua(); // utk trigger totalHarga
-
-                let cart = JSON.parse(localStorage.getItem('cart')) || []
-                let cartTotal = JSON.parse(localStorage.getItem('totalHarga')) || [];
 
                 let hitung = this.totalHarga * this.qty;
 

@@ -37,7 +37,7 @@
             
             <div class="lg:w-1/12 md:w-1/12 w-4/12 text-center flex items-center justify-center">   
                 <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
-                    <img :src="getImg(item.gambar[0])" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
+                    <img :src="getImg(item.gambar[0], item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
                 </router-link>
             </div>
 
@@ -110,7 +110,10 @@ export default {
         })
     },
     methods: {
-        getImg: function(img){
+        getImg: function(img, source){
+            if(source == 'import'){
+                return img;
+            }
             return `http://localhost:5500/apiBrg/images/${img}`
         }
     }
