@@ -16,18 +16,18 @@
 
                 <div class="flex flex-wrap mb-2" v-for="(item, index) in dataBeli" :key="index">
                     <div class="lg:w-1/12 md:w-2/12 sm:w-2/12 w-2/12">
-                        <img :src="getImg(item.gambar)" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
+                        <img :src="getImg(item.gambar, item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
                     </div>
                     <div class="lg:w-11/12 md:w-10/12 sm:w-10/12 w-10/12 pl-2">
                         <div class="flex flex-wrap">
                             <div class="w-full font-bold mb-1">
-                                {{ item.nama_barang }}
+                                {{ item.nama_barang }} 
                             </div>
                             <div class="w-full text-[10px] text-gray-600">
-                                Topping : {{ item.topping }}
+                                Topping : {{ JSON.parse(item.topping).toString().length > 0 ? JSON.parse(item.topping).toString().replace(/[{}]/g, '') : 'Tidak Memilih Topping' }}
                             </div>
                             <div class="w-full text-[10px] text-gray-600">
-                                Syrup : {{ item.syrup }}
+                                Syrup : {{ JSON.parse(item.syrup).toString().length > 0 ? JSON.parse(item.syrup).toString().replace(/[{}]/g, '') : 'Tidak Memilih Sirup' }}
                             </div>
                             <div class="w-full text-[10px] text-gray-600">
                                 Ice Cube : {{ item.ice_cube }}
@@ -75,7 +75,7 @@
                         GrandTotal
                     </div>
                     <div class="w-4/12 text-right">
-                        Rp. {{ grandTotal }}
+                        <b>Rp. {{ grandTotal }}</b>
                     </div>
                 </div>
 
@@ -128,7 +128,7 @@
                 </div>
             </div>
         </div>
-
+        <ConfirmDialog></ConfirmDialog>
         <NavbarBottom></NavbarBottom>
     </div>
 </template>
@@ -138,6 +138,7 @@ import axios from "axios";
 import NavbarBottom from "./NavbarBottom.vue";
 // import { initFlowbite } from 'flowbite'
 import { Modal } from "flowbite";
+import ConfirmDialog from 'primevue/confirmdialog';
 
 export default {
     name: "payment-component",
@@ -151,24 +152,54 @@ export default {
     },
     beforeRouteLeave(to, from, next) {
         if (from.name === 'payment') { // ambil dari name router.js
-            let r = confirm("Apakah Yakin Ingin Membatalkan?");
 
-            if(r == true){
-                axios.delete(`http://localhost:5500/apiJual/cancelTransaction/${this.id}`)
-                .then((res) => {
-                    console.log(res);
-                    next();
-                })
-                .catch((err) => {
-                    console.warn(err)
+            // Primevue ConfirmDialog
+            this.$confirm.require({
+                message: "Anda Yakin Ingin Membatalkan?",
+                header: "Confirmation",
+                icon: 'fas fa-exclamation-triangle',
+                rejectClass: 'px-4 py-2 bg-red-600 rounded-lg text-white',
+                rejectLabel: 'Cancel',
+                acceptLabel: 'Proses',
+                acceptClass: 'px-4 py-2 bg-green-600 rounded-lg text-white',
+                accept: () => {
+                    axios.delete(`http://localhost:5500/apiJual/cancelTransaction/${this.id}`)
+                    .then((res) => {
+                        console.log(res);
+                        next();
+                    })
+                    .catch((err) => {
+                        console.warn(err)
+                        next(false); // Mencegah Navigasi
+                        return false; // Harus tambah return supaya navigasiny d cekal
+
+                    });
+                },
+                reject: () => {
                     next(false); // Mencegah Navigasi
                     return false; // Harus tambah return supaya navigasiny d cekal
+                }
+            });
 
-                });
-            }else{
-                next(false); // Mencegah Navigasi
-                return false; // Harus tambah return supaya navigasiny d cekal
-            }
+            // Original
+            // let r = confirm("Apakah Yakin Ingin Membatalkan?");
+
+            // if(r == true){
+            //     axios.delete(`http://localhost:5500/apiJual/cancelTransaction/${this.id}`)
+            //     .then((res) => {
+            //         console.log(res);
+            //         next();
+            //     })
+            //     .catch((err) => {
+            //         console.warn(err)
+            //         next(false); // Mencegah Navigasi
+            //         return false; // Harus tambah return supaya navigasiny d cekal
+
+            //     });
+            // }else{
+            //     next(false); // Mencegah Navigasi
+            //     return false; // Harus tambah return supaya navigasiny d cekal
+            // }
         } else {
             next();
         }
@@ -223,6 +254,7 @@ export default {
     },
     components: {
         NavbarBottom,
+        ConfirmDialog
     },
     computed: {
         subtotal: function(){
@@ -247,10 +279,13 @@ export default {
         }
     },
     methods: {
-        getImg: function(img){
+        getImg: function(img, srcData){
             const convertStrToJson = JSON.parse(img);
             const gbrPertama = convertStrToJson[0];
 
+            if(srcData == 'import'){
+                return gbrPertama;
+            }
             return `http://localhost:5500/apiBrg/images/${gbrPertama}`
         },
         handleBukti: function(e){

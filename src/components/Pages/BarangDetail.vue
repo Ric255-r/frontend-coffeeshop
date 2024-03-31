@@ -43,11 +43,15 @@
                             <div class="flex flex-wrap mt-3">
 
                                 <div class="lg:w-auto w-6/12">
-                                    <button class="bg-red-600 hover:bg-red-400 text-white py-[15px] lg:px-[100px] w-full rounded" @click="handleVariant('hot')">Hot</button>
+                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[15px] lg:px-[100px] w-full rounded `" @click="handleVariant('hot')">
+                                        🥵
+                                    </button>
                                 </div>
 
                                 <div class="lg:w-auto lg:ml-3 w-6/12">
-                                    <button class="bg-cyan-600 hover:bg-cyan-400 text-white py-[15px] lg:px-[100px] w-full ml-1 rounded" @click="handleVariant('cold')">Cold</button>
+                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[15px] lg:px-[100px] w-full ml-1 rounded`" @click="handleVariant('cold')">
+                                        🥶
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -334,21 +338,23 @@
                                         v-if="item.id_barang == dataBarang.id" 
                                         :style="`border: ${selectedProducts === index ? `1px solid black` : `none`}`">
 
-                                        <div class="flex flex-wrap" @click="handleSelectedProducts(index)">
-                                            <div class="lg:w-2/12 md:w-2/12 w-4/12 text-center flex items-center justify-center">
+                                        <div class="flex flex-wrap" >
+                                            <div class="lg:w-2/12 md:w-2/12 w-4/12 text-center flex items-center justify-center" @click="handleSelectedProducts(index)">
                                                 <img :src="loadGbr(dataBarang.gambar[0], dataBarang.source_data)" alt="" class="object-cover h-[50px] w-[50px] rounded-lg">
                                             </div>
                                             
-                                            <div class="lg:w-9/12 md:w-9/12 w-8/12 capitalize text-[10px]">
-                                                <p>{{ dataBarang.nama_barang }}</p>
-                                                <p>{{ 'Summary : ' + item.ukuran_cup + ', ' + item.milk + ', ' +  item.espresso + ', ' + item.ice_cube +  ', ' + item.sweetness + ', ' + item.variant + ', ' + item.syrup + ', ' + item.topping }}</p>
+                                            <div class="lg:w-9/12 md:w-9/12 w-8/12 capitalize text-[10px]" @click="handleSelectedProducts(index)">
+                                                <p class="pl-1">{{ dataBarang.nama_barang }}</p>
+                                                <p class="pl-1 text-gray-800">{{ 'Summary : ' + item.ukuran_cup + ', ' + item.milk + ', ' +  item.espresso + ', ' + item.ice_cube +  ', ' + item.sweetness + ', ' + item.variant + ', ' + item.syrup + ', ' + item.topping }}</p>
+                                            </div>
+
+                                            <div class="lg:w-1/12 mb-5 flex pt-1 justify-center invisible group-hover/item:visible hover:bg-slate-400 rounded-lg hover:cursor-pointer" @click="handleHapus(index)">
+                                                <i class="fas fa-trash"></i>
                                             </div>
                                         </div>
 
 
-                                        <div class="lg:w-1/12 invisible group-hover/item:visible hover:bg-slate-400 hover:cursor-auto" @click="handleHapus(index)">
-                                            <i class="fas fa-trash"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -367,8 +373,8 @@
 
                         <div class="flex flex-wrap" v-else>
                             <div class="w-full">
-                                <p class="">Subtotal : 0</p>
-                                <p class="text-right">
+                                <p class="text-[11px] font-bold text-right pr-2">Subtotal : 0</p>
+                                <p class="text-right pt-2">
                                     <button 
                                         class="bg-cyan-400 rounded-full h-[30px] w-[30px]"
                                         @click="handleTambahBaru"><i class="fas fa-plus-circle"></i>
@@ -449,7 +455,7 @@
 import NavbarBottom from './NavbarBottom.vue';
 import axios from 'axios';
 import BubbleCartVue from './BubbleCart.vue';
-// import {toast} from 'vue3-toastify';
+import {toast} from 'vue3-toastify';
 // import { initFlowbite } from 'flowbite';
 
 export default {
@@ -625,8 +631,12 @@ export default {
                 }
             }
             // kemungkinan g kepake lg, udh digantikan sm handleSubTotal. kedepanny akan coba rombak
-            this.totalHarga = this.hargaAwal + totalEspresso + totalCup + totalMilk + totalSyrup + totalTopping;        
-            console.log(this.totalHarga);
+            // Original
+            // this.totalHarga = this.hargaAwal + totalEspresso + totalCup + totalMilk + totalSyrup + totalTopping;        
+            // console.log(this.totalHarga);
+            // End Original
+            let totalHargaGKepake = this.totalHarga = this.hargaAwal + totalEspresso + totalCup + totalMilk + totalSyrup + totalTopping;        
+            this.tampungVariableGKepake(totalHargaGKepake);
         }).catch((error) => {
             if (error.response && error.response.status == 401) {
                 this.$router.push('/');
@@ -668,6 +678,7 @@ export default {
             this.selectedMilk = 'NORMAL';
             this.checkedSyrup = [];
             this.checkedTopping = [];
+            this.selectedVariant = '';
 
             this.componentKey += 1;
         },
@@ -741,6 +752,7 @@ export default {
                 this.selectedExpresso = cartObj[existsObjIndex].espresso;
                 this.selectedIceCube = cartObj[existsObjIndex].ice_cube;
                 this.selectedSweetness = cartObj[existsObjIndex].sweetness;
+                this.selectedVariant = cartObj[existsObjIndex].variant;
                 this.qty = cartObj[existsObjIndex].qty;
 
                 this.selectedProducts = index;
@@ -764,6 +776,8 @@ export default {
 
                 this.qty = 1;
 
+                this.selectedVariant = '';
+
                 newCart.push({
                     ...this.allObj,
                     'nama_barang' : this.dataBarang.nama_barang,
@@ -773,7 +787,7 @@ export default {
                     'sweetness' : this.selectedSweetness,
                     'ukuran_cup' : this.selectedCup,
                     'variant' : this.selectedVariant,
-                    'qty': this.qty
+                    'qty': this.qty,
                 });
 
                 newTotalHarga.push({
@@ -810,6 +824,12 @@ export default {
         },
         handleVariant: function(variant){
             this.selectedVariant = variant;
+            this.changeTotalSemua();
+
+            toast(`Variant Terpilih : ${this.selectedVariant.toUpperCase()}`, {
+                autoClose: 1800,
+            });
+
             console.log(this.selectedVariant);
         },
         handleResize: function(){
@@ -1111,7 +1131,7 @@ export default {
                 existsObjIndex = cartObj.findIndex((item) => item.id_barang == this.params);
             }
 
-            alert(`ini existsobj ${existsObjIndex}, ini selected ${this.selectedProducts}`);
+            // alert(`ini existsobj ${existsObjIndex}, ini selected ${this.selectedProducts}`);
 
             if(existsObjIndex !== -1){
                 cartObj[existsObjIndex].id_barang = this.params;
@@ -1123,6 +1143,7 @@ export default {
                 cartObj[existsObjIndex].espresso = this.selectedExpresso;
                 cartObj[existsObjIndex].ice_cube = this.selectedIceCube;
                 cartObj[existsObjIndex].sweetness = this.selectedSweetness;
+                cartObj[existsObjIndex].variant = this.selectedVariant;
                 cartObj[existsObjIndex].qty = this.qty;
             }else{
                 this.qty = 1;
@@ -1135,6 +1156,7 @@ export default {
                     sweetness: this.selectedSweetness,
                     ukuran_cup: this.selectedCup,
                     espresso: this.selectedExpresso,
+                    variant: this.selectedVariant,
                     qty: this.qty
                 });
             }
@@ -1321,6 +1343,12 @@ export default {
 
 
         },
+
+        tampungVariableGKepake: function(...args){
+            // Buat nampung variable g kepake klo takut error.. 
+            // gegara no nouses variable yg bangsat
+            console.log(...args);
+        }
     }
 }
 </script>
@@ -1391,8 +1419,8 @@ input[type=number] {
 
 /* End Buat Notif */
 
-
-/* div {
+/* 
+div {
     border: 1px solid black;
 } */
 </style>

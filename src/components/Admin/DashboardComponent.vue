@@ -261,7 +261,8 @@ export default {
       .then((res) => {
         this.dataTerbanyak = res.data.arrTerbanyak;
         this.dataThisMonth = res.data.arrThisMonth;
-        this.getOmset(); // panggil request axios yg kedua.
+        // this.getOmset(); // panggil request axios yg kedua.
+        this.getOmsetAndDataTable();
 
         let arrNamaBrg = [];
         for (let i = 0; i < this.dataTerbanyak.length; i++) {
@@ -279,39 +280,49 @@ export default {
         console.warn(err)
       });
     },
-    getOmset: function(){
-      // axios req kedua
-      axios.get(`http://localhost:5500/apiAdmin/dataOmset/${this.selectedOmset}`, {
-        headers:{
-          Authorization: 'Bearer ' + this.token
-        }
-      }).then((res) => {
-        let jlhOmset = res.data.omset.grandtotal;
-        let jlhTrans = res.data.transaksi.jlhTrans;
+    // getOmset: function(){
+    //   // axios req kedua
+    //   axios.get(`http://localhost:5500/apiAdmin/dataOmset/${this.selectedOmset}`, {
+    //     headers:{
+    //       Authorization: 'Bearer ' + this.token
+    //     }
+    //   }).then((res) => {
+    //     let jlhOmset = res.data.omset.grandtotal;
+    //     let jlhTrans = res.data.transaksi.jlhTrans;
 
-        this.jlhOmset = jlhOmset == null ? 0 : jlhOmset;
-        this.jlhTrans = jlhTrans == null ? 0 : jlhTrans;
+    //     this.jlhOmset = jlhOmset == null ? 0 : jlhOmset;
+    //     this.jlhTrans = jlhTrans == null ? 0 : jlhTrans;
 
-        // Panggil axios ketiga
-        this.getDataTable();
-      }).catch((err) => {
-        alert("Gagl ubah changes");
-        console.warn(err);
-      });
-    },
-    getDataTable: async function(){
-      // ini axios ketiga dan seterusnya. biar g banyak callback pake async await aje
+    //     // Panggil axios ketiga
+    //     this.getDataTable(); // udh kuubah jd getomsetanddatatable
+    //   }).catch((err) => {
+    //     alert("Gagl ubah changes");
+    //     console.warn(err);
+    //   });
+    // },
+    getOmsetAndDataTable: async function(){
+      // ini axios kedua, ketiga dan seterusnya. biar g banyak callback pake async await aje
       try {
         const resDataOrder = await axios.get(`http://localhost:5500/apiAdmin/dataOrderan`, {
           headers: {
             Authorization: 'Bearer ' + this.token
           }
         });
-
         this.dataOrder = JSON.parse(resDataOrder.data) // ini diparse kejson krn returnny string dari python;
 
-        console.log(this.dataOrder);
+        const resDataOmset = await axios.get(`http://localhost:5500/apiAdmin/dataOmset/${this.selectedOmset}`, {
+          headers:{
+            Authorization: 'Bearer ' + this.token
+          }
+        });
 
+        let jlhOmset = resDataOmset.data.omset.grandtotal;
+        let jlhTrans = resDataOmset.data.transaksi.jlhTrans;
+
+        this.jlhOmset = jlhOmset == null ? 0 : jlhOmset;
+        this.jlhTrans = jlhTrans == null ? 0 : jlhTrans;
+
+        console.log(this.dataOrder);
       } catch (error) {
         console.warn(error);
         return null;

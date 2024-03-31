@@ -63,7 +63,7 @@
                   </td>
                   <td class="px-6 py-4 text-center items-center justify-center">
                     <img 
-                      :src="`http://localhost:5500/apiBrg/images/${item.gambar[0]}`" 
+                      :src="getImg(item.gambar[0], item.source_data)" 
                       :alt="``"
                       height="50" width="50" />
                   </td>
@@ -205,6 +205,12 @@ export default {
     this.getDataBrg();
   },
   methods: {
+    getImg: function(img, srcData){
+      if(srcData == 'import'){
+        return img;
+      }
+      return`http://localhost:5500/apiBrg/images/${img}`;
+    },
     postBarang: function(){
       let formData = new FormData();
       formData.append('nama_barang', this.nama_barang);
@@ -298,6 +304,7 @@ export default {
     },
     deleteBarang: function(id){
       console.log(id);
+      // Ini Confirm pakai confirm primevue
       this.$confirm.require({
         message: "Anda Yakin Ingin Menghapus?",
         header: "Confirmation",

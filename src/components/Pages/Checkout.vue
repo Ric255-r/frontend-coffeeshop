@@ -16,12 +16,22 @@
                                         <th class="text-left font-semibold">Quantity</th>
                                         <th class="text-left font-semibold">Total</th>
                                     </tr>
+                                    <tr>
+                                        <th colspan="4">
+                                            <div class="mt-3 w-full h-[0.1px]"></div>
+                                        </th>
+                                    </tr>
                                 </thead>
-                                <tbody>
+
+                    
+                                <tbody v-if="showCart.cart.length">
                                     <tr v-for="(item, index) in showCart.cart" :key="index">
                                         <td class="py-4">
                                             <div class="flex items-center">
-                                                <img class="h-16 w-16 mr-4 lg:block md:block sm:block hidden" src="https://via.placeholder.com/150" alt="Product image">
+                                                <template v-for="(item2, index2) in dataBarang" :key="index2">
+                                                    <img class="h-16 w-16 mr-4 lg:block md:block sm:block hidden" v-if="item.id_barang == item2.id" :src="getImg(item2.gambar[0], item2.source_data)" alt="Product image">
+
+                                                </template>
                                                 <span>
                                                     <span class="font-semibold">
                                                         <router-link :to="{ name: 'BarangDetail', params: { id: item.id_barang},  query: { productOrder: index } }">{{ item.nama_barang }}</router-link> <br />
@@ -62,12 +72,12 @@
                                         <td class="py-4">
                                             <div class="flex items-center">
                                                 <button 
-                                                    class="border rounded-md py-2 px-4 mr-2"
+                                                    class="border rounded-md lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-2 mr-2"
                                                     @click="handleMinus(index, item.qty == null ? 1 : item.qty)">-</button>
 
                                                 <span class="text-center w-8">{{ item.qty == null ? 1 :  item.qty }}</span>
                                                 <button 
-                                                    class="border rounded-md py-2 px-4 ml-2" 
+                                                    class="border rounded-md lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-2 ml-2" 
                                                     @click="handlePlus(index, item.qty == null ? 1 : item.qty)">
                                                 +
                                                 </button>
@@ -84,6 +94,13 @@
                                             </form>
                                         </td>
 
+                                    </tr>
+                                </tbody>
+
+                                <tbody v-else>
+                                    <br><br>
+                                    <tr class="text-center">
+                                        <td colspan="4" class="py-5">Tidak Ada List Minuman</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -208,6 +225,13 @@ export default {
         this.handleResize();
     },
     methods: {
+        getImg: function(img, srcData){
+            if(srcData == 'import'){
+                return img;
+            }
+            return `http://localhost:5500/apiBrg/images/${img}`
+
+        },
         handleResize: function(){
             if(window.innerWidth < 1000){
                 this.styleBg = 'background: linear-gradient(to top,  #FFFFFF 65%, #057a55 35%)'

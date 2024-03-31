@@ -11,7 +11,9 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-animated'),
-    require('flowbite/plugin')
+    require('flowbite/plugin'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
     // require("tw-elements/dist/plugin.cjs")
     // require('daisyui')
   ],
