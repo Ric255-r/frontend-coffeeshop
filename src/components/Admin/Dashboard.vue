@@ -56,17 +56,17 @@ export default {
         {
           name: "Order List", 
           link: '/admin/order',
-          icon: 'fas fa-user'
+          icon: 'fas fa-shopping-cart'
         },
         {
           name: "Penjualan", 
           link: '/admin/penjualan',
-          icon: 'fas fa-message'
+          icon: 'fas fa-dollar-sign'
         },
         {
           name: "Input Data Menu", 
           link: '/admin/barang',
-          icon: 'fas fa-analytics',
+          icon: 'fas fa-pencil-alt',
           margin: true
         },
         {

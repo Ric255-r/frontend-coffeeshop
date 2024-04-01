@@ -283,7 +283,7 @@
             </div>
 
             <div class="w-2/12 text-center">
-              <form action="" method="post" @submit.prevent="handleAcc(noJual)">
+              <form action="" method="post" @submit.prevent="declineOrder(noJual)">
                 <button type="submit" class="bg-red-600 py-2 w-[180px] rounded-lg text-white">Decline</button>
               </form>
             </div>
@@ -294,24 +294,126 @@
         <br />
 
         <span class="p-text-secondary block mb-5">Pesanan : </span>
-        <div class="flex flex-wrap align-items-center mb-3" style="border: 1px solid;">
-            <div class="w-2/12">
-              <b>Gambar Produk</b>
-            </div>
-            <div class="w-2/12">
-              <b>Nama Produk</b>
-            </div>
-            <div class="w-4/12">
-              <b>Request</b>
-            </div>
-            <div class="w-2/12">
-              <b>Qty</b>
-            </div>
-            <div class="w-2/12">
-              <b>Harga</b>
-            </div>
-        </div>
-        <div class="flex flex-wrap align-items-center mb-3" style="border: 1px solid;" v-for="(items, index) in isiJualDetil" :key="index">
+
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                Gambar
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Nama Produk
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Request
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Qty
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Harga 
+              </th>
+            </tr>
+          </thead>
+          <tbody v-if="isiJualDetil.length">
+            <template v-for="(items, index) in isiJualDetil" :key="index">
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" width="5%">
+                  <img :src="getImg(JSON.parse(items.gambar), items.source_data)" alt="Gbr">
+                </th>
+                <td class="px-6 py-4">
+                  {{ items.nama_barang }}
+                </td>
+                <td class="px-6 py-4">
+                  Variant : {{ items.variant == "" ? "Default" : items.variant }}
+                  <br />
+                  Ukuran Cup : {{ items.ukuran_cup == "" ? "Default " : items.ukuran_cup}}
+                  <br />
+                  Ice Cup : {{ items.ice_cube }}
+                  <br />
+                  Sweetness : {{ items.sweetness }}
+                  <br />
+                  Milk : {{ items.milk }}
+                  <br />
+                  Syrup : {{ items.syrup }}
+                  <br />
+                  Espresso : {{ items.espresso }}
+                  <br />
+                  Topping : {{ items.topping }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ items.qty }}
+                </td>
+                <td class="px-6 py-4">
+                  Rp. {{ items.harga_seluruh }}
+                </td>
+              </tr>
+              
+            </template>
+
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" width="5%">
+
+              </th>
+              <td class="px-6 py-4">
+
+              </td>
+              <td class="px-6 py-4">
+
+              </td>
+              <td class="px-6 py-4">
+                <b>Pajak (11%)</b>
+              </td>
+              <td class="px-6 py-4">
+                Rp. {{ biayaPjk }}
+              </td>
+            </tr>
+
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" width="5%">
+
+              </th>
+              <td class="px-6 py-4">
+
+              </td>
+              <td class="px-6 py-4">
+
+              </td>
+              <td class="px-6 py-4">
+                <b>GrandTotal</b>
+              </td>
+              <td class="px-6 py-4">
+                Rp. {{ grandtotal }}
+              </td>
+            </tr>
+
+          </tbody>
+          <tbody v-else>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+              <td class="text-center py-5" colspan="7">Tidak Ada Data</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- <div class="flex flex-wrap align-items-center mb-3" style="border: 1px solid;">
+          <div class="w-2/12">
+            <b>Gambar Produk</b>
+          </div>
+          <div class="w-2/12">
+            <b>Nama Produk</b>
+          </div>
+          <div class="w-4/12">
+            <b>Request</b>
+          </div>
+          <div class="w-2/12">
+            <b>Qty</b>
+          </div>
+          <div class="w-2/12">
+            <b>Harga</b>
+          </div>
+        </div> -->
+
+        <!-- <div class="flex flex-wrap align-items-center mb-3" style="border: 1px solid;" v-for="(items, index) in isiJualDetil" :key="index">
             <div class="w-2/12">
               <img :src="`http://localhost:5500/apiBrg/images/${items.gambar}`" alt="Gbr">
             </div>
@@ -355,7 +457,7 @@
             <div class="w-2/12">
               <b>Rp {{grandtotal}} </b>
             </div>
-        </div>
+        </div> -->
         <!-- <div class="flex align-items-center gap-3 mb-5">
             <label for="email" class="font-semibold w-6rem">Email</label>
 
@@ -395,7 +497,8 @@ export default {
         bayarCash: 0,
         refreshKey: 0,
         modeModal: '',
-        statusOrderModal: ''
+        statusOrderModal: '',
+        biayaPjk: 0
       }
   },
   components: {
@@ -449,7 +552,16 @@ export default {
       this.styleForm= ' hidden';
       this.styleButton= '';
 
-      console.log(buktibayar);
+      let sumSubTotal = 0;
+
+      for (let i = 0; i < this.isiJualDetil.length; i++) {
+        if(this.isiJualDetil[i].nojual_id == nojual){
+          sumSubTotal += this.isiJualDetil[i].harga_seluruh 
+        }
+      }
+
+      let pjk = 0.11;
+      this.biayaPjk = sumSubTotal * pjk;
 
       this.visible = true;
     },
@@ -500,6 +612,43 @@ export default {
 
         console.log(err)
       })
+    },
+    declineOrder: function(nojual){
+      // Belum diedit
+      axios.put(`http://localhost:5500/apiAdmin/dataOrderan/${nojual}`, {} , {
+        headers: {
+          Authorization: 'Bearer ' + this.token,
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((res) => {
+        toast("Success Process! ", {
+          autoClose: 1500,
+          type: 'success'
+        });
+        
+        console.log(res);
+        this.visible = false;
+        
+        this.refreshKey += 1;
+        this.fetchData();
+      }).catch((err) => {
+        if(err.response.status == 402){
+          toast("Bayarannya Kurang! ", {
+            autoClose: 1500,
+            type: 'error'
+          })
+        }
+
+        console.log(err)
+      })
+    },
+    getImg: function(img, srcData){
+      console.log(srcData);
+
+      if(srcData == 'import'){
+        return img[0];
+      }
+      return `http://localhost:5500/apiBrg/images/${img[0]}`
     }
   }
 }

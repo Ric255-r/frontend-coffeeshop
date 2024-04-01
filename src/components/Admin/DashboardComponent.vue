@@ -6,12 +6,12 @@
       </div>
 
       <div class="w-2/12 fontChart my-auto" >
-        <div class="flex flex-wrap bg-white shadow-md rounded mx-1 pb-2">
+        <div class="flex flex-wrap bg-white shadow-md rounded mx-1">
           <div class="w-full text-sm text-center pt-2">Jumlah Gelas Terjual dibulan ini </div>
           <div class="w-full text-center pt-[50px]">
             <i class="fas fa-coffee text-[25px]"></i>
           </div>
-          <div class="w-full text-center text-sm">{{ dataThisMonth.totalSales }}</div>
+          <div class="w-full text-center text-sm py-2">{{ dataThisMonth.totalSales }}</div>
         </div>
       </div>
 

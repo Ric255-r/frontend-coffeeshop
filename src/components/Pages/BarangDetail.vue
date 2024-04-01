@@ -43,13 +43,13 @@
                             <div class="flex flex-wrap mt-3">
 
                                 <div class="lg:w-auto w-6/12">
-                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[15px] lg:px-[100px] w-full rounded `" @click="handleVariant('hot')">
+                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[20px] px-[20px] w-full rounded `" @click="handleVariant('hot')">
                                         🥵
                                     </button>
                                 </div>
 
                                 <div class="lg:w-auto lg:ml-3 w-6/12">
-                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[15px] lg:px-[100px] w-full ml-1 rounded`" @click="handleVariant('cold')">
+                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[20px] px-[20px] w-full ml-1 rounded`" @click="handleVariant('cold')">
                                         🥶
                                     </button>
                                 </div>

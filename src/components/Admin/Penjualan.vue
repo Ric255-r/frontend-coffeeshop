@@ -64,13 +64,13 @@
                       No Jual
                     </th>
                     <th class="py-3 px-3 text-[#212B36] sm:text-base font-bold whitespace-nowrap">
-                      GrandTotal
+                      Pelanggan Id
                     </th>
                     <th class="py-3 px-3 text-[#212B36] sm:text-base font-bold whitespace-nowrap">
                       TglTransaksi
                     </th>
                     <th class="py-3 px-3 text-[#212B36] sm:text-base font-bold whitespace-nowrap">
-                      Pelanggan Id
+                      GrandTotal 
                     </th>
 
                   </tr>
@@ -112,7 +112,7 @@
                       <td
                         class="py-2 px-3 font-normal text-base border-t whitespace-nowrap"
                       >
-                        {{ item1.grandtotal }}
+                        {{ item1.pelanggan_id }}
                       </td>
                       <td
                         class="py-2 px-3 text-base  font-normal border-t whitespace-nowrap"
@@ -122,7 +122,7 @@
                       <td
                         class="py-2 px-3 text-base  font-normal border-t"
                       >
-                        {{ item1.pelanggan_id }}
+                         Rp. {{ item1.grandtotal }}
                       </td>
                     </tr>
                     <tr>
@@ -148,13 +148,19 @@
                               Nama Barang
                             </th>
                             <th class="py-3 px-4 text-[#212B36] text-base sm:text-sm font-normal whitespace-nowrap">
-                              Blabla
+                              Qty
                             </th>
                             <th class="py-3 px-4 text-[#212B36] text-base sm:text-sm font-normal whitespace-nowrap">
-                              Blabla
+                              Variant
                             </th>
                             <th class="py-3 px-4 text-[#212B36] text-base sm:text-sm font-normal whitespace-nowrap rounded-r-lg">
-                              Blabla
+                              AddOn
+                            </th>
+                            <th class="py-3 px-4 text-[#212B36] text-base sm:text-sm font-normal whitespace-nowrap rounded-r-lg">
+                              Total
+                            </th>
+                            <th class="py-3 px-4 text-[#212B36] text-base sm:text-sm font-normal whitespace-nowrap rounded-r-lg">
+                              Total + Pajak
                             </th>
                           </thead>
                           <tbody>
@@ -162,10 +168,30 @@
                               <tr class="animate-fade-left whitespace-pre duration-500" :style="`transition-delay: ${index2 + 3}00ms`"> 
                                 <td class="py-3 px-4">{{ index2 + 1}}</td>
                                 <td class="py-3 px-4">{{ item2.nama_barang }}</td>
-                                <td class="py-3 px-4">{cdata?.Customer}</td>
-                                <td class="py-3 px-4 text-center">{cdata?.Quantity}</td>
+                                <td class="py-3 px-4">{{ item2.qty }}</td>
+                                <td class="py-3 px-4 text-center">{{ item2.variant }}</td>
+                                <td class="py-3 px-4 min-w-[400px]">
+                                  <tr>
+                                    <td>Ice Cube : {{ item2.ice_cube }}</td>
+                                    <td class="pl-5">Ukuran Cup : {{ item2.ukuran_cup }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Sweetness :  {{ item2.sweetness }}</td>
+                                    <td class="pl-5">Milk : {{ item2.milk }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Syrup : {{ item2.syrup }}</td>
+                                    <td class="pl-5">Espresso : {{ item2.espresso }} Shot</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Topping : {{ item2.topping }} </td>
+                                  </tr>
+                                </td>
                                 <td class="py-3 px-4 text-center">
-                                  {"$" + cdata?.TotalAmount}
+                                  Rp. {{ item2.harga_seluruh }} 
+                                </td>
+                                <td class="py-3 px-4 text-center">
+                                  Rp. {{ hitungPjk(item2.harga_seluruh)  }} 
                                 </td>
                               </tr>
                             </template>
@@ -407,6 +433,13 @@ export default {
         console.warn(error);
         return null;
       }
+    },
+    hitungPjk: function(total){
+      let pjk = 0.11;
+      let hitungPjk = total * pjk;
+      let hasilPajak = total + hitungPjk;
+
+      return hasilPajak;
     }
   }
 }
@@ -414,6 +447,10 @@ export default {
 
 <style scoped>
 /* div {
+  border: 1px solid;
+} */
+
+/* tr {
   border: 1px solid;
 } */
 </style>
