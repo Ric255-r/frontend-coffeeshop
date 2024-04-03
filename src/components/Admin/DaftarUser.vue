@@ -2,7 +2,7 @@
   <div class="flex flex-wrap">
     <div class="w-6/12">
       <button class="text-sm" @click="handleUbah('Karyawan')">Data Karyawan</button>
-      <button class="text-sm pl-5" @click="handleUbah('Pelanggan')">Data Pelanggan</button>
+      <button class="text-sm pl-5" @click="handleUbah('Customer')">Data Pelanggan</button>
 
     </div>
     <div class="w-full mt-2">

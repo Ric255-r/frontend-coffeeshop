@@ -1,6 +1,20 @@
 <template>
-    <div class="animate-fade-left poppins-regular mt-4">
+    <div class="animate-fade-left poppins-regular mt-1">
         <div class="flex flex-wrap">
+            <div class=" lg:w-2/12 md:w-2/12 hidden lg:block md:block ">
+
+            </div>
+
+            <div :class="`lg:w-8/12 md:w-8/12 lg:pl-0 md:pl-0 pl-2 w-full text-white poppins-regular mb-3`">
+                Welcome <br /> {{ dataUser.email }}
+            </div>
+
+            <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block ">
+
+            </div>
+
+            
+
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block ">
 
             </div>
@@ -81,6 +95,7 @@ export default {
     data: function(){
         return {
             dataBarang: null,
+            dataUser: {}
         }
     },
     components: {
@@ -100,6 +115,8 @@ export default {
             // alert("Berhasil Tarik barang");
             console.log(response.data);
             this.dataBarang = response.data;
+
+            this.getDataUser();
         }).catch((error) => {
             if(error.response.status == 401){
                 this.$router.push('/');
@@ -115,6 +132,21 @@ export default {
                 return img;
             }
             return `http://localhost:5500/apiBrg/images/${img}`
+        },
+        getDataUser: function(){
+            let token = localStorage.getItem('token');
+
+            axios.get(`http://localhost:5500/apiUser/me`, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            }).then((res) => {
+                this.dataUser = res.data;
+                console.log(res);
+            }).catch((err) => {
+                alert("Error Authentikasi");
+                console.warn(err);
+            });
         }
     }
 }

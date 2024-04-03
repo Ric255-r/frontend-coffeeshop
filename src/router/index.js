@@ -13,6 +13,8 @@ import OrderList from '@/components/Admin/OrderList.vue'
 import PenjualanList from '@/components/Admin/Penjualan.vue'
 import DashboardComponent from '@/components/Admin/DashboardComponent.vue'
 import DaftarUser from '@/components/Admin/DaftarUser.vue'
+import BarangMenu from '@/components/Pages/Barang.vue'
+import ProfileUser from '@/components/Pages/ProfileUser.vue'
 
 
 const routes = [
@@ -35,7 +37,26 @@ const routes = [
     component: HomeView,
     meta: {
       requiresAuth: true
-    }
+    },
+    children: [
+      {
+        path: '',
+        name: 'barang-component',
+        component: BarangMenu,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'profile',
+        name: 'profile-user',
+        component: ProfileUser,
+        meta: {
+          requiresAuth: true
+        }
+      }
+
+    ]
   },
   {
     path: '/pesanan',
