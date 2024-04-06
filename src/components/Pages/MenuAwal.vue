@@ -36,8 +36,12 @@ export default {
     },
     mounted: function(){
         window.addEventListener('resize', this.handleResize);
-        this.handleResize();   
-        
+        this.handleResize();  
+
+        let url = window.location.href;
+        let splitUrl = url.split("/");
+
+        this.panggilBalik(splitUrl[4] == undefined ? splitUrl[3] : splitUrl[4]);   
     },
     // watch: {
     //     '$route' (to, from){
