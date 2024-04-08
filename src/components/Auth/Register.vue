@@ -30,6 +30,7 @@
 <script>
 // import Login from './Login.vue';
 import axios from 'axios';
+import {toast} from 'vue3-toastify'
 
 export default {
     name: 'register-component',
@@ -62,14 +63,24 @@ export default {
                     passwd: this.password
                 }).then((res) => {
                     console.log(res);
-                    alert("Sudah Teregis, Silahkan Login");
+                    // alert("Sudah Teregis, Silahkan Login");
+
+                    toast("Sudah Teregis. Silahkan Login!", {
+                        autoClose: 2500,
+                        type: 'success'
+                    });
+
                     this.$emit("update:klikRegis", false);
                 }).catch((err) => {
                     console.warn(err);
                 })
                 
             }else{
-                alert("Pastikan Konfirmasi password sama dengan pass yg anda isi");
+                toast("Pastikan Konfirmasi password sama dengan pass yg anda isi", {
+                    toastClassName: 'w-full mr-5 pr-5',
+                    autoClose: 2500,
+                    type: 'error'
+                });
             }
 
 

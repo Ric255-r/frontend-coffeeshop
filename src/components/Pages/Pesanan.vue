@@ -1,6 +1,6 @@
 <template>
   <!-- Ini Ak ikuti struktur inspect dari menuawal.vue, krn malas mw ubah router ganti children lg -->
-  <div class="home">
+  <div class="home poppins-regular">
     <div>
       <div :style="styleBg" class="flex flex-wrap">
         <div class="lg:w-2/12 w-1/12"></div>
@@ -55,6 +55,7 @@
 <script>
 import axios from 'axios';
 import NavbarBottom from "./NavbarBottom.vue";
+import {toast} from 'vue3-toastify'
 
 export default {
   name: "pesanan-component",
@@ -88,7 +89,11 @@ export default {
 
         this.dataPesanan = resData;
       }).catch((err) => {
-        alert("Gagal get pesanan");
+        toast("Gagal Get Pesanan", {
+          autoClose: 2500,
+          type: 'success'
+        });
+
         console.log(err);
       })
     },

@@ -89,6 +89,7 @@
 import axios from 'axios'
 import CarouselBrgVue from './CarouselBrg.vue'
 import BubbleCartVue from './BubbleCart.vue'
+import {toast} from 'vue3-toastify'
 
 export default {
     name: 'barang-component',
@@ -122,7 +123,12 @@ export default {
                 this.$router.push('/');
             }
 
-            alert("gagal");
+            // alert("gagal");
+            toast("Gagal", {
+              autoClose: 2500,
+              type: 'error'
+            });
+
             console.warn(error);
         })
     },
@@ -144,7 +150,10 @@ export default {
                 this.dataUser = res.data;
                 console.log(res);
             }).catch((err) => {
-                alert("Error Authentikasi");
+                toast("Error Authentikasi", {
+                    autoClose: 2500,
+                    type: 'error'
+                });
                 console.warn(err);
             });
         }

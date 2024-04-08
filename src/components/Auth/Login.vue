@@ -30,6 +30,7 @@
 import axios from 'axios';
 import Register from './Register.vue';
 import store from '@/router/store'
+import {toast} from 'vue3-toastify'
 
 export default {
     name: 'login-component',
@@ -65,7 +66,11 @@ export default {
                 this.$router.push('/home');
 
             }).catch((err) => {
-                alert("Gagal");
+                
+                toast("Gagal Login", {
+                    autoClose: 2500,
+                    type: 'error'
+                });
                 store.commit('setLoggedIn', false);
                 this.$router.push('/');
 

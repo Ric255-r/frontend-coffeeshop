@@ -139,6 +139,7 @@ import NavbarBottom from "./NavbarBottom.vue";
 // import { initFlowbite } from 'flowbite'
 import { Modal } from "flowbite";
 import ConfirmDialog from 'primevue/confirmdialog';
+import {toast} from 'vue3-toastify'
 
 export default {
     name: "payment-component",
@@ -307,7 +308,11 @@ export default {
                         "Content-Type" : "multipart/form-data"
                     }
                 }).then((res) => {
-                    alert("Sukses Bayar");
+                    toast("Pembayaran Berhasil", {
+                        autoClose: 2500,
+                        type: 'success'
+                    });
+
                     console.log(res);
                     // gk bs pake push router
                     window.location.href = '/home';
@@ -315,11 +320,17 @@ export default {
                     localStorage.removeItem('cart');
                     localStorage.removeItem('totalHarga');
                 }).catch((err) => {
-                    alert("Gagal Bayar");
+                    toast("Gagal bayar", {
+                        autoClose: 2500,
+                        type: 'errpr'
+                    });
                     console.warn(err);
                 })
             }else{
-                alert("Gagal Sumbit")
+                toast("Gagal Submit", {
+                    autoClose: 2500,
+                    type: 'error'
+                });
             }
         }
     }
