@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <div class="w-full text-center font-sophia"><h3>Registrasi CoffeeKu</h3></div>
+    <div class="poppins-regular">
+        <div class="w-full text-center"><span>Registrasi </span><h3 class="font-bold text-5xl "> CoffeeKu</h3></div>
 
-        <form action="" class="w-full mt-3 font-sophia" method="post" @submit.prevent="buatRegis">
+        <form action="" class="w-full mt-8 " method="post" @submit.prevent="buatRegis">
             <!-- <div class=" mt-3">
                 <label for="">Nama</label>
                 <input type="text" v-model="nama" name="" id="" class="w-full rounded-br-lg rounded-tl-lg">
@@ -13,15 +13,15 @@
             </div>
             <div class=" mt-3">
                 <label for="">Password</label>
-                <input type="text" v-model="password" name=""  id="" class="w-full rounded-br-lg rounded-tl-lg">
+                <input type="password" v-model="password" name=""  id="" class="w-full rounded-br-lg rounded-tl-lg">
             </div>
             <div class=" mt-3">
-                <label for="">Konfirmasi PAssword</label>
-                <input type="text" v-model="konfirPass" name="" id="" class="w-full rounded-br-lg rounded-tl-lg">
+                <label for="">Konfirmasi Password</label>
+                <input type="password" v-model="konfirPass" name="" id="" class="w-full rounded-br-lg rounded-tl-lg">
             </div>
 
             
-            <button class="w-full text-white bg-blue-600 hover:bg-blue-700 mt-3 rounded-br-lg rounded-tl-lg">Submit</button>
+            <button class="w-full text-white bg-blue-600 hover:bg-blue-700 mt-5 py-3 rounded-br-lg rounded-tl-lg">Submit</button>
         </form>
 
     </div>

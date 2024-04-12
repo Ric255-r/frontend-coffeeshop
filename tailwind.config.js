@@ -15,7 +15,16 @@ module.exports = {
   },
 
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        shine: "shine 1.5s",
+      },
+      keyframes: {
+        shine: {
+          "100%": { left: "125%" },
+        },
+      },
+    },
   },
   plugins: [
     require('tailwindcss-animated'),

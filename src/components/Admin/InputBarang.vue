@@ -10,7 +10,7 @@
       </div>
       <div class="w-6/12 text-right">
         <label>
-            <a @click="visibleDialog = true" class="py-2 px-2 rounded bg-blue-600">Import Via Excel ? </a>
+            <a @click="visibleDialog = true" class="py-2 px-2 rounded bg-blue-600 cursor-pointer text-white">Import Via Excel ? </a>
         </label>
         <!-- Ini klo mw buat button tanpa "choose file"
         <label for="excel">
@@ -167,7 +167,7 @@
           <input type="file" name="" id="" @change="handleFileChange">
         </div>
         <div class="w-full mt-2">
-          <button @click="submitExcel" class="w-full bg-green-600 rounded px-2 py-2">Submit</button>
+          <button @click="submitExcel" class="w-full bg-green-600 rounded px-2 py-2 text-white">Submit</button>
         </div>
       </div>
     </Dialog>
@@ -233,7 +233,6 @@ export default {
           "Content-Type": "multipart/form-data"
         }
       }).then((res) => {
-        alert("Berhasil");
         console.log(res.data);
 
         this.nama_barang = '';
@@ -241,10 +240,20 @@ export default {
         this.deskripsi = '';
         this.gambar = [];
         this.selectedId = '';
+        this.modeCrud = 'showAll';
+
+        toast("Berhasil Tambah", {
+          autoClose: 1500,
+          type: 'success'
+        });
 
         this.getDataBrg();
       }).catch((err) => {
-        alert("Gagal");
+        toast("Gagal", {
+          autoClose: 1500,
+          type: 'error'
+        });
+        
         console.warn(err);
 
       });

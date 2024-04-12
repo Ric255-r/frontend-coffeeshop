@@ -1,27 +1,27 @@
 <template>
     <div>
-        <div v-if="!klikRegis" class="animate-flip-up flex flex-wrap font-sophia">
-            <div class="w-full text-center"><h3>Selamat Datang Di CoffeeKu</h3></div>
+        <div v-if="!klikRegis" class="animate-flip-up flex flex-wrap poppins-regular">
+            <div class="w-full text-center"><span>Selamat Datang di </span><h3 class="font-bold text-5xl "> CoffeeKu</h3></div>
 
-            <form action="" class="w-full mt-3" method="post" @submit.prevent="buatLogin()">
-                <div class="">
+            <form action="" class="w-full mt-8" method="post" @submit.prevent="buatLogin()">
+                <div class="mb-3">
                     <label for="">Email</label>
                     <input type="text" v-model="email" name="" id="" class="w-full rounded-br-lg rounded-tl-lg">
                 </div>
-                <div class=" mt-3">
+                <div class="mt-3 mb-4">
                     <label for="">Password</label>
                     <input type="password" v-model="password" name="" id="" class="w-full rounded-br-lg rounded-tl-lg">
                 </div>
                 
-                <button class="w-full text-white bg-blue-600 hover:bg-blue-700 mt-5 rounded-br-lg rounded-tl-lg">Submit</button>
+                <button class="w-full text-white bg-blue-600 hover:bg-blue-700 mt-5 py-3 rounded-br-lg rounded-tl-lg">Submit</button>
             </form>
             
-            <button @click="formRegis">Ayo Regis</button>
+            <button class="w-full mt-3 rounded-br-lg rounded-tl-lg" @click="formRegis">Register</button>
         </div>
 
-        <div v-if="klikRegis" class="animate-flip-up">
+        <div v-if="klikRegis" class="animate-flip-up ">
             <Register v-model:klikRegis="klikRegis"></Register>
-            <button @click="formRegis" >Ayo Login</button>
+            <div class="mt-5">Already Have An Account? <button @click="formRegis" class="text-blue-600" >Login Now</button></div>
         </div>
     </div>
 </template>
@@ -63,7 +63,12 @@ export default {
                 store.commit('setLoggedIn', res.data.access_token);
 
                 // tembak ke halaman lain
-                this.$router.push('/home');
+                if(res.data.usernya.roles == 'Admin'){
+                    this.$router.push('/admin');
+                }else{
+                    this.$router.push('/home');
+
+                }
 
             }).catch((err) => {
                 

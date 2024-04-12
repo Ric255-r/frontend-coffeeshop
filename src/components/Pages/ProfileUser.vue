@@ -61,12 +61,12 @@
               <div class="w-8/12">
               </div>
 
-              <div class="w-2/12">
-                <button @click="handleCancel('formProfile')">Cancel</button>
+              <div class="w-2/12 p-2">
+                <button class="w-full border border-red-700 hover:bg-red-800 hover:text-white text-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 text-center py-3 px-4 rounded-full" @click="handleCancel('formProfile')">Cancel</button>
               </div>
 
-              <div class="w-2/12">
-                <button @click="handleUbah">Save Profile</button>
+              <div class="w-2/12 p-2">
+                <button class="w-full py-3 px-4 rounded-full bg-blue-600 text-white hover:bg-blue-800" @click="handleUbah">Save Profile</button>
               </div>
             </div>
           </div>
@@ -112,11 +112,11 @@
               </div>
 
               <div class="w-2/12 p-2">
-                <button type="button" class="w-full border border-red-700 hover:bg-red-800 text-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 text-center py-3 px-4 rounded-full" @click="handleCancel('formPass')">Cancel</button>              
+                <button type="button" class="w-full border border-red-700 hover:bg-red-800 hover:text-white text-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 text-center py-3 px-4 rounded-full" @click="handleCancel('formPass')">Cancel</button>              
               </div>
 
               <div class="w-2/12 p-2">
-                <button type="submit" class="w-full py-3 px-4 rounded-full bg-blue-600">Save Profile</button>
+                <button type="submit" class="w-full py-3 px-4 rounded-full bg-blue-600 text-white hover:bg-blue-800">Save Profile</button>
               </div>
             </div>
 
@@ -179,6 +179,7 @@ export default {
         this.email = this.dataUser.email;
         this.pelanggan_id = this.dataUser.pelanggan_id;
         this.foto = this.dataUser.foto;
+        this.created_at = this.dataUser.created_at;
       }).catch((err) => {
         toast("Error fn loadData", {
           autoClose: 1500,
@@ -278,7 +279,7 @@ export default {
 
       this.inputPass();
     },
-    // Bikin Delay. utk ngecek axios aje. pakai lodashjs
+    // Bikin Delay. utk ngecek axios aje. pakai lodashjs debounce
     inputPass: debounce(function(){
       axios.post('http://localhost:5500/apiUser/checkPass', {
         passwd: this.passwd
@@ -293,11 +294,6 @@ export default {
 
         console.log(res);
         this.setChangePass = true;
-
-        toast("Success Ganti Password", {
-          autoClose: 2500,
-          type: 'success'
-        });
 
       }).catch((err) => {
         this.setChangePass = false;
@@ -334,6 +330,11 @@ export default {
             this.inputNewPass = '';
             this.confirmInputNewPass = '';
             this.passwd = '';
+
+            toast("Success Ganti Password", {
+              autoClose: 2500,
+              type: 'success'
+            });
 
           }).catch((err) => {
             console.warn(err);

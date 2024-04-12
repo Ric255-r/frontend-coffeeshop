@@ -162,80 +162,84 @@
 
       <div class="mb-2">Done Order : </div>
 
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="px-6 py-3">
-              No.
-            </th>
-            <th scope="col" class="px-6 py-3">
-              No Jual
-            </th>
-            <th scope="col" class="px-6 py-3">
-              TglTransaksi
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Pelanggan_ID
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Bukti Bayar 
-            </th>
-            <th scope="col" class="px-6 py-3">
-              GrandTotal
-            </th>
-            <th scope="col" class="px-6 py-3">
-              Aksi
-            </th>
-          </tr>
-        </thead>
-        <tbody v-if="filterDone().length">
-          <template v-for="(item, index) in filterDone()" :key="index + refreshKey">
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" width="5%">
-                {{ index + 1}}
+      <div class="overflow-y-scroll h-[400px]">
+
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                No.
               </th>
-              <td class="px-6 py-4">
-                {{ item.nojual }}
-              </td>
-              <td class="px-6 py-4">
-                {{ item.tgltransaksi }}
-              </td>
-              <td class="px-6 py-4">
-                {{ item.pelanggan_id }}
-              </td>
-              <td class="px-6 py-4 text-center items-center justify-center">
-                <img 
-                  :src="`http://localhost:5500/apiAdmin/buktibayar/${item.buktiByr}`" 
-                  :alt="``"
-                  height="50" width="50" />
-              </td>
-              <td class="px-6 py-4">
-                Rp. {{ item.grandtotal }}
-              </td>
-
-              <td class="px-6 py-4 text-left">
-                <!-- Modal toggle -->
-                <button 
-                  @click="openModal(item.jualdetil, item.buktiByr, item.nojual, item.grandtotal, 'done')" 
-                  class="block text-white bg-blue-700 
-                  hover:bg-blue-800 focus:ring-4 focus:outline-none 
-                  focus:ring-blue-300 font-medium rounded-lg text-sm px-5 
-                  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 
-                  dark:focus:ring-blue-800" type="button">
-                  View Details
-                </button>
-              </td>
+              <th scope="col" class="px-6 py-3">
+                No Jual
+              </th>
+              <th scope="col" class="px-6 py-3">
+                TglTransaksi
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Pelanggan_ID
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Bukti Bayar 
+              </th>
+              <th scope="col" class="px-6 py-3">
+                GrandTotal
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Aksi
+              </th>
             </tr>
-            
-          </template>
+          </thead>
+          <tbody v-if="filterDone().length">
+            <template v-for="(item, index) in filterDone()" :key="index + refreshKey">
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" width="5%">
+                  {{ index + 1}}
+                </th>
+                <td class="px-6 py-4">
+                  {{ item.nojual }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ item.tgltransaksi }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ item.pelanggan_id }}
+                </td>
+                <td class="px-6 py-4 text-center items-center justify-center">
+                  <img 
+                    :src="`http://localhost:5500/apiAdmin/buktibayar/${item.buktiByr}`" 
+                    :alt="``"
+                    height="50" width="50" />
+                </td>
+                <td class="px-6 py-4">
+                  Rp. {{ item.grandtotal }}
+                </td>
 
-        </tbody>
-        <tbody v-else>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
-            <td class="text-center py-5" colspan="7">Tidak Ada Data</td>
-          </tr>
-        </tbody>
-      </table>
+                <td class="px-6 py-4 text-left">
+                  <!-- Modal toggle -->
+                  <button 
+                    @click="openModal(item.jualdetil, item.buktiByr, item.nojual, item.grandtotal, 'done')" 
+                    class="block text-white bg-blue-700 
+                    hover:bg-blue-800 focus:ring-4 focus:outline-none 
+                    focus:ring-blue-300 font-medium rounded-lg text-sm px-5 
+                    py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 
+                    dark:focus:ring-blue-800" type="button">
+                    View Details
+                  </button>
+                </td>
+              </tr>
+              
+            </template>
+
+          </tbody>
+          <tbody v-else>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+              <td class="text-center py-5" colspan="7">Tidak Ada Data</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
 
 
       <Dialog v-model:visible="visible" header="Rincian Pesanan" class="w-full"  :modal="true" :draggable="false">
@@ -260,7 +264,7 @@
 
           <template v-else>
             <div class="w-2/12 text-center" v-if="modeModal == 'pending'">
-              <button :class="`bg-blue-600 text-white py-2 rounded w-[180px] ${styleButton}`" @click="handleAcc">Acc? </button>
+              <button :class="`bg-blue-600 text-white py-2 rounded w-[180px] ${styleButton}`" @click="handleAcc">Accept</button>
 
               <form action="" :class="`${styleForm}`" method="post" @submit.prevent="submitAcc(noJual)">
                 <div class="text-left">
@@ -335,11 +339,11 @@
                   <br />
                   Milk : {{ items.milk }}
                   <br />
-                  Syrup : {{ items.syrup }}
+                  Syrup : {{ JSON.parse(items.syrup).length ? JSON.parse(items.syrup).join(', ') : 'Tanpa Syrup' }}
                   <br />
-                  Espresso : {{ items.espresso }}
+                  Espresso : {{ items.espresso == 0 ? 'Tanpa Espresso' : '1 Shot' }}
                   <br />
-                  Topping : {{ items.topping }}
+                  Topping : {{ JSON.parse(items.topping).length ? JSON.parse(items.topping).join(', ') : 'Tanpa Topping' }}
                 </td>
                 <td class="px-6 py-4">
                   {{ items.qty }}

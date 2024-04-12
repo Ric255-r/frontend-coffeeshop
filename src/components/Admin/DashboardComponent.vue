@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div class="w-full overflow-x-hidden">
     <div class="flex flex-wrap">
       <div class="w-4/12 bg-white shadow-md rounded">
         <apexchart width="500" type="pie" :options="chartOptions" :series="series"></apexchart>
@@ -21,7 +21,7 @@
             Jumlah Penghasilan Per : 
             <select 
               name="omset" id="omset" class="py-2 px-0 text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer" 
-              @change="getOmset" v-model="selectedOmset">
+              @change="getOmsetAndDataTable" v-model="selectedOmset">
               <option value="hari">Hari ini</option>
               <option value="bulan">Bulan ini</option>
               <option value="tahun">Tahun ini</option>
@@ -247,8 +247,8 @@ export default {
     // atau bs pake async await kaya di react (sosmed yg ak buat) loader.js
     
     // Buat Radial Bar. di arg this.valueToPercent isi aj jlh userny
-    this.totalUser = 10;
-    this.radialBarOption.series[0] = this.valueToPercent(this.totalUser);
+    // this.totalUser = 10;
+    // this.radialBarOption.series[0] = this.valueToPercent(this.totalUser);
   },
   methods: {
     fetchDataTerjual: function(){
@@ -316,13 +316,21 @@ export default {
           }
         });
 
+        const resCountUser = await axios.get(`http://localhost:5500/apiAdmin/countUser/`, {
+          headers:{
+            Authorization: 'Bearer ' + this.token
+          }
+        });
+
         let jlhOmset = resDataOmset.data.omset.grandtotal;
         let jlhTrans = resDataOmset.data.transaksi.jlhTrans;
+        let jlhUser = resCountUser.data;
 
         this.jlhOmset = jlhOmset == null ? 0 : jlhOmset;
         this.jlhTrans = jlhTrans == null ? 0 : jlhTrans;
+        this.totalUser = parseInt(jlhUser);
 
-        console.log(this.dataOrder);
+        this.radialBarOption.series[0] = this.valueToPercent(this.totalUser);
       } catch (error) {
         console.warn(error);
         return null;

@@ -5,7 +5,7 @@
 
             </div>
 
-            <div :class="`lg:w-8/12 md:w-8/12 lg:pl-0 md:pl-0 pl-2 w-full text-white poppins-regular mb-3`">
+            <div :class="`lg:w-8/12 md:w-8/12 lg:pl-0 md:pl-0 pl-4 w-full text-white poppins-regular mb-3`">
                 Welcome <br /> {{ dataUser.email }}
             </div>
 
@@ -19,7 +19,7 @@
 
             </div>
 
-            <div class="lg:w-8/12 md:w-8/12 w-full flex items-center justify-center">
+            <div class="lg:w-8/12 md:w-8/12 lg:mx-0 mx-3 w-full flex items-center justify-center">
                 <CarouselBrgVue></CarouselBrgVue>
             </div>
             
@@ -34,7 +34,7 @@
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
 
             </div>
-            <div class="lg:w-8/12 md:w-8/12 w-full">
+            <div class="lg:w-8/12 md:w-8/12 lg:pl-0 md:pl-0 pl-4 w-full">
                 Choose Your Favourite : 
             </div>
 
@@ -49,24 +49,24 @@
 
             </div>
             
-            <div class="lg:w-1/12 md:w-1/12 w-4/12 text-center flex items-center justify-center">   
+            <div class="lg:w-1/12 md:w-1/12 w-3/12 text-center flex items-center justify-center">   
                 <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
                     <img :src="getImg(item.gambar[0], item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
                 </router-link>
             </div>
 
-            <div class="lg:w-7/12 md:w-7/12 w-8/12 lg:pl-2 md:pl-2 pt-1" >
+            <div class="lg:w-7/12 md:w-7/12 w-9/12 lg:pl-2 md:pl-2 pt-1" >
                 <div class="font-bold">
                     <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">{{ item.nama_barang }}</router-link>
                 </div>
                 <div class="py-1 text-xs">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum qui enim, corrupti labore beatae sapiente aliquid, temporibus eveniet, provident vel minima. Voluptates, asperiores quod? Hic dignissimos culpa aliquid deleniti cupiditate.
+                    {{item.deskripsi}}
                 </div>
                 <div class="text-green-400">
                     Rp. {{ item.harga }}
                 </div>
 
-                <div class="text-right">
+                <div class="text-right pr-3">
                     <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
                         <i class="fas fa-plus-circle text-green-600"></i>
                     </router-link>

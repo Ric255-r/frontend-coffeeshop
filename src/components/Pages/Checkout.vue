@@ -2,9 +2,9 @@
     <div>
         <!-- Template By JaxStone -->
         <!-- https://tailwindflex.com/@jaxstone/checkout-page-template -->
-        <div class="h-screen py-8" :style="styleBg">
+        <div class="h-screen py-8 poppins-regular" :style="styleBg">
             <div class="container mx-auto px-4">
-                <h1 class="text-2xl font-semibold mb-4 text-center text-gray-800">Pesanan Sementara</h1>
+                <h1 class="text-2xl font-semibold mb-4 text-center text-white">Pesanan Sementara</h1>
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="md:w-full">
                         <div class="bg-white rounded-lg shadow-md p-6 mb-[100px]" style="overflow-x: auto;">
@@ -51,6 +51,7 @@
                                                     <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.variant">
                                                         Variant : {{ item.variant }} <br />
                                                     </span> 
+                                                    <!-- Cara Pertama Utk Hilangkan Kurung Array -->
                                                     <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px] whitespace-normal" v-if="item.topping.length > 0">
                                                         Topping : 
                                                         <span v-for="(items, index) in item.topping" :key="index">
@@ -58,8 +59,9 @@
                                                             {{  index !== item.topping.length - 1 ? ', ': '' }}
                                                         </span> <br />
                                                     </span> 
+                                                    <!-- Cara Kedua utk Hilangkan Kurung Array -->
                                                     <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.syrup.length > 0">
-                                                        Syrup : {{ item.syrup }} <br />
+                                                        Syrup : {{ Array.isArray(item.syrup) ? item.syrup.join(', ') : 'Tanpa Syrup' }} <br />
                                                     </span> 
                                                     <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.milk">
                                                         Milk : {{ item.milk }} <br />

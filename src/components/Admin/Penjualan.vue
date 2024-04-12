@@ -8,7 +8,7 @@
     <div class="w-6/12 text-sm">
 
       <div class="flex flex-wrap px-2 py-2 overflow-hidden shadow">
-        <div class="w-full">Master Data</div>
+        <div class="w-full mb-4">Master Data</div>
         <br><br>
         <div class="w-3/12">
           No
@@ -127,7 +127,7 @@
                     </tr>
                     <tr>
                       <td colspan="6" class="pl-10">
-                        <h1 :class="`text-md ${openNestedTable[index1] ? 'block' : 'hidden'}`">Detail Barang</h1>
+                        <h1 :class="`text-md ${openNestedTable[index1] ? 'block' : 'hidden'} text-center py-4 font-bold`">Detail Barang</h1>
                       </td>
                     </tr>
 
@@ -180,11 +180,11 @@
                                     <td class="pl-5">Milk : {{ item2.milk }}</td>
                                   </tr>
                                   <tr>
-                                    <td>Syrup : {{ item2.syrup }}</td>
+                                    <td>Syrup : {{ JSON.parse(item2.syrup).length ? JSON.parse(item2.syrup).join(', ') : 'Tanpa Syrup' }}</td>
                                     <td class="pl-5">Espresso : {{ item2.espresso }} Shot</td>
                                   </tr>
                                   <tr>
-                                    <td>Topping : {{ item2.topping }} </td>
+                                    <td>Topping : {{ JSON.parse(item2.topping).length ? JSON.parse(item2.topping).join(', ') : 'Tanpa Topping' }} </td>
                                   </tr>
                                 </td>
                                 <td class="py-3 px-4 text-center">

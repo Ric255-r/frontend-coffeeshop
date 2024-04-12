@@ -10,11 +10,11 @@
                         <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya">
                             <div class="wrappernya lg:py-2 md:py-2 sm:py-2 py-1">
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full h-full object-cover rounded">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 h-72 object-cover rounded">
                                 </div>
                                 <!-- Mesti Load 2x biar kesannnya Infinite Looping Carouselnya -->
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full h-full object-cover rounded">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 h-72 object-cover rounded">
                                 </div>
                             </div>
 
@@ -27,8 +27,7 @@
                                 </div>
                             </div>
                             <div class="w-full mt-2 text-sm capitalize lg:pl-2 md:pl-2">
-                                {{ dataBarang.deskripsi }} Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum odio impedit quidem doloribus nobis magnam, sequi, quasi possimus asperiores iusto porro est facilis molestiae. Placeat ut tenetur expedita deserunt. Asperiores?
-                                Blanditiis accusamus rerum temporibus maxime?m?
+                                {{ dataBarang.deskripsi }}  
                             </div>
                             <div class="w-full mt-2 text-right">
                                 <b>Rp. {{ dataBarang.harga }}</b>
@@ -42,15 +41,15 @@
                             <b>Variant Tersedia :</b>
                             <div class="flex flex-wrap mt-3">
 
-                                <div class="lg:w-auto w-6/12">
+                                <div class=" w-6/12">
                                     <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[20px] px-[20px] w-full rounded `" @click="handleVariant('hot')">
-                                        🥵
+                                        <i class="fas fa-sun "></i>
                                     </button>
                                 </div>
 
-                                <div class="lg:w-auto lg:ml-3 w-6/12">
+                                <div class=" w-6/12">
                                     <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[20px] px-[20px] w-full ml-1 rounded`" @click="handleVariant('cold')">
-                                        🥶
+                                        <i class="far fa-snowflake"></i>
                                     </button>
                                 </div>
                             </div>
@@ -344,8 +343,10 @@
                                             </div>
                                             
                                             <div class="lg:w-9/12 md:w-9/12 w-8/12 capitalize text-[10px]" @click="handleSelectedProducts(index)">
-                                                <p class="pl-1">{{ dataBarang.nama_barang }}</p>
-                                                <p class="pl-1 text-gray-800">{{ 'Summary : ' + item.ukuran_cup + ', ' + item.milk + ', ' +  item.espresso + ', ' + item.ice_cube +  ', ' + item.sweetness + ', ' + item.variant + ', ' + item.syrup + ', ' + item.topping }}</p>
+                                                <p class="pl-1 font-bold">{{ dataBarang.nama_barang }}</p>
+                                                <p class="pl-1 text-gray-800"><span class="font-bold">Summary :</span> {{ item.variant + ', ' + item.ukuran_cup + ', ' + item.ice_cube + ', ' }} {{item.espresso  == 0 ? 'No Espresso' : '1 Shot Espresso'}} , {{ item.sweetness }} Sweetness, {{ item.milk}} Milk, {{ item.syrup.length ? item.syrup + ', ' : ''}} {{ item.topping.length ? item.topping + ', ' : ''}}</p>
+
+                                                
                                             </div>
 
                                             <div class="lg:w-1/12 mb-5 flex pt-1 justify-center invisible group-hover/item:visible hover:bg-slate-400 rounded-lg hover:cursor-pointer" @click="handleHapus(index)">
@@ -429,7 +430,7 @@
                             <router-link to="/checkout" 
                                 :class="`bg-green-600 py-3 rounded-lg hover:bg-green-900 ${toggleAddBtn == false ? '': ' px-10'}`" :style="`${toggleAddBtn == false ? 'display: inline-block; width: 100%;' : ''}`">
                                 <span>Go To Cart</span>
-                                <span :class="lengthCart > 0 ? ' badge' : ' hidden'">{{ lengthCart }}</span>
+                                <span :key="updateBadge" :class="lengthCart > 0 ? ' badge' : ' hidden'">{{ lengthCart }}</span>
 
                             </router-link>
                         </div>
@@ -545,7 +546,11 @@ export default {
                 let ls = JSON.parse(localStorage.getItem("cart"));
 
                 // Menu Responsive. buat check cartlength
-                this.lengthCart = ls.length;
+                // this.lengthCart = ls.length;
+                for (let i = 0; i < ls.length; i++) {
+                    this.lengthCart = this.lengthCart + ls[i].qty 
+                    
+                }
 
                 let cariIndex = ls.findIndex((item) => item.id_barang == this.params);
 
@@ -585,7 +590,7 @@ export default {
                     this.selectedSweetness = ls[cariIndex].sweetness;
                     this.qty = ls[cariIndex].qty;
 
-                    console.log(cariIndex)
+                    // console.log(cariIndex)
 
                     for(let i = 0; i < this.dataTopping.length; i++){
                         if(this.dataTopping[i].nama_topping == ls[cariIndex].milk){
@@ -776,7 +781,7 @@ export default {
 
                 this.qty = 1;
 
-                this.selectedVariant = '';
+                this.selectedVariant = this.selectedVariant ? this.selectedVariant : 'cold';
 
                 newCart.push({
                     ...this.allObj,
@@ -808,6 +813,14 @@ export default {
                 this.componentKey += 1;
                 this.lengthCart = cart2.length;
                 // this.handleDataKosong();
+
+                // Buat Akumulasi Quantity menu Responsive
+                let sumQty = 0;
+                for (let i = 0; i < cart2.length; i++) {
+                    sumQty += cart2[i].qty 
+                }
+                this.lengthCart = sumQty;
+                // End Akumulasi qty
             }
         },
         handleSubTotal: function(){
@@ -1077,8 +1090,8 @@ export default {
                 // End Ubah Balik
                 cartObj[existsObjIndex].ice_cube = this.selectedIceCube;
                 cartObj[existsObjIndex].sweetness = this.selectedSweetness;
-
-
+                cartObj[existsObjIndex].variant = this.selectedVariant;
+                cartObj[existsObjIndex].qty = this.qty;
             }else{
                 // Buat Baru
                 cartObj.push({...this.allObj, id_barang: this.params, topping: this.checkedTopping});
@@ -1134,6 +1147,9 @@ export default {
             // alert(`ini existsobj ${existsObjIndex}, ini selected ${this.selectedProducts}`);
 
             if(existsObjIndex !== -1){
+                this.qty = this.qty == 0 ? 1 : this.qty;
+                this.selectedVariant = this.selectedVariant == '' ? 'cold' : this.selectedVariant;
+
                 cartObj[existsObjIndex].id_barang = this.params;
                 cartObj[existsObjIndex].nama_barang= this.dataBarang.nama_barang;
                 cartObj[existsObjIndex].milk = this.selectedMilk;
@@ -1147,6 +1163,7 @@ export default {
                 cartObj[existsObjIndex].qty = this.qty;
             }else{
                 this.qty = 1;
+                this.selectedVariant = this.selectedVariant ? this.selectedVariant : 'cold';    
 
                 cartObj.push({
                     ...this.allObj, 
@@ -1162,6 +1179,8 @@ export default {
             }
 
             this.toggleAddBtn = true;
+
+
 
             localStorage.setItem("cart", JSON.stringify(cartObj));
 
@@ -1195,7 +1214,7 @@ export default {
             // totalSeluruh itu buat akumulasi qty * totalharga
             if(index !== -1){
                 items[index].totalHarga = this.totalHarga;
-                items[index].totalSeluruh = this.totalHarga;
+                items[index].totalSeluruh = this.totalHarga * this.qty;
             }else{
                 items.push(newItem);
             }
@@ -1207,7 +1226,15 @@ export default {
             this.componentKey += 1;
             this.handleSubTotal(); //ini subtotal utk produk + topping dimenu brg detail.
             // Pas ubah topping, tampilkan length cart jg
-            this.lengthCart = items.length;
+            // Buat Akumulasi Quantity menu Responsive
+
+            let cartObj = JSON.parse(localStorage.getItem('cart'));
+            let sumQty = 0;
+            for (let i = 0; i < cartObj.length; i++) {
+                sumQty += cartObj[i].qty 
+            }
+            this.lengthCart = sumQty;
+            // End Akumulasi qty
         },
         handlePlus: function(){
             
@@ -1216,6 +1243,14 @@ export default {
 
             let cart = JSON.parse(localStorage.getItem('cart')) || []
             let cartTotal = JSON.parse(localStorage.getItem('totalHarga')) || [];
+
+            // Buat Akumulasi Quantity menu Responsive
+            let sumQty = 0;
+            for (let i = 0; i < cart.length; i++) {
+                sumQty += cart[i].qty 
+            }
+            this.lengthCart = sumQty;
+            // End Akumulasi qty
 
             let hitung = this.totalHarga * this.qty;
 
@@ -1256,6 +1291,14 @@ export default {
             let cart = JSON.parse(localStorage.getItem('cart')) || []
             let cartTotal = JSON.parse(localStorage.getItem('totalHarga')) || [];
 
+            // Buat Akumulasi Quantity menu Responsive
+            let sumQty = 0;
+            for (let i = 0; i < cart.length; i++) {
+                sumQty += cart[i].qty 
+            }
+            this.lengthCart = sumQty;
+            // End Akumulasi qty
+
             // Buat Cegah Minus
             if(this.qty <= 1){
                 this.changeTotalSemua(); // utk trigger totalHarga
@@ -1281,7 +1324,13 @@ export default {
                 if(editMode == true){
                     this.handleHapus(this.selectedProducts);
                     this.qty = 0;
-                    this.$router.push('/checkout');
+
+                    // Logika supaya klo ad 2 item yang sama, lalu mau di kurangi
+                    if(resetIndex != undefined && lengthItemYgSama > 1){
+                        this.$router.push('/checkout');
+                    }else{
+                        this.$router.push('/home');
+                    }
                 }else{
                     // Logika supaya klo ad 2 item yang sama, lalu mau di kurangi
                     if(resetIndex != undefined && lengthItemYgSama > 1){
@@ -1299,7 +1348,6 @@ export default {
                         // Opsi Kedua, pentalkan dia ke halaman checkout dgn router.push
                         this.handleHapus(this.selectedProducts);
                         this.$router.push('/checkout');
-
                     }else{
                         this.handleHapus(this.selectedProducts);
                         this.qty = 0;
@@ -1340,6 +1388,8 @@ export default {
                 // console.log(this.totalHarga * this.qty);
                 // console.log(this.qty);
             }
+
+
 
 
         },
