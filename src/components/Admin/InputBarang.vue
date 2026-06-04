@@ -3,9 +3,9 @@
     <div class="flex flex-wrap pt-5">
       <!-- Ini Lebih Baik Pakai Modal -->
       <div class="w-6/12">
-        <button @click="handleMode('showAll')" :class="`pr-2 ${modeCrud == 'showAll' ? ' underline': ''}`">Data Utama</button>
-        <button @click="handleMode('insert')"  :class="`pr-2 ${modeCrud == 'insert' ? ' underline': ''}`">Insert Data</button>
-        <button @click="handleMode('update')" :class="`pr-2 ${modeCrud == 'update' ? ' underline': ''}`">Update Data</button>
+        <button @click="handleMode('showAll')" :class="`pr-2 ${modeCrud == 'showAll' ? ' underline': ''}`"> Data Utama |</button>
+        <button @click="handleMode('insert')"  :class="`pr-2 ${modeCrud == 'insert' ? ' underline': ''}`"> Insert Data |</button>
+        <button @click="handleMode('update')" :class="`pr-2 ${modeCrud == 'update' ? ' underline': ''}`"> Update Data</button>
 
       </div>
       <div class="w-6/12 text-right">

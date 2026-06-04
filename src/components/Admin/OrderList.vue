@@ -528,7 +528,11 @@ export default {
         // alert("Berhasil");
         console.log(resData);
       }).catch((err) => {
-        alert("Gagal");
+        if(err.response.status == 401){
+          alert("ga Blh Login"); 
+        }else{
+          alert("Gagal d func fetchData");
+        }
         console.warn(err);
       });
     },

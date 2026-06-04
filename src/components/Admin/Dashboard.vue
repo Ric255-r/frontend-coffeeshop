@@ -6,24 +6,41 @@
         <div class="py-3 flex justify-end cursor-pointer sticky top-0" @click="openNavbar(!stateNavbar)">
           <i class="fas fa-ellipsis-h" style="height: 20px; width: 20px;"></i>
         </div>
-        <div class="mt-4 flex flex-col gap-4 relative sticky top-[60px]">
+        <div class="mt-4 flex flex-col gap-4  sticky top-[60px]">
           <!-- Ntr Bagian ini di loop -->
-          <router-link  
-            v-for="(item, index) in menuLoop" 
-            :key="index" 
-            :class="`${item.margin ? 'mt-5 ': ''} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`"
-            :to="item.link">
-              
-            <div><i :class="item.icon"></i></div>
+          <template v-for="(item, index) in menuLoop" :key="index">
+          <!-- jika bkn function logout, rolenya router-link kek biasa -->
+            <router-link v-if="!item.isLogoutFn"
+              :class="`${item.margin ? 'mt-5 ': ''} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`"
+              :to="item.link">
+                
+              <div><i :class="item.icon"></i></div>
 
-            <h2 
-                :style="`transition-delay: ${index + 3}00ms`" 
-                :class="`whitespace-pre duration-500 ${!stateNavbar ? 'opacity-0 translate-x-28 overflow-hidden' : ''}`"
-                >
-                {{ item.name }}
-            </h2>
-            <h2 :class="`${stateNavbar ? 'hidden ' : ''} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`">{{ item.name }}</h2>
-          </router-link>
+              <h2 :style="`transition-delay: ${index + 3}00ms`" 
+                  :class="`whitespace-pre duration-500 ${!stateNavbar ? 'opacity-0 translate-x-28 overflow-hidden' : ''}`"
+                  >
+                  {{ item.name }}
+              </h2>
+
+              <h2 :class="`${stateNavbar ? 'hidden ' : ''} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`">{{ item.name }}</h2>
+            </router-link>
+
+            <a v-else @click="logout" role="button"
+              :class="`${item.margin ? 'mt-5 ': ''} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`" >
+                
+              <div><i :class="item.icon"></i></div>
+
+              <h2 :style="`transition-delay: ${index + 3}00ms`" 
+                  :class="`whitespace-pre duration-500 ${!stateNavbar ? 'opacity-0 translate-x-28 overflow-hidden' : ''}`"
+                  >
+                  {{ item.name }}
+              </h2>
+
+              <h2 :class="`${stateNavbar ? 'hidden ' : ''} absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`">{{ item.name }}</h2>
+
+            </a>
+          </template>
+
 
         </div>
       </div>
@@ -38,6 +55,9 @@
 </template>
 
 <script>
+import store from '@/router/store'
+import {toast} from 'vue3-toastify'
+
 export default {
   name: 'dashboard-admin',
   data: function(){
@@ -69,22 +89,23 @@ export default {
           icon: 'fas fa-pencil-alt',
           margin: true
         },
-        {
-          name: "File Manager", 
-          link: '/',
-          icon: 'fas fa-file'
-        },
+        // {
+        //   name: "File Manager", 
+        //   link: '/',
+        //   icon: 'fas fa-file'
+        // },
         {
           name: "Data User",
           link: '/admin/daftaruser',
           icon: 'fas fa-user',
           margin: true
         },
-        // {
-        //     name: "Saved",
-        //     link: '/',
-        //     icon: 'fas fa-save'
-        // }
+        {
+          name: "Logout",
+          link: '/',
+          icon: 'fas fa-sign-out-alt',
+          isLogoutFn: true
+        }
       ];
 
       return menu;
@@ -93,6 +114,20 @@ export default {
   methods: {
     openNavbar: function(state){
         this.stateNavbar = state;
+    },
+    logout: function(e){
+      e.preventDefault();
+
+      let acc = confirm("Apa anda Yakin Ingin Logout?");
+
+      if(acc){
+        toast("Success Logout", {
+            autoClose: 2500,
+            type: 'success'
+        });
+        store.commit('setLoggedIn', false);
+        this.$router.push('/');
+      }
     }
   }
 }

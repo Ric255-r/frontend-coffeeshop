@@ -281,6 +281,9 @@ export default {
     },
     // Bikin Delay. utk ngecek axios aje. pakai lodashjs debounce
     inputPass: debounce(function(){
+
+      console.log("Hai Debounce");
+      
       axios.post('http://localhost:5500/apiUser/checkPass', {
         passwd: this.passwd
       }, {

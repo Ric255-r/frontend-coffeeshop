@@ -1,20 +1,20 @@
 <template>
     <div class="poppins-regular">
-        <div class=" animate-fade items-center justify-center ">
+        <div class=" animate-fade items-center justify-center">
             <div class="flex flex-wrap">
                 <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
                     <!-- Hai -->
                 </div>
-                <div class="lg:w-8/12 lg:px-0 md:w-8/12 md:px-0 w-full px-2">
+                <div class="lg:w-8/12 lg:px-3 md:w-8/12 md:px-2 w-full px-2 shadow-md rounded-xl">
                     <div class="flex flex-wrap">
                         <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya">
                             <div class="wrappernya lg:py-2 md:py-2 sm:py-2 py-1">
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 h-72 object-cover rounded">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 md:h-[190px] h-72 object-cover rounded">
                                 </div>
                                 <!-- Mesti Load 2x biar kesannnya Infinite Looping Carouselnya -->
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 h-72 object-cover rounded">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 md:h-[190px] h-72 object-cover rounded">
                                 </div>
                             </div>
 
@@ -32,23 +32,42 @@
                             <div class="w-full mt-2 text-right">
                                 <b>Rp. {{ dataBarang.harga }}</b>
                             </div>
+
+                            <!-- Utk Tampilan Web -->
+                            <div class="w-full mt-2 lg:pl-2 md:pl-2 lg:block md:block  hidden">
+                                <p>Variant Tersedia :</p>
+                                <div class="flex flex-wrap mt-3">
+
+                                    <div class=" w-6/12">
+                                        <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[10px] px-[20px] w-full rounded `" @click="handleVariant('hot')">
+                                            <i class="fas fa-sun "></i>
+                                        </button>
+                                    </div>
+
+                                    <div class=" w-6/12">
+                                        <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[10px] px-[20px] w-full ml-1 rounded`" @click="handleVariant('cold')">
+                                            <i class="far fa-snowflake"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-
-                        <div class="w-full mt-5">
+                        <!-- Utk Tampilan Mobile -->
+                        <div class="w-full mt-5 lg:hidden md:hidden ">
                             <b>Variant Tersedia :</b>
                             <div class="flex flex-wrap mt-3">
 
                                 <div class=" w-6/12">
-                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[20px] px-[20px] w-full rounded `" @click="handleVariant('hot')">
+                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[10px] px-[20px] w-full rounded `" @click="handleVariant('hot')">
                                         <i class="fas fa-sun "></i>
                                     </button>
                                 </div>
 
                                 <div class=" w-6/12">
-                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[20px] px-[20px] w-full ml-1 rounded`" @click="handleVariant('cold')">
+                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[10px] px-[20px] w-full ml-1 rounded`" @click="handleVariant('cold')">
                                         <i class="far fa-snowflake"></i>
                                     </button>
                                 </div>
@@ -396,7 +415,7 @@
 
             <!-- Menu Responsive -->
 
-            <div class="flex flex-wrap text-white lg:hidden md:hidden block sticky bottom-[53px] bg-white py-2">
+            <div class="flex flex-wrap text-white lg:hidden md:hidden  sticky bottom-[53px] bg-white py-2">
                 
                 <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
                     <button @click="handleMinus()" class="rounded-full bg-red-500 w-[30px] h-[30px]" >
@@ -705,7 +724,7 @@ export default {
                     // jd kalo mw ambil data terakhir, g ush d break. kecuali mw ambil data pertamakali;
                 }
             }
-            console.log(`ini reset index ${resetIndex} ini selectedProduct ${this.selectedProducts}`)
+            console.log(`ini di func handleHapus reset index ${resetIndex} ini selectedProduct ${this.selectedProducts}`)
 
             localStorage.setItem('cart', JSON.stringify(cartObj));
             localStorage.setItem('totalHarga', JSON.stringify(total));
@@ -714,6 +733,9 @@ export default {
                 this.selectedProducts = -1;
                 this.toggleAddBtn = false; // utk toggle btn di menu responsive
                 this.handleDataKosong();
+
+                // reset input type yg idQtyResp ke 0 pas brg ini undefined
+                this.qty = 0;
 
             }else{
                 this.handleSelectedProducts(resetIndex);

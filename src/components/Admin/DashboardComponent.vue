@@ -11,7 +11,7 @@
           <div class="w-full text-center pt-[50px]">
             <i class="fas fa-coffee text-[25px]"></i>
           </div>
-          <div class="w-full text-center text-sm py-2">{{ dataThisMonth.totalSales }}</div>
+          <div class="w-full text-center text-sm py-2">{{ dataThisMonth.totalSales ?? '0'  }}</div>
         </div>
       </div>
 
@@ -156,6 +156,8 @@
 import axios from 'axios'
 import VueApexCharts from 'vue3-apexcharts'
 import OverlayPanel from 'primevue/overlaypanel'
+import store from '@/router/store'
+
 
 export default {
   name: 'dashboard-component',
@@ -276,7 +278,11 @@ export default {
         this.updateChartOptions(arrNamaBrg);
       })
       .catch((err) => {
-        alert("Gagal");
+        if(err.response.status == 401){
+          store.commit('setLoggedIn', false);
+          this.$router.push('/');
+        }
+
         console.warn(err)
       });
     },
