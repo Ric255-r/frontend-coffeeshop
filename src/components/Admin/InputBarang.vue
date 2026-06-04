@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-white px-5 rounded-md shadow-md">
+  <div class="bg-white px-5 rounded-2xl shadow-xl shadow-slate-900/5 border border-slate-100">
     <div class="flex flex-wrap pt-5">
       <!-- Ini Lebih Baik Pakai Modal -->
       <div class="w-6/12">
-        <button @click="handleMode('showAll')" :class="`pr-2 ${modeCrud == 'showAll' ? ' underline': ''}`"> Data Utama |</button>
-        <button @click="handleMode('insert')"  :class="`pr-2 ${modeCrud == 'insert' ? ' underline': ''}`"> Insert Data |</button>
-        <button @click="handleMode('update')" :class="`pr-2 ${modeCrud == 'update' ? ' underline': ''}`"> Update Data</button>
+        <button @click="handleMode('showAll')" :class="`pr-3 py-2 ${modeCrud == 'showAll' ? ' text-emerald-700 font-semibold': 'text-slate-500'}`"> Data Utama |</button>
+        <button @click="handleMode('insert')"  :class="`pr-3 py-2 ${modeCrud == 'insert' ? ' text-emerald-700 font-semibold': 'text-slate-500'}`"> Insert Data |</button>
+        <button @click="handleMode('update')" :class="`pr-3 py-2 ${modeCrud == 'update' ? ' text-emerald-700 font-semibold': 'text-slate-500'}`"> Update Data</button>
 
       </div>
       <div class="w-6/12 text-right">
         <label>
-            <a @click="visibleDialog = true" class="py-2 px-2 rounded bg-blue-600 cursor-pointer text-white">Import Via Excel ? </a>
+            <a @click="visibleDialog = true" class="py-2 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 cursor-pointer text-white shadow-sm transition">Import Via Excel ? </a>
         </label>
         <!-- Ini klo mw buat button tanpa "choose file"
         <label for="excel">
@@ -68,10 +68,10 @@
                       height="50" width="50" />
                   </td>
                   <td class="px-6 py-4">
-                    <button @click="handleMode('update', item.id)" type="button" class="bg-blue-600 py-2 px-2 rounded-lg text-white">Update</button>
+                    <button @click="handleMode('update', item.id)" type="button" class="bg-emerald-700 hover:bg-emerald-800 py-2 px-3 rounded-xl text-white transition">Update</button>
                   </td>
                   <td class="px-6 py-4">
-                    <button @click="deleteBarang(item.id)" type="button" class="bg-red-600 py-2 px-2 rounded-lg text-white">Delete</button>
+                    <button @click="deleteBarang(item.id)" type="button" class="bg-red-600 hover:bg-red-700 py-2 px-3 rounded-xl text-white transition">Delete</button>
                   </td>
 
                 </tr>
@@ -113,7 +113,7 @@
         </div>
 
         <div class="w-full mt-3">
-          <input type="submit" value="Simpan" class="w-full bg-blue-600 py-3 rounded-md">
+          <input type="submit" value="Simpan" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl cursor-pointer transition">
         </div>
       </div>
     </form>
@@ -155,7 +155,7 @@
         </div>
 
         <div class="w-full mt-3">
-          <input type="submit" value="Simpan" class="w-full bg-blue-600 py-3 rounded-md">
+          <input type="submit" value="Simpan" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl cursor-pointer transition">
         </div>
       </div>
     </form>
@@ -167,7 +167,7 @@
           <input type="file" name="" id="" @change="handleFileChange">
         </div>
         <div class="w-full mt-2">
-          <button @click="submitExcel" class="w-full bg-green-600 rounded px-2 py-2 text-white">Submit</button>
+          <button @click="submitExcel" class="w-full bg-emerald-700 hover:bg-emerald-800 rounded-xl px-2 py-2 text-white transition">Submit</button>
         </div>
       </div>
     </Dialog>

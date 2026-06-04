@@ -2,8 +2,8 @@
 <template>
   <div class="bgAbu">
     <section class="flex gap-6">
-      <div :class="`bg-[#0e0e0e] min-h-screen ${stateNavbar ? ' w-72' : ' w-16'} duration-500 px-4 text-gray-100`" >
-        <div class="py-3 flex justify-end cursor-pointer sticky top-0" @click="openNavbar(!stateNavbar)">
+      <div :class="`bg-[#101916] min-h-screen ${stateNavbar ? ' w-72' : ' w-16'} duration-500 px-4 text-gray-100 shadow-2xl shadow-slate-950/20`" >
+        <div class="py-3 flex justify-end cursor-pointer sticky top-0 text-emerald-100" @click="openNavbar(!stateNavbar)">
           <i class="fas fa-ellipsis-h" style="height: 20px; width: 20px;"></i>
         </div>
         <div class="mt-4 flex flex-col gap-4  sticky top-[60px]">
@@ -11,7 +11,7 @@
           <template v-for="(item, index) in menuLoop" :key="index">
           <!-- jika bkn function logout, rolenya router-link kek biasa -->
             <router-link v-if="!item.isLogoutFn"
-              :class="`${item.margin ? 'mt-5 ': ''} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`"
+              :class="`${item.margin ? 'mt-5 ': ''} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-emerald-900/60 rounded-xl transition`"
               :to="item.link">
                 
               <div><i :class="item.icon"></i></div>
@@ -26,7 +26,7 @@
             </router-link>
 
             <a v-else @click="logout" role="button"
-              :class="`${item.margin ? 'mt-5 ': ''} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`" >
+              :class="`${item.margin ? 'mt-5 ': ''} group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-emerald-900/60 rounded-xl transition`" >
                 
               <div><i :class="item.icon"></i></div>
 
@@ -44,7 +44,7 @@
 
         </div>
       </div>
-      <div class="m-3 text-xl text-gray 900 font-semibold w-full">
+      <div class="m-3 text-xl text-gray-900 font-semibold w-full">
           <!-- Sama kaya outlet di react -->
         <router-view class="animate-fade-left"></router-view>
 
@@ -135,6 +135,6 @@ export default {
 
 <style scoped>
 .bgAbu {
-    background-color: #F1F2F7;
+    background-color: #F6F7F4;
 }
 </style>

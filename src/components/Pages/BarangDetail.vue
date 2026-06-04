@@ -1,20 +1,20 @@
 <template>
-    <div class="poppins-regular">
+    <div class="poppins-regular text-stone-800">
         <div class=" animate-fade items-center justify-center">
             <div class="flex flex-wrap">
                 <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
                     <!-- Hai -->
                 </div>
-                <div class="lg:w-8/12 lg:px-3 md:w-8/12 md:px-2 w-full px-2 shadow-md rounded-xl">
+                <div class="lg:w-8/12 lg:px-3 md:w-8/12 md:px-2 w-full px-2 bg-white/95 shadow-2xl shadow-emerald-950/10 border border-white rounded-2xl overflow-hidden">
                     <div class="flex flex-wrap">
                         <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya">
                             <div class="wrappernya lg:py-2 md:py-2 sm:py-2 py-1">
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 md:h-[190px] h-72 object-cover rounded">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 md:h-[190px] h-72 object-cover rounded-2xl">
                                 </div>
                                 <!-- Mesti Load 2x biar kesannnya Infinite Looping Carouselnya -->
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 md:h-[190px] h-72 object-cover rounded">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 md:h-[190px] h-72 object-cover rounded-2xl">
                                 </div>
                             </div>
 
@@ -22,30 +22,30 @@
 
                         <div class="lg:w-9/12 lg:pl-2 md:w-9/12 md:pl-2 w-full lg:mt-0 md:mt-0 sm:mt-0 mt-2">
                             <div class="flex flex-wrap">
-                                <div class="w-full lg:pt-1 font-bold capitalize text-[30px] lg:pl-2 md:pl-2">
+                                <div class="w-full lg:pt-1 font-bold capitalize text-[30px] lg:pl-2 md:pl-2 text-stone-900">
                                     {{ dataBarang.nama_barang }}
                                 </div>
                             </div>
-                            <div class="w-full mt-2 text-sm capitalize lg:pl-2 md:pl-2">
+                            <div class="w-full mt-2 text-sm capitalize lg:pl-2 md:pl-2 text-stone-500 leading-relaxed">
                                 {{ dataBarang.deskripsi }}  
                             </div>
-                            <div class="w-full mt-2 text-right">
+                            <div class="w-full mt-2 text-right text-emerald-700 text-lg">
                                 <b>Rp. {{ dataBarang.harga }}</b>
                             </div>
 
                             <!-- Utk Tampilan Web -->
                             <div class="w-full mt-2 lg:pl-2 md:pl-2 lg:block md:block  hidden">
-                                <p>Variant Tersedia :</p>
+                                <p class="font-semibold text-stone-900">Variant Tersedia :</p>
                                 <div class="flex flex-wrap mt-3">
 
                                     <div class=" w-6/12">
-                                        <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[10px] px-[20px] w-full rounded `" @click="handleVariant('hot')">
+                                        <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[10px] px-[20px] w-full rounded-xl shadow-sm transition`" @click="handleVariant('hot')">
                                             <i class="fas fa-sun "></i>
                                         </button>
                                     </div>
 
                                     <div class=" w-6/12">
-                                        <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[10px] px-[20px] w-full ml-1 rounded`" @click="handleVariant('cold')">
+                                        <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[10px] px-[20px] w-full ml-1 rounded-xl shadow-sm transition`" @click="handleVariant('cold')">
                                             <i class="far fa-snowflake"></i>
                                         </button>
                                     </div>
@@ -57,17 +57,17 @@
 
                         <!-- Utk Tampilan Mobile -->
                         <div class="w-full mt-5 lg:hidden md:hidden ">
-                            <b>Variant Tersedia :</b>
+                            <b class="text-stone-900">Variant Tersedia :</b>
                             <div class="flex flex-wrap mt-3">
 
                                 <div class=" w-6/12">
-                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[10px] px-[20px] w-full rounded `" @click="handleVariant('hot')">
+                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[10px] px-[20px] w-full rounded-xl shadow-sm transition`" @click="handleVariant('hot')">
                                         <i class="fas fa-sun "></i>
                                     </button>
                                 </div>
 
                                 <div class=" w-6/12">
-                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[10px] px-[20px] w-full ml-1 rounded`" @click="handleVariant('cold')">
+                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[10px] px-[20px] w-full ml-1 rounded-xl shadow-sm transition`" @click="handleVariant('cold')">
                                         <i class="far fa-snowflake"></i>
                                     </button>
                                 </div>
@@ -347,18 +347,18 @@
                     </div>
                 </div>
                 <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block"> 
-                    <div class="sticky top-1 rounded-lg py-5 px-1 mt-1 mx-1" style="border: 2px solid green">
+                    <div class="sticky top-1 rounded-2xl py-5 px-2 mt-1 mx-1 bg-white shadow-xl shadow-emerald-950/10 border border-emerald-100">
 
                         <div class="flex flex-wrap" v-if="handleSubTotal()">
                             <div class="w-full">
                                 <div class="cursor-pointer mt-1" v-for="(item, index) in loadSameProducts()" :key="index" >
-                                    <div class="flex flex-wrap mt-2 rounded group/item hover:bg-slate-100"
+                                    <div class="flex flex-wrap mt-2 rounded-xl group/item hover:bg-emerald-50 transition"
                                         v-if="item.id_barang == dataBarang.id" 
-                                        :style="`border: ${selectedProducts === index ? `1px solid black` : `none`}`">
+                                        :style="`border: ${selectedProducts === index ? `1px solid #047857` : `1px solid transparent`}`">
 
                                         <div class="flex flex-wrap" >
                                             <div class="lg:w-2/12 md:w-2/12 w-4/12 text-center flex items-center justify-center" @click="handleSelectedProducts(index)">
-                                                <img :src="loadGbr(dataBarang.gambar[0], dataBarang.source_data)" alt="" class="object-cover h-[50px] w-[50px] rounded-lg">
+                                                <img :src="loadGbr(dataBarang.gambar[0], dataBarang.source_data)" alt="" class="object-cover h-[50px] w-[50px] rounded-xl">
                                             </div>
                                             
                                             <div class="lg:w-9/12 md:w-9/12 w-8/12 capitalize text-[10px]" @click="handleSelectedProducts(index)">
@@ -386,7 +386,7 @@
                             <div class="w-full text-right mt-1">
                                 <span class="text-[10px] pr-3">Add New?</span>
                                 <button 
-                                    class="bg-cyan-400 rounded-full h-[30px] w-[30px]"
+                                    class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full h-[30px] w-[30px] transition"
                                     @click="handleTambahBaru"><i class="fas fa-plus-circle"></i></button>
                             </div>
                         </div>
@@ -396,7 +396,7 @@
                                 <p class="text-[11px] font-bold text-right pr-2">Subtotal : 0</p>
                                 <p class="text-right pt-2">
                                     <button 
-                                        class="bg-cyan-400 rounded-full h-[30px] w-[30px]"
+                                        class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full h-[30px] w-[30px] transition"
                                         @click="handleTambahBaru"><i class="fas fa-plus-circle"></i>
                                     </button>
                                 </p>
@@ -418,15 +418,15 @@
             <div class="flex flex-wrap text-white lg:hidden md:hidden  sticky bottom-[53px] bg-white py-2">
                 
                 <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
-                    <button @click="handleMinus()" class="rounded-full bg-red-500 w-[30px] h-[30px]" >
+                    <button @click="handleMinus()" class="rounded-full bg-red-500 hover:bg-red-600 text-white w-[30px] h-[30px] shadow-sm transition" >
                         <i class="fas fa-minus"></i>
                     </button>
                 </div>
                 <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-2/12 block lg:hidden md:hidden text-black mt-1">
-                    <input type="number" name="" id="idQtyResp" v-model="qty" class="w-full rounded text-center">
+                    <input type="number" name="" id="idQtyResp" v-model="qty" class="w-full rounded-xl text-center border-stone-200 focus:border-emerald-500 focus:ring-emerald-500">
                 </div>
                 <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
-                    <button @click="handlePlus()" class="rounded-full bg-green-300 w-[30px] h-[30px]">
+                    <button @click="handlePlus()" class="rounded-full bg-emerald-600 hover:bg-emerald-700 text-white w-[30px] h-[30px] shadow-sm transition">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -435,8 +435,8 @@
                     <div class="flex flex-wrap">
                         <div class="w-full text-center">
                             <span 
-                            class="py-3 px-9 rounded-lg border-red-600 bg-transparent text-black hover:bg-green-400 hover:text-white" 
-                            style="border: 1px solid green;" @click="handleTambahBaru">
+                            class="py-3 px-9 rounded-xl border border-emerald-600 bg-transparent text-emerald-700 hover:bg-emerald-700 hover:text-white transition" 
+                            @click="handleTambahBaru">
                                 Add New?
                             </span>
                         </div>
@@ -447,7 +447,7 @@
                     <div class="flex flex-wrap">
                         <div class="w-full notification">
                             <router-link to="/checkout" 
-                                :class="`bg-green-600 py-3 rounded-lg hover:bg-green-900 ${toggleAddBtn == false ? '': ' px-10'}`" :style="`${toggleAddBtn == false ? 'display: inline-block; width: 100%;' : ''}`">
+                                :class="`bg-emerald-700 py-3 rounded-xl hover:bg-emerald-900 shadow-lg shadow-emerald-900/20 transition ${toggleAddBtn == false ? '': ' px-10'}`" :style="`${toggleAddBtn == false ? 'display: inline-block; width: 100%;' : ''}`">
                                 <span>Go To Cart</span>
                                 <span :key="updateBadge" :class="lengthCart > 0 ? ' badge' : ' hidden'">{{ lengthCart }}</span>
 

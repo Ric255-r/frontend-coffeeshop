@@ -5,30 +5,30 @@
       <div :style="styleBg" class="flex flex-wrap">
         <div class="lg:w-2/12 w-1/12"></div>
 
-        <div class="lg:w-8/12 w-10/12 animate-fade-left bg-white rounded-lg shadow-md mt-10">
+        <div class="lg:w-8/12 w-10/12 animate-fade-left bg-white/95 rounded-2xl shadow-2xl shadow-emerald-950/10 border border-white mt-10 overflow-hidden">
 
 
           <div class="text-center mt-5 animate-fade-left ">
-            <b>Pesanan Anda : </b>
+            <b class="text-stone-900">Pesanan Anda : </b>
           </div>
 
           <div :class="`text-center mt-5 animate-fade-left py-10 ${dataPesanan.length > 0 ? ' hidden' : ''}` ">
-            Anda Belum Memiliki Pesanan
+            <span class="text-stone-500">Anda Belum Memiliki Pesanan</span>
           </div>
 
-          <div :class="`flex flex-wrap pb-3 pt-2 border-b-2 ${dataPesanan.length > 0 ? '' : ' hidden'}`" v-for="(items, i1) in dataPesanan" :key="i1">
-            <div class="w-6/12 pl-7">Nomor Pesanan: </div>
-            <div class="w-6/12 pr-[55px] text-right">{{ items.nojual }}</div>
+          <div :class="`flex flex-wrap pb-4 pt-4 border-b border-stone-100 ${dataPesanan.length > 0 ? '' : ' hidden'}`" v-for="(items, i1) in dataPesanan" :key="i1">
+            <div class="w-6/12 pl-7 text-stone-500">Nomor Pesanan: </div>
+            <div class="w-6/12 pr-[55px] text-right font-semibold text-stone-900">{{ items.nojual }}</div>
 
             <div class="w-full mb-1"></div>
-            <div class="w-6/12 pl-7">Status Pesanan: </div>
-            <div class="w-6/12 pr-[55px] text-right">{{ items.status_order }}</div>
+            <div class="w-6/12 pl-7 text-stone-500">Status Pesanan: </div>
+            <div class="w-6/12 pr-[55px] text-right"><span class="rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 px-3 py-1 text-xs font-semibold">{{ items.status_order }}</span></div>
             <div class="w-full mb-3"></div>
 
             <div class="w-full lg:pl-0 pl-7">
               <div class="flex flex-wrap mb-2" v-for="(items2, i2) in items.jualdetil" :key="i2">
                 <div class="w-2/12 text-center flex items-center justify-center">
-                  <img :src="getImg(JSON.parse(items2.gambar)[0], items2.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-lg" />
+                  <img :src="getImg(JSON.parse(items2.gambar)[0], items2.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-2xl shadow-sm" />
                 </div>
 
                 <div class="w-10/12">

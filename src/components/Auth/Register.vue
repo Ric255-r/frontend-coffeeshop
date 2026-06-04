@@ -1,6 +1,6 @@
 <template>
     <div class="poppins-regular">
-        <div class="w-full text-center"><span>Registrasi </span><h3 class="font-bold text-5xl "> CoffeeKu</h3></div>
+        <div class="w-full text-center"><span class="text-sm tracking-wide text-emerald-700">Registrasi</span><h3 class="font-bold text-5xl text-stone-900 mt-1"> CoffeeKu</h3></div>
 
         <form action="" class="w-full mt-8 " method="post" @submit.prevent="buatRegis">
             <!-- <div class=" mt-3">
@@ -8,20 +8,20 @@
                 <input type="text" v-model="nama" name="" id="" class="w-full rounded-br-lg rounded-tl-lg">
             </div> -->
             <div class="">
-                <label for="">Email</label>
-                <input type="text" v-model="email" name="" id="" class="w-full rounded-br-lg rounded-tl-lg">
+                <label for="" class="text-sm font-medium text-stone-700">Email</label>
+                <input type="text" v-model="email" name="" id="" class="w-full rounded-xl border-stone-200 bg-stone-50 focus:border-emerald-500 focus:ring-emerald-500 mt-1">
             </div>
             <div class=" mt-3">
-                <label for="">Password</label>
-                <input type="password" v-model="password" name=""  id="" class="w-full rounded-br-lg rounded-tl-lg">
+                <label for="" class="text-sm font-medium text-stone-700">Password</label>
+                <input type="password" v-model="password" name=""  id="" class="w-full rounded-xl border-stone-200 bg-stone-50 focus:border-emerald-500 focus:ring-emerald-500 mt-1">
             </div>
             <div class=" mt-3">
-                <label for="">Konfirmasi Password</label>
-                <input type="password" v-model="konfirPass" name="" id="" class="w-full rounded-br-lg rounded-tl-lg">
+                <label for="" class="text-sm font-medium text-stone-700">Konfirmasi Password</label>
+                <input type="password" v-model="konfirPass" name="" id="" class="w-full rounded-xl border-stone-200 bg-stone-50 focus:border-emerald-500 focus:ring-emerald-500 mt-1">
             </div>
 
             
-            <button class="w-full text-white bg-blue-600 hover:bg-blue-700 mt-5 py-3 rounded-br-lg rounded-tl-lg">Submit</button>
+            <button class="w-full text-white bg-emerald-700 hover:bg-emerald-800 mt-5 py-3 rounded-xl shadow-lg shadow-emerald-900/20 transition">Submit</button>
         </form>
 
     </div>

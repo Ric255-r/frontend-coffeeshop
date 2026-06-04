@@ -1,12 +1,13 @@
 <template>
-    <div class="animate-fade-left poppins-regular mt-1">
+    <div class="animate-fade-left poppins-regular mt-1 text-stone-800">
         <div class="flex flex-wrap">
             <div class=" lg:w-2/12 md:w-2/12 hidden lg:block md:block ">
 
             </div>
 
             <div :class="`lg:w-8/12 md:w-8/12 lg:pl-0 md:pl-0 pl-4 w-full text-white poppins-regular mb-3`">
-                Welcome <br /> {{ dataUser.email }}
+                <div class="text-sm text-emerald-50/90">Welcome</div>
+                <div class="font-semibold tracking-wide">{{ dataUser.email }}</div>
             </div>
 
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block ">
@@ -35,7 +36,10 @@
 
             </div>
             <div class="lg:w-8/12 md:w-8/12 lg:pl-0 md:pl-0 pl-4 w-full">
-                Choose Your Favourite : 
+                <div class="flex items-center justify-between">
+                    <span class="font-semibold text-stone-900">Choose Your Favourite</span>
+                    <span class="text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-1">Fresh today</span>
+                </div>
             </div>
 
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
@@ -51,25 +55,27 @@
             
             <div class="lg:w-1/12 md:w-1/12 w-3/12 text-center flex items-center justify-center">   
                 <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
-                    <img :src="getImg(item.gambar[0], item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
+                    <img :src="getImg(item.gambar[0], item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-2xl shadow-md shadow-stone-900/10 border border-white">
                 </router-link>
             </div>
 
-            <div class="lg:w-7/12 md:w-7/12 w-9/12 lg:pl-2 md:pl-2 pt-1" >
-                <div class="font-bold">
-                    <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">{{ item.nama_barang }}</router-link>
+            <div class="lg:w-7/12 md:w-7/12 w-9/12 lg:pl-3 md:pl-3 pl-3 pt-1" >
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg border border-stone-100 px-4 py-3 transition">
+                <div class="font-bold text-stone-900">
+                    <router-link class="hover:text-emerald-700 transition" :to="{ name: 'BarangDetail', params: { id: item.id } }">{{ item.nama_barang }}</router-link>
                 </div>
-                <div class="py-1 text-xs">
+                <div class="py-1 text-xs text-stone-500 leading-relaxed">
                     {{item.deskripsi}}
                 </div>
-                <div class="text-green-400">
+                <div class="text-emerald-700 font-semibold">
                     Rp. {{ item.harga }}
                 </div>
 
                 <div class="text-right pr-3">
                     <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
-                        <i class="fas fa-plus-circle text-green-600"></i>
+                        <i class="fas fa-plus-circle text-emerald-600 hover:text-emerald-800 text-xl transition"></i>
                     </router-link>
+                </div>
                 </div>
 
 

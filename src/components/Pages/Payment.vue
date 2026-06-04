@@ -4,19 +4,18 @@
             <div class="lg:w-2/12 md:w-1/12 sm:w-1/12 hidden lg:block md:block sm:block">
 
             </div>
-            <div class="lg:w-8/12 md:w-10/12 sm:w-10/12 py-2 w-full lg:px-0 md:px-0 px-4">
+            <div class="lg:w-8/12 md:w-10/12 sm:w-10/12 py-4 w-full lg:px-0 md:px-0 px-4">
 
-                <div class="flex flex-wrap">
-                    <div class="w-full">
+                <div class="flex flex-wrap bg-white rounded-2xl shadow-xl shadow-stone-900/10 border border-stone-100 p-5 mb-[90px]">
+                    <div class="w-full font-semibold text-stone-900">
                         Payment Summary : 
                     </div>
-                </div>
 
-                <div class="w-full bg-gray-100 h-[7px] mt-2 mb-2"></div>
+                <div class="w-full bg-emerald-50 h-[7px] rounded-full mt-2 mb-4"></div>
 
-                <div class="flex flex-wrap mb-2" v-for="(item, index) in dataBeli" :key="index">
+                <div class="flex flex-wrap mb-3 rounded-2xl border border-stone-100 bg-stone-50/60 p-3" v-for="(item, index) in dataBeli" :key="index">
                     <div class="lg:w-1/12 md:w-2/12 sm:w-2/12 w-2/12">
-                        <img :src="getImg(item.gambar, item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-lg">
+                        <img :src="getImg(item.gambar, item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-2xl shadow-sm">
                     </div>
                     <div class="lg:w-11/12 md:w-10/12 sm:w-10/12 w-10/12 pl-2">
                         <div class="flex flex-wrap">
@@ -48,14 +47,14 @@
                                 Qty : {{ item.qty }}
                             </div>
 
-                            <div class="w-full text-right font-bold">
+                            <div class="w-full text-right font-bold text-emerald-700">
                                 Rp.{{ item.harga_seluruh }}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="w-full bg-gray-100 h-[7px] mt-2 mb-2"></div>
+                <div class="w-full bg-emerald-50 h-[7px] rounded-full mt-2 mb-4"></div>
 
                 <div class="flex flex-wrap ">
                     <div class="w-full text-[14px] text-gray-600">
@@ -78,15 +77,16 @@
                     <div class="w-8/12">
                         GrandTotal
                     </div>
-                    <div class="w-4/12 text-right">
+                    <div class="w-4/12 text-right text-emerald-700">
                         <b>Rp. {{ grandTotal }}</b>
                     </div>
                 </div>
 
                 <div class="flex justify-center p-4">
-                    <button id="button" type="button" class="text-white bg-[#2557D6] hover:bg-[#2557D6]/90 focus:ring-4 focus:ring-[#2557D6]/50 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#2557D6]/50 me-2 mb-2">
+                    <button id="button" type="button" class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-emerald-700/30 focus:outline-none font-medium rounded-xl text-sm px-6 py-3 text-center inline-flex items-center me-2 mb-2 shadow-lg shadow-emerald-900/20 transition">
                         Process To Pay
                     </button>
+                </div>
                 </div>
             </div>
             <div class="lg:w-2/12 md:w-1/12 sm:w-1/12 hidden lg:block md:block sm:block">
@@ -98,9 +98,9 @@
         <div id="modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-2xl max-h-full">
                 <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="relative bg-white rounded-2xl shadow-2xl dark:bg-gray-700 overflow-hidden">
                     <!-- Modal header -->
-                    <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
+                    <div class="flex items-start justify-between p-5 border-b border-stone-100 rounded-t dark:border-gray-600">
                         <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
                             Payment
                         </h3>
@@ -116,7 +116,7 @@
                                     Transfer Pembayaran
                                 </div>
                                 <div class="w-6/12">
-                                    <div class="flex flex-wrap border mr-2 rounded-lg px-2 py-4">
+                                    <div class="flex flex-wrap border border-stone-200 mr-2 rounded-2xl px-3 py-4 bg-stone-50">
                                         <div class="w-full mb-4">
                                             <img :src="require('@/assets/bca.png')" alt="">
                                         </div>
@@ -137,7 +137,7 @@
                                     </div>
                                 </div>
                                 <div class="w-6/12">
-                                    <div class="flex flex-wrap border rounded-lg px-2 py-4">
+                                    <div class="flex flex-wrap border border-stone-200 rounded-2xl px-3 py-4 bg-stone-50">
                                         <div class="w-full mb-4">
                                             <img :src="require('@/assets/bni.png')" alt="">
                                         </div>
@@ -159,18 +159,18 @@
                                 </div>
                                 <div class="w-full mt-3">
                                     <label for="">Nama Pemesan</label>
-                                    <input type="text" name="" id="" class="w-full rounded-lg" v-model="nama_pemesan">
+                                    <input type="text" name="" id="" class="w-full rounded-xl border-stone-200 focus:border-emerald-500 focus:ring-emerald-500" v-model="nama_pemesan">
                                 </div>
                                 <div class="w-full mt-3">
                                     <label for="">Nomor HP</label>
-                                    <input type="text" name="" id="" class="w-full rounded-lg" v-model="nohp_pemesan">
+                                    <input type="text" name="" id="" class="w-full rounded-xl border-stone-200 focus:border-emerald-500 focus:ring-emerald-500" v-model="nohp_pemesan">
                                 </div>
                                 <div class="w-full mt-3">
                                     <label for="">Upload Bukti Pembayaran</label>
                                     <input type="file" name="payment" id="payment" v-on:change="handleBukti" class="w-full mt-2">
                                 </div>
                                 <div class="w-full">
-                                    <button type="submit" class="bg-green-600 rounded w-full py-3 mt-3 rounded-lg hover:bg-green-800 text-white">Submit Bukti Pembayaran</button>
+                                    <button type="submit" class="bg-emerald-700 w-full py-3 mt-3 rounded-xl hover:bg-emerald-800 text-white shadow-lg shadow-emerald-900/20 transition">Submit Bukti Pembayaran</button>
                                 </div>
                             </div>
                         </form>

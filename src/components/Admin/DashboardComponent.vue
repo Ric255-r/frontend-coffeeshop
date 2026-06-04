@@ -1,12 +1,12 @@
 <template>
   <div class="w-full overflow-x-hidden">
     <div class="flex flex-wrap">
-      <div class="w-4/12 bg-white shadow-md rounded">
+      <div class="w-4/12 bg-white shadow-xl shadow-slate-900/5 rounded-2xl border border-slate-100">
         <apexchart width="500" type="pie" :options="chartOptions" :series="series"></apexchart>
       </div>
 
       <div class="w-2/12 fontChart my-auto" >
-        <div class="flex flex-wrap bg-white shadow-md rounded mx-1">
+        <div class="flex flex-wrap bg-white shadow-xl shadow-slate-900/5 rounded-2xl mx-1 border border-slate-100">
           <div class="w-full text-sm text-center pt-2">Jumlah Gelas Terjual dibulan ini </div>
           <div class="w-full text-center pt-[50px]">
             <i class="fas fa-coffee text-[25px]"></i>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="w-4/12 fontChart text-center">
-        <div class="flex flex-wrap bg-white shadow-md rounded min-h-full">
+        <div class="flex flex-wrap bg-white shadow-xl shadow-slate-900/5 rounded-2xl min-h-full border border-slate-100">
           <div class="w-full text-sm">
             Jumlah Penghasilan Per : 
             <select 
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="w-2/12 my-auto" @mouseenter="showOverlay" @mouseleave="hideOverlay">
-        <div class="flex justify-center flex-wrap ml-1 bg-white shadow-md rounded min-h-full" >
+        <div class="flex justify-center flex-wrap ml-1 bg-white shadow-xl shadow-slate-900/5 rounded-2xl min-h-full border border-slate-100" >
           <apexchart class="transition ease-in-out" width="210" type="radialBar" :options="radialBarOption" :series="radialBarOption.series"></apexchart>
         
           <OverlayPanel ref="op">
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div class="flex flex-wrap mt-5 bg-white shadow-md rounded">
+    <div class="flex flex-wrap mt-5 bg-white shadow-xl shadow-slate-900/5 rounded-2xl border border-slate-100 overflow-hidden">
       <div class="w-full py-3 text-sm fontChart pl-5">
         Top 3 Transaksi Pending : 
       </div>
@@ -119,11 +119,10 @@
 
                   <td class="px-6 py-4 text-left">
                     <!-- Modal toggle -->
-                    <button class="block text-white bg-blue-700 
-                      hover:bg-blue-800 focus:ring-4 focus:outline-none 
-                      focus:ring-blue-300 font-medium rounded-lg text-sm px-5 
-                      py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 
-                      dark:focus:ring-blue-800" @click="$router.push('/admin/order')">
+                    <button class="block text-white bg-emerald-700 
+                      hover:bg-emerald-800 focus:ring-4 focus:outline-none 
+                      focus:ring-emerald-300 font-medium rounded-xl text-sm px-5 
+                      py-2.5 text-center shadow-sm transition" @click="$router.push('/admin/order')">
                       Go To Penjualan
                     </button>
                   </td>

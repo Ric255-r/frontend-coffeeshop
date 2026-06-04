@@ -7,21 +7,21 @@
       <img class="max-w-full h-auto" :src="require('@/assets/coffee-bread.jpg')" alt="Sample 2">
     </SplideSlide>
   </Splide> -->
-  <div class="splide">
-    <div class="splide__track" style="border-radius: 1.5rem;">
+  <div class="splide w-full">
+    <div class="splide__track shadow-xl shadow-emerald-950/15 border border-white/70" style="border-radius: 1.25rem;">
         <ul class="splide__list">
 
             <li class="splide__slide">
-                <img class="min-w-full h-64 lg:px-0 px-2" :src="require('@/assets/coffeebanner3.jpg')" alt="Sample 3">
+                <img class="min-w-full h-64 lg:px-0 px-2 object-cover" :src="require('@/assets/coffeebanner3.jpg')" alt="Sample 3">
             </li>
             <li class="splide__slide">
-                <img class="min-w-full h-64 lg:px-0 px-2" :src="require('@/assets/coffeebanner4.jpg')" alt="Sample 4">
+                <img class="min-w-full h-64 lg:px-0 px-2 object-cover" :src="require('@/assets/coffeebanner4.jpg')" alt="Sample 4">
             </li>
             <li class="splide__slide">
-                <img class="min-w-full h-64 lg:px-0 px-2" :src="require('@/assets/milklatte-banner.jpg')" alt="Sample 1">
+                <img class="min-w-full h-64 lg:px-0 px-2 object-cover" :src="require('@/assets/milklatte-banner.jpg')" alt="Sample 1">
             </li>
             <li class="splide__slide">
-                <img class="min-w-full h-64 lg:px-0 px-2" :src="require('@/assets/coffee-bread.jpg')" alt="Sample 2">
+                <img class="min-w-full h-64 lg:px-0 px-2 object-cover" :src="require('@/assets/coffee-bread.jpg')" alt="Sample 2">
             </li>
 
             <!-- <li class="splide__slide">Slide 03</li> -->

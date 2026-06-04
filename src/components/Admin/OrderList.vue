@@ -1,8 +1,8 @@
 <template>
   <div>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <div class="mb-3">Menu Order</div>
+    <div class="relative overflow-x-auto shadow-xl shadow-slate-900/5 sm:rounded-2xl bg-white border border-slate-100 p-4">
+      <div class="mb-3 font-semibold text-slate-900">Menu Order</div>
 
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -59,11 +59,10 @@
                   <!-- Modal toggle -->
                   <button 
                     @click="openModal(item.jualdetil, item.buktiByr, item.nojual, item.grandtotal, 'pending')" 
-                    class="block text-white bg-blue-700 
-                    hover:bg-blue-800 focus:ring-4 focus:outline-none 
-                    focus:ring-blue-300 font-medium rounded-lg text-sm px-5 
-                    py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 
-                    dark:focus:ring-blue-800" type="button">
+                    class="block text-white bg-emerald-700 
+                    hover:bg-emerald-800 focus:ring-4 focus:outline-none 
+                    focus:ring-emerald-300 font-medium rounded-xl text-sm px-5 
+                    py-2.5 text-center shadow-sm transition" type="button">
                     View Details
                   </button>
                 </td>
@@ -81,7 +80,7 @@
 
       <br>
 
-      <div class="mb-2">Processed Order : </div>
+      <div class="mb-2 font-semibold text-slate-900">Processed Order : </div>
 
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -138,11 +137,10 @@
                 <!-- Modal toggle -->
                 <button 
                   @click="openModal(item.jualdetil, item.buktiByr, item.nojual, item.grandtotal, 'process')" 
-                  class="block text-white bg-blue-700 
-                  hover:bg-blue-800 focus:ring-4 focus:outline-none 
-                  focus:ring-blue-300 font-medium rounded-lg text-sm px-5 
-                  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 
-                  dark:focus:ring-blue-800" type="button">
+                  class="block text-white bg-emerald-700 
+                  hover:bg-emerald-800 focus:ring-4 focus:outline-none 
+                  focus:ring-emerald-300 font-medium rounded-xl text-sm px-5 
+                  py-2.5 text-center shadow-sm transition" type="button">
                   View Details
                 </button>
               </td>
@@ -160,7 +158,7 @@
 
       <br>
 
-      <div class="mb-2">Done Order : </div>
+      <div class="mb-2 font-semibold text-slate-900">Done Order : </div>
 
       <div class="overflow-y-scroll h-[400px]">
 
@@ -219,11 +217,10 @@
                   <!-- Modal toggle -->
                   <button 
                     @click="openModal(item.jualdetil, item.buktiByr, item.nojual, item.grandtotal, 'done')" 
-                    class="block text-white bg-blue-700 
-                    hover:bg-blue-800 focus:ring-4 focus:outline-none 
-                    focus:ring-blue-300 font-medium rounded-lg text-sm px-5 
-                    py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 
-                    dark:focus:ring-blue-800" type="button">
+                  class="block text-white bg-emerald-700 
+                    hover:bg-emerald-800 focus:ring-4 focus:outline-none 
+                    focus:ring-emerald-300 font-medium rounded-xl text-sm px-5 
+                    py-2.5 text-center shadow-sm transition" type="button">
                     View Details
                   </button>
                 </td>
@@ -264,7 +261,7 @@
 
           <template v-else>
             <div class="w-2/12 text-center" v-if="modeModal == 'pending'">
-              <button :class="`bg-blue-600 text-white py-2 rounded w-[180px] ${styleButton}`" @click="handleAcc">Accept</button>
+              <button :class="`bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded-xl w-[180px] transition ${styleButton}`" @click="handleAcc">Accept</button>
 
               <form action="" :class="`${styleForm}`" method="post" @submit.prevent="submitAcc(noJual)">
                 <div class="text-left">
@@ -276,19 +273,19 @@
                     v-model="bayarCash"
                   />
                 </div>
-                <button type="submit" class="bg-green-600 py-2 mt-2 w-full rounded-lg text-white">Acc And Brew</button>
+                <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 py-2 mt-2 w-full rounded-xl text-white transition">Acc And Brew</button>
               </form>
             </div>
 
             <div class="w-2/12 text-center" v-if="modeModal == 'process'">
               <form action="" method="post" @submit.prevent="submitAcc(noJual)">
-                <button type="submit" class="bg-green-600 py-2 w-[180px] rounded-lg text-white">Done?</button>
+                <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 py-2 w-[180px] rounded-xl text-white transition">Done?</button>
               </form>
             </div>
 
             <div class="w-2/12 text-center">
               <form action="" method="post" @submit.prevent="declineOrder(noJual)">
-                <button type="submit" class="bg-red-600 py-2 w-[180px] rounded-lg text-white">Decline</button>
+                <button type="submit" class="bg-red-600 hover:bg-red-700 py-2 w-[180px] rounded-xl text-white transition">Decline</button>
               </form>
             </div>
           </template>

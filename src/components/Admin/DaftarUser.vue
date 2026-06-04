@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-wrap">
     <div class="w-6/12">
-      <button :class="`text-sm ${status_user == 'Karyawan' ? 'underline' : ''}`" @click="handleUbah('Karyawan')">Data Karyawan</button>
-      <button :class="`text-sm pl-5 ${status_user == 'Customer' ? 'underline' : ''}`" @click="handleUbah('Customer')">Data Pelanggan</button>
+      <button :class="`text-sm px-3 py-2 rounded-xl ${status_user == 'Karyawan' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-600 hover:bg-emerald-50'}`" @click="handleUbah('Karyawan')">Data Karyawan</button>
+      <button :class="`text-sm px-3 py-2 rounded-xl ml-2 ${status_user == 'Customer' ? 'bg-emerald-700 text-white shadow-sm' : 'text-slate-600 hover:bg-emerald-50'}`" @click="handleUbah('Customer')">Data Pelanggan</button>
 
     </div>
     <div class="w-full mt-2">
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">      
+      <div class="relative overflow-x-auto shadow-xl shadow-slate-900/5 sm:rounded-2xl bg-white border border-slate-100">      
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -49,7 +49,7 @@
                   {{ item.roles }}
                 </td>
                 <td class="px-6 py-4">
-                  <button @click="deleteUser(item.id_user)" type="button" class="bg-red-600 py-2 px-2 rounded-lg text-white">Delete</button>
+                  <button @click="deleteUser(item.id_user)" type="button" class="bg-red-600 hover:bg-red-700 py-2 px-3 rounded-xl text-white transition">Delete</button>
                 </td>
 
               </tr>

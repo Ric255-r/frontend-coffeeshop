@@ -3,29 +3,29 @@
     <div class="flex flex-wrap">
       <div class="lg:w-2/12 w-1/12"></div>
 
-      <div class="lg:w-8/12 w-10/12 animate-fade-left bg-white rounded-lg shadow-md mt-10">
+      <div class="lg:w-8/12 w-10/12 animate-fade-left bg-white/95 rounded-2xl shadow-2xl shadow-emerald-950/10 border border-white mt-10 overflow-hidden">
         <div class="text-center mt-5 animate-fade-left hidden">
           Anda Belum Memiliki Pesanan
         </div>
 
         <div class="text-center mt-5 animate-fade-left -my-3">
-          <img :src="loadFoto ? loadFoto : dataUser.foto ? getImg(dataUser.foto) : require('@/assets/profileabu.png')" alt="" class="mx-auto" style="border-radius: 50%; height: 150px; width: 150px;" >
+          <img :src="loadFoto ? loadFoto : dataUser.foto ? getImg(dataUser.foto) : require('@/assets/profileabu.png')" alt="" class="mx-auto object-cover ring-4 ring-emerald-50 shadow-lg" style="border-radius: 50%; height: 150px; width: 150px;" >
 
           <br><br>
-          <input type="file" :class="stateUbahPass ? ' hidden' : ''" name="" id="fileProfile" @change="handleProfile" v-if="!disableInput" style="border: 0;">
+          <input type="file" :class="stateUbahPass ? ' hidden' : ''" name="" id="fileProfile" @change="handleProfile" v-if="!disableInput" class="text-sm text-stone-600" style="border: 0;">
         </div>
 
         <div class="flex flex wrap">
           <div class="w-full text-right pr-2" v-if="disableInput">
-            <button @click="handleBtnEdit">Edit Profile</button>
+            <button class="text-sm text-emerald-700 font-semibold hover:text-emerald-900" @click="handleBtnEdit">Edit Profile</button>
           </div>
 
           <div class="w-full text-right pr-2 mt-5" v-if="!disableInput && !stateUbahPass">
-            <button @click="stateUbahPass = true">Ubah Password?</button>
+            <button class="text-sm text-emerald-700 font-semibold hover:text-emerald-900" @click="stateUbahPass = true">Ubah Password?</button>
           </div>
         </div>
 
-        <div class="flex flex-wrap pb-3 mt-1 border-b-2 px-2" v-if="!stateUbahPass">
+        <div class="flex flex-wrap pb-5 mt-1 border-b border-stone-100 px-5" v-if="!stateUbahPass">
           <div class="w-full">
             <label for="" class="font-medium">Nama</label>
             <input type="text" name="" id="nama" class="w-full font-light" v-model="nama" :readonly="disableInput">
@@ -62,17 +62,17 @@
               </div>
 
               <div class="w-2/12 p-2">
-                <button class="w-full border border-red-700 hover:bg-red-800 hover:text-white text-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 text-center py-3 px-4 rounded-full" @click="handleCancel('formProfile')">Cancel</button>
+                <button class="w-full border border-red-200 hover:bg-red-600 hover:text-white text-red-700 focus:ring-4 focus:outline-none focus:ring-red-200 text-center py-3 px-4 rounded-full transition" @click="handleCancel('formProfile')">Cancel</button>
               </div>
 
               <div class="w-2/12 p-2">
-                <button class="w-full py-3 px-4 rounded-full bg-blue-600 text-white hover:bg-blue-800" @click="handleUbah">Save Profile</button>
+                <button class="w-full py-3 px-4 rounded-full bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg shadow-emerald-900/20 transition" @click="handleUbah">Save Profile</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="flex flex-wrap pb-3 mt-5 border-b-2 px-2 " v-else>
+        <div class="flex flex-wrap pb-5 mt-5 border-b border-stone-100 px-5 " v-else>
           <div id="alertSalah" class="w-full hidden animate-fade-left">
             <div class=" flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
               <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -112,11 +112,11 @@
               </div>
 
               <div class="w-2/12 p-2">
-                <button type="button" class="w-full border border-red-700 hover:bg-red-800 hover:text-white text-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 text-center py-3 px-4 rounded-full" @click="handleCancel('formPass')">Cancel</button>              
+                <button type="button" class="w-full border border-red-200 hover:bg-red-600 hover:text-white text-red-700 focus:ring-4 focus:outline-none focus:ring-red-200 text-center py-3 px-4 rounded-full transition" @click="handleCancel('formPass')">Cancel</button>              
               </div>
 
               <div class="w-2/12 p-2">
-                <button type="submit" class="w-full py-3 px-4 rounded-full bg-blue-600 text-white hover:bg-blue-800">Save Profile</button>
+                <button type="submit" class="w-full py-3 px-4 rounded-full bg-emerald-700 text-white hover:bg-emerald-800 shadow-lg shadow-emerald-900/20 transition">Save Profile</button>
               </div>
             </div>
 
@@ -376,16 +376,18 @@ input[type=text], input[type=text]:focus {
   border-left: none;
   border-right: none;
   border-top: none;
-  border-bottom:0.5px solid black;
-  box-shadow: 0 2px 2px -2px gray;
+  border-bottom:0.5px solid #d6d3d1;
+  box-shadow: 0 2px 2px -2px #a8a29e;
+  background-color: transparent;
 }
 
 input[type=password], input[type=password]:focus {
   border-left: none;
   border-right: none;
   border-top: none;
-  border-bottom:0.5px solid black;
-  box-shadow: 0 2px 2px -2px gray;
+  border-bottom:0.5px solid #d6d3d1;
+  box-shadow: 0 2px 2px -2px #a8a29e;
+  background-color: transparent;
 }
 
 

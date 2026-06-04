@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-wrap">
-    <div class="w-6/12">
-      <div class="sticky top-[10px]">Penjualan 6 Bulan Terakhir</div>
+    <div class="w-6/12 bg-white rounded-2xl shadow-xl shadow-slate-900/5 border border-slate-100 p-4">
+      <div class="sticky top-[10px] font-semibold text-slate-900">Penjualan 6 Bulan Terakhir</div>
       <apexchart class="sticky top-[40px]"  width="500" type="line" :options="options" :series="series"></apexchart>
     </div>
 
-    <div class="w-6/12 text-sm">
+    <div class="w-6/12 text-sm pl-3">
 
-      <div class="flex flex-wrap px-2 py-2 overflow-hidden shadow">
-        <div class="w-full mb-4">Master Data</div>
+      <div class="flex flex-wrap px-4 py-3 overflow-hidden shadow-xl shadow-slate-900/5 rounded-t-2xl bg-white border border-slate-100">
+        <div class="w-full mb-4 font-semibold text-slate-900">Master Data</div>
         <br><br>
         <div class="w-3/12">
           No
@@ -24,7 +24,7 @@
         </div>
 
       </div>
-      <div class="flex flex-wrap px-2 py-2 overflow-hidden shadow text-gray-600" v-for="(items, index) in dataOrder" :key="index">
+      <div class="flex flex-wrap px-4 py-3 overflow-hidden shadow-sm text-gray-600 bg-white border-x border-slate-100 hover:bg-emerald-50/50 transition" v-for="(items, index) in dataOrder" :key="index">
         <div class="w-3/12">
           {{index + 1}}
         </div>
@@ -35,11 +35,11 @@
           {{items.totalSales}}
         </div>
         <div class="w-3/12">
-          <button @click="handleDetail(items.month)">View Details</button>
+          <button class="text-emerald-700 font-semibold hover:text-emerald-900" @click="handleDetail(items.month)">View Details</button>
         </div>
 
       </div>
-      <div class="flex flex-wrap px-2 py-2 overflow-hidden shadow">
+      <div class="flex flex-wrap px-4 py-3 overflow-hidden shadow-sm bg-white border border-slate-100 rounded-b-2xl">
         <div class="w-full text-center">View More</div>
       </div>
     </div>

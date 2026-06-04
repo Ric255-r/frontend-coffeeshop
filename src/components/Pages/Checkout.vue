@@ -2,14 +2,14 @@
     <div>
         <!-- Template By JaxStone -->
         <!-- https://tailwindflex.com/@jaxstone/checkout-page-template -->
-        <div class="h-screen py-8 poppins-regular" :style="styleBg">
+        <div class="min-h-screen py-8 poppins-regular" :style="styleBg">
             <div class="container mx-auto px-4">
-                <h1 class="text-2xl font-semibold mb-4 text-center text-white">Pesanan Sementara</h1>
+                <h1 class="text-2xl font-semibold mb-4 text-center text-white tracking-wide">Pesanan Sementara</h1>
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="md:w-full">
-                        <div class="bg-white rounded-lg shadow-md p-6 mb-[100px]" style="overflow-x: auto;">
+                        <div class="bg-white/95 rounded-2xl shadow-2xl shadow-emerald-950/10 border border-white p-6 mb-[100px]" style="overflow-x: auto;">
                             <table class="w-full mb-[30px] whitespace-nowrap">
-                                <thead>
+                                <thead class="text-stone-700">
                                     <tr>
                                         <th class="text-left font-semibold">Beverages</th>
                                         <th class="text-left font-semibold">Price</th>
@@ -25,16 +25,16 @@
 
                     
                                 <tbody v-if="showCart.cart.length">
-                                    <tr v-for="(item, index) in showCart.cart" :key="index">
+                                    <tr class="border-b border-stone-100 last:border-0" v-for="(item, index) in showCart.cart" :key="index">
                                         <td class="py-4">
                                             <div class="flex items-center">
                                                 <template v-for="(item2, index2) in dataBarang" :key="index2">
-                                                    <img class="h-16 w-16 mr-4 lg:block md:block sm:block hidden" v-if="item.id_barang == item2.id" :src="getImg(item2.gambar[0], item2.source_data)" alt="Product image">
+                                                    <img class="h-16 w-16 mr-4 lg:block md:block sm:block hidden object-cover rounded-2xl shadow-sm" v-if="item.id_barang == item2.id" :src="getImg(item2.gambar[0], item2.source_data)" alt="Product image">
 
                                                 </template>
                                                 <span>
-                                                    <span class="font-semibold">
-                                                        <router-link :to="{ name: 'BarangDetail', params: { id: item.id_barang},  query: { productOrder: index } }">{{ item.nama_barang }}</router-link> <br />
+                                                    <span class="font-semibold text-stone-900">
+                                                        <router-link class="hover:text-emerald-700 transition" :to="{ name: 'BarangDetail', params: { id: item.id_barang},  query: { productOrder: index } }">{{ item.nama_barang }}</router-link> <br />
                                                     </span> 
                                                     <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.ukuran_cup">
                                                         Ukuran Cup : {{ item.ukuran_cup }} <br />
@@ -74,12 +74,12 @@
                                         <td class="py-4">
                                             <div class="flex items-center">
                                                 <button 
-                                                    class="border rounded-md lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-2 mr-2"
+                                                    class="border border-stone-200 rounded-lg lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-2 mr-2 hover:bg-stone-100 transition"
                                                     @click="handleMinus(index, item.qty == null ? 1 : item.qty)">-</button>
 
                                                 <span class="text-center w-8">{{ item.qty == null ? 1 :  item.qty }}</span>
                                                 <button 
-                                                    class="border rounded-md lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-2 ml-2" 
+                                                    class="border border-stone-200 rounded-lg lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-2 ml-2 hover:bg-stone-100 transition" 
                                                     @click="handlePlus(index, item.qty == null ? 1 : item.qty)">
                                                 +
                                                 </button>
@@ -92,7 +92,7 @@
                                     <tr>
                                         <td colspan="4">
                                             <form method="post" @submit.prevent="postTransaction">
-                                                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                                                <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white py-3 px-4 rounded-xl mt-4 w-full shadow-lg shadow-emerald-900/20 transition">Checkout</button>
                                             </form>
                                         </td>
 

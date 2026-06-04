@@ -1,10 +1,10 @@
 <template>
     <!-- By https://tailwindcomponents.com/component/responsive-bottom-navigation -->
-    <div class="w-full py-[30px]">
+    <div class="w-full py-[34px]">
         <!-- <section id="bottom-navigation" class="md:hidden block fixed inset-x-0 bottom-0 z-10 bg-white shadow"> // if shown only tablet/mobile-->
-        <section id="bottom-navigation" class="border-t block animate-flip-up fixed inset-x-0 bottom-0 z-0 bg-white shadow">
-            <div id="tabs" class="flex justify-between">
-                <a @click="goToHome" class="w-full focus:text-teal-500 hover:text-teal-500 justify-center inline-block text-center pt-2 pb-1">
+        <section id="bottom-navigation" class="border-t border-emerald-100 block animate-flip-up fixed inset-x-0 bottom-0 z-10 bg-white/95 backdrop-blur shadow-[0_-12px_30px_rgba(15,23,42,0.08)]">
+            <div id="tabs" class="flex justify-between text-stone-500">
+                <a @click="goToHome" class="w-full focus:text-emerald-600 hover:text-emerald-600 justify-center inline-block text-center pt-2 pb-2 transition cursor-pointer">
                     <svg width="25" height="25" viewBox="0 0 42 42" class="inline-block mb-1">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <path d="M21.0847458,3.38674884 C17.8305085,7.08474576 17.8305085,10.7827427 21.0847458,14.4807396 C24.3389831,18.1787365 24.3389831,22.5701079 21.0847458,27.6548536 L21.0847458,42 L8.06779661,41.3066256 L6,38.5331279 L6,26.2681048 L6,17.2542373 L8.88135593,12.4006163 L21.0847458,2 L21.0847458,3.38674884 Z" fill="currentColor" fill-opacity="0.1"></path>
@@ -16,7 +16,7 @@
                     </svg>
                     <span class="tab tab-home block text-xs">Home</span>
                 </a>
-                <router-link to="/pesanan" class="w-full focus:text-teal-500 hover:text-teal-500 justify-center inline-block text-center pt-2 pb-1">
+                <router-link to="/pesanan" class="w-full focus:text-emerald-600 hover:text-emerald-600 justify-center inline-block text-center pt-2 pb-2 transition">
                     <i class="fas fa-receipt inline-block" style="font-size: 25px;"></i>
                     <span class="tab tab-kategori block text-xs">Pesanan</span>
                 </router-link>
@@ -45,7 +45,7 @@
                     </svg>
                     <span class="tab tab-whishlist block text-xs">Whishlist</span>
                 </a> -->
-                <a @click="goToProfile" class="w-full focus:text-teal-500 hover:text-teal-500 justify-center inline-block text-center pt-2 pb-1">
+                <a @click="goToProfile" class="w-full focus:text-emerald-600 hover:text-emerald-600 justify-center inline-block text-center pt-2 pb-2 transition cursor-pointer">
                     <i class="fas fa-user inline-block" style="font-size: 25px;"></i>
                     <!-- <svg width="25" height="25" viewBox="0 0 42 42" class="inline-block mb-1">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
