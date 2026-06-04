@@ -58,7 +58,7 @@ export default {
             };
 
             if(checkpass()){
-                axios.post('http://localhost:5500/apiUser/register', {
+                axios.post('http://localhost:5500/api/register', {
                     email: this.email,
                     passwd: this.password
                 }).then((res) => {

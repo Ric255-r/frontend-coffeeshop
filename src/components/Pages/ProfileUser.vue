@@ -168,7 +168,7 @@ export default {
   },
   methods: {
     loadData: function(){
-      axios.get(`http://localhost:5500/apiUser/me`, {
+      axios.get(`http://localhost:5500/api/me`, {
         headers: {
           Authorization: 'Bearer ' + this.token
         }
@@ -190,7 +190,7 @@ export default {
     },
     // loadData: async function(){
     //   try {
-    //     const resData = await axios.get(`http://localhost:5500/apiUser/me`, {
+    //     const resData = await axios.get(`http://localhost:5500/api/me`, {
     //       headers: {
     //         Authorization: 'Bearer ' + this.token
     //       }
@@ -220,7 +220,7 @@ export default {
         formData.append('foto', this.foto);
       }
 
-      axios.put(`http://localhost:5500/apiUser/updateMe`, formData, {
+      axios.put(`http://localhost:5500/api/updateMe`, formData, {
         headers: {
           Authorization: 'Bearer ' + this.token,
           "Content-Type": "multipart/form-data"
@@ -284,7 +284,7 @@ export default {
 
       console.log("Hai Debounce");
       
-      axios.post('http://localhost:5500/apiUser/checkPass', {
+      axios.post('http://localhost:5500/api/checkPass', {
         passwd: this.passwd
       }, {
         headers: {
@@ -320,7 +320,7 @@ export default {
     submitChangePass: function(){
       if(this.setChangePass){
         if(this.inputNewPass === this.confirmInputNewPass){
-          axios.put('http://localhost:5500/apiUser/changePassword', {
+          axios.put('http://localhost:5500/api/changePassword', {
             new_password: this.inputNewPass
           }, {
             headers: {
@@ -365,7 +365,7 @@ export default {
     },
 
     getImg: function(foto){
-      return `http://localhost:5500/apiUser/images/${foto}`
+      return `http://localhost:5500/api/images/${foto}`
     }
   }
 }

@@ -300,7 +300,7 @@ export default {
 
   },
   mounted: function(){
-    axios.get(`http://localhost:5500/apiAdmin/dataPenjualan`, {
+    axios.get(`http://localhost:5500/api/dataPenjualan`, {
       headers: {
         Authorization: 'Bearer ' + this.token
       }
@@ -418,7 +418,7 @@ export default {
         let splitYearMonth = yearMonth.split("-");
         let monthOnly = splitYearMonth[1];
 
-        const resJualDetil = await axios.get(`http://localhost:5500/apiAdmin/dataPenjualanDetil/${monthOnly}`, {
+        const resJualDetil = await axios.get(`http://localhost:5500/api/dataPenjualanDetil/${monthOnly}`, {
           headers: {
             Authorization: 'Bearer ' + this.token
           }

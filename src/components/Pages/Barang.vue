@@ -112,7 +112,7 @@ export default {
     mounted: function(){
         let token = localStorage.getItem('token');
 
-        axios.get('http://localhost:5500/apiBrg/barang', {
+        axios.get('http://localhost:5500/api/barang', {
             headers: {
                 Authorization: 'Bearer ' + token
             }
@@ -143,12 +143,12 @@ export default {
             if(source == 'import'){
                 return img;
             }
-            return `http://localhost:5500/apiBrg/images/${img}`
+            return `http://localhost:5500/api/images/${img}`
         },
         getDataUser: function(){
             let token = localStorage.getItem('token');
 
-            axios.get(`http://localhost:5500/apiUser/me`, {
+            axios.get(`http://localhost:5500/api/me`, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }

@@ -104,7 +104,7 @@ export default {
         rejectLabel: 'Cancel',
         acceptLabel: 'Proses',
         accept: () => {
-          axios.delete(`http://localhost:5500/apiAdmin/datauser/${id}`, {
+          axios.delete(`http://localhost:5500/api/datauser/${id}`, {
             headers: {
               Authorization: 'Bearer ' + this.token
             }
@@ -135,7 +135,7 @@ export default {
     },
     async getData(){
       try {
-        const resOrg = await axios.get(`http://localhost:5500/apiUser/datauser/${this.status_user}`, {
+        const resOrg = await axios.get(`http://localhost:5500/api/datauser/${this.status_user}`, {
           headers: {
             Authorization: 'Bearer ' + this.token
           }

@@ -221,7 +221,7 @@ export default {
                 acceptLabel: 'Proses',
                 acceptClass: 'px-4 py-2 bg-green-600 rounded-lg text-white',
                 accept: () => {
-                    axios.delete(`http://localhost:5500/apiJual/cancelTransaction/${this.id}`)
+                    axios.delete(`http://localhost:5500/api/cancelTransaction/${this.id}`)
                     .then((res) => {
                         console.log(res);
                         next();
@@ -243,7 +243,7 @@ export default {
             // let r = confirm("Apakah Yakin Ingin Membatalkan?");
 
             // if(r == true){
-            //     axios.delete(`http://localhost:5500/apiJual/cancelTransaction/${this.id}`)
+            //     axios.delete(`http://localhost:5500/api/cancelTransaction/${this.id}`)
             //     .then((res) => {
             //         console.log(res);
             //         next();
@@ -301,7 +301,7 @@ export default {
         }
 
         axios
-            .get(`http://localhost:5500/apiJual/detailPenjualan/${this.id}`)
+            .get(`http://localhost:5500/api/detailPenjualan/${this.id}`)
             .then((res) => {
                 this.dataBeli = res.data;
                 console.log(this.dataBeli)
@@ -344,7 +344,7 @@ export default {
             if(srcData == 'import'){
                 return gbrPertama;
             }
-            return `http://localhost:5500/apiBrg/images/${gbrPertama}`
+            return `http://localhost:5500/api/images/${gbrPertama}`
         },
         handleBukti: function(e){
             let files = e.target.files || e.dataTransfer.files;
@@ -361,7 +361,7 @@ export default {
                 formData.append('nohp_pemesan', this.nohp_pemesan);
                 formData.append('buktiByr', this.buktiGbr);
 
-                axios.post(`http://localhost:5500/apiJual/finalizeTransaction/${this.id}`, formData, {
+                axios.post(`http://localhost:5500/api/finalizeTransaction/${this.id}`, formData, {
                     headers: {
                         Authorization: 'Bearer ' + this.token,
                         "Content-Type" : "multipart/form-data"

@@ -53,7 +53,7 @@ export default {
             let email = this.email;
             let password = this.password;
 
-            axios.post(`http://localhost:5500/apiUser/login`, {
+            axios.post(`http://localhost:5500/api/login`, {
                 email: email,
                 passwd: password
             }).then((res) => {

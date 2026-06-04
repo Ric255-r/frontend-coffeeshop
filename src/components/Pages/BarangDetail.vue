@@ -537,7 +537,7 @@ export default {
 
         let token = localStorage.getItem('token');
 
-        axios.get(`http://localhost:5500/apiBrg/barang/${this.params}`, {
+        axios.get(`http://localhost:5500/api/barang/${this.params}`, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
@@ -878,7 +878,7 @@ export default {
             if(srcData == 'import'){
                 return img;
             }
-            return `http://localhost:5500/apiBrg/images/${img}`
+            return `http://localhost:5500/api/images/${img}`
         },
         loadGbrCarousel: function(gambar, srcData){
             // cek jika databarang.gambar ada atau ngga
@@ -890,7 +890,7 @@ export default {
                         return gambar;
                     }
 
-                    return `http://localhost:5500/apiBrg/images/${gambar}`;
+                    return `http://localhost:5500/api/images/${gambar}`;
                 }else{
                     // console.log("ini bkn array");
                     return [this.dataBarang.gambar.toString()]

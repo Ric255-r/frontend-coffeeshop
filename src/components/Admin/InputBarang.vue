@@ -209,7 +209,7 @@ export default {
       if(srcData == 'import'){
         return img;
       }
-      return`http://localhost:5500/apiBrg/images/${img}`;
+      return`http://localhost:5500/api/images/${img}`;
     },
     postBarang: function(){
       let formData = new FormData();
@@ -222,9 +222,9 @@ export default {
 
       let url = "";
       if(this.modeCrud == "insert"){
-        url = `http://localhost:5500/apiBrg/barang`
+        url = `http://localhost:5500/api/barang`
       }else if(this.modeCrud == "update"){
-        url = `http://localhost:5500/apiBrg/barang/${this.selectedId}`
+        url = `http://localhost:5500/api/barang/${this.selectedId}`
       }
 
       axios.post(url, formData, {
@@ -278,7 +278,7 @@ export default {
     },
     getDataBrg: async function(){
       try {
-        const resBrg = await axios.get(`http://localhost:5500/apiBrg/barang`, {
+        const resBrg = await axios.get(`http://localhost:5500/api/barang`, {
           headers: {
             Authorization: 'Bearer ' + this.token
           }
@@ -322,7 +322,7 @@ export default {
         rejectLabel: 'Cancel',
         acceptLabel: 'Proses',
         accept: () => {
-          axios.delete(`http://localhost:5500/apiBrg/barang/${id}`, {
+          axios.delete(`http://localhost:5500/api/barang/${id}`, {
             headers: {
               Authorization: 'Bearer ' + this.token
             }
@@ -359,7 +359,7 @@ export default {
       let formData = new FormData();
       formData.append('fileExcel', this.fileExcel)
 
-      axios.post(`http://localhost:5500/apiBrg/importDataBarang`, formData, {
+      axios.post(`http://localhost:5500/api/importDataBarang`, formData, {
         headers : {
           Authorization: 'Bearer ' + this.token
         }

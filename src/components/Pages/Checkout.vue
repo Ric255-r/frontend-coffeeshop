@@ -231,7 +231,7 @@ export default {
             if(srcData == 'import'){
                 return img;
             }
-            return `http://localhost:5500/apiBrg/images/${img}`
+            return `http://localhost:5500/api/images/${img}`
 
         },
         handleResize: function(){
@@ -274,13 +274,13 @@ export default {
             let token = localStorage.getItem('token');
 
             try {
-                const responseBrg = await axios.get('http://localhost:5500/apiBrg/barang/', {
+                const responseBrg = await axios.get('http://localhost:5500/api/barang/', {
                     headers: {
                         Authorization: 'Bearer ' + token
                     }
                 });
 
-                const responseNota = await axios.get('http://localhost:5500/apiJual/startTransaction/', {
+                const responseNota = await axios.get('http://localhost:5500/api/startTransaction/', {
                     headers: {
                         Authorization: 'Bearer ' + token
                     }
@@ -299,7 +299,7 @@ export default {
             let dataCart = JSON.parse(localStorage.getItem('cart')) || []
 
             try {
-                const resNota = await axios.post(`http://localhost:5500/apiJual/bukaNota/${this.dataNota}`, {
+                const resNota = await axios.post(`http://localhost:5500/api/bukaNota/${this.dataNota}`, {
                     headers: {
                         Authorization: 'Bearer ' + token
                     }
@@ -321,7 +321,7 @@ export default {
                     data.append('espresso', dataCart[i].espresso);
                     data.append('qty', dataCart[i].qty == null ? 1 : dataCart[i].qty);
 
-                    const element = await axios.post(`http://localhost:5500/apiJual/detailPenjualan/`, data , {
+                    const element = await axios.post(`http://localhost:5500/api/detailPenjualan/`, data , {
                         headers: {
                             Authorization: 'Bearer ' + token,
                             'Content-Type': 'multipart/form-data'

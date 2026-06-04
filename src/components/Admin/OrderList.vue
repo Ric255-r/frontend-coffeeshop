@@ -47,7 +47,7 @@
                 </td>
                 <td class="px-6 py-4 text-center items-center justify-center">
                   <img 
-                    :src="`http://localhost:5500/apiAdmin/buktibayar/${item.buktiByr}`" 
+                    :src="`http://localhost:5500/api/buktibayar/${item.buktiByr}`" 
                     :alt="``"
                     height="50" width="50" />
                 </td>
@@ -125,7 +125,7 @@
               </td>
               <td class="px-6 py-4 text-center items-center justify-center">
                 <img 
-                  :src="`http://localhost:5500/apiAdmin/buktibayar/${item.buktiByr}`" 
+                  :src="`http://localhost:5500/api/buktibayar/${item.buktiByr}`" 
                   :alt="``"
                   height="50" width="50" />
               </td>
@@ -205,7 +205,7 @@
                 </td>
                 <td class="px-6 py-4 text-center items-center justify-center">
                   <img 
-                    :src="`http://localhost:5500/apiAdmin/buktibayar/${item.buktiByr}`" 
+                    :src="`http://localhost:5500/api/buktibayar/${item.buktiByr}`" 
                     :alt="``"
                     height="50" width="50" />
                 </td>
@@ -247,7 +247,7 @@
           </div>
           <div class="w-5/12 text-center">
             <img 
-              :src="`http://localhost:5500/apiAdmin/buktibayar/${modalBuktiByr}`" 
+              :src="`http://localhost:5500/api/buktibayar/${modalBuktiByr}`" 
               alt="" :class="`mx-auto my-auto object-cover ${scaleImg == 2 ? ' hover:cursor-zoom-out' : ' hover:cursor-zoom-in'}`" 
               :style="`transform: scale(${scaleImg})`"
               @click="handleZoom()" srcset="" height="220" width="220" />
@@ -416,7 +416,7 @@
 
         <!-- <div class="flex flex-wrap align-items-center mb-3" style="border: 1px solid;" v-for="(items, index) in isiJualDetil" :key="index">
             <div class="w-2/12">
-              <img :src="`http://localhost:5500/apiBrg/images/${items.gambar}`" alt="Gbr">
+              <img :src="`http://localhost:5500/api/images/${items.gambar}`" alt="Gbr">
             </div>
             <div class="w-2/12">
               {{ items.nama_barang }}
@@ -513,7 +513,7 @@ export default {
   },
   methods: {
     fetchData: function(){
-      axios.get(`http://localhost:5500/apiAdmin/dataOrderan`, {
+      axios.get(`http://localhost:5500/api/dataOrderan`, {
         headers: {
           Authorization: 'Bearer ' + this.token
         }
@@ -591,7 +591,7 @@ export default {
         }
       }
 
-      axios.put(`http://localhost:5500/apiAdmin/dataOrderan/${nojual}`, data , {
+      axios.put(`http://localhost:5500/api/dataOrderan/${nojual}`, data , {
         headers: {
           Authorization: 'Bearer ' + this.token,
           'Content-Type': 'multipart/form-data'
@@ -620,7 +620,7 @@ export default {
     },
     declineOrder: function(nojual){
       // Belum diedit
-      axios.put(`http://localhost:5500/apiAdmin/dataOrderan/${nojual}`, {} , {
+      axios.put(`http://localhost:5500/api/dataOrderan/${nojual}`, {} , {
         headers: {
           Authorization: 'Bearer ' + this.token,
           'Content-Type': 'multipart/form-data'
@@ -653,7 +653,7 @@ export default {
       if(srcData == 'import'){
         return img[0];
       }
-      return `http://localhost:5500/apiBrg/images/${img[0]}`
+      return `http://localhost:5500/api/images/${img[0]}`
     }
   }
 }

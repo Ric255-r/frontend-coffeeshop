@@ -109,7 +109,7 @@
                   </td>
                   <td class="px-6 py-4 text-center items-center justify-center">
                     <img 
-                      :src="`http://localhost:5500/apiAdmin/buktibayar/${item.buktiByr}`" 
+                      :src="`http://localhost:5500/api/buktibayar/${item.buktiByr}`" 
                       :alt="``"
                       height="50" width="50" />
                   </td>
@@ -254,7 +254,7 @@ export default {
   methods: {
     fetchDataTerjual: function(){
       // ini req axios yg pertama.
-      axios.get(`http://localhost:5500/apiAdmin/dataItemTerjual`, {
+      axios.get(`http://localhost:5500/api/dataItemTerjual`, {
         headers: {
           Authorization: 'Bearer ' + this.token
         }
@@ -287,7 +287,7 @@ export default {
     },
     // getOmset: function(){
     //   // axios req kedua
-    //   axios.get(`http://localhost:5500/apiAdmin/dataOmset/${this.selectedOmset}`, {
+    //   axios.get(`http://localhost:5500/api/dataOmset/${this.selectedOmset}`, {
     //     headers:{
     //       Authorization: 'Bearer ' + this.token
     //     }
@@ -308,20 +308,20 @@ export default {
     getOmsetAndDataTable: async function(){
       // ini axios kedua, ketiga dan seterusnya. biar g banyak callback pake async await aje
       try {
-        const resDataOrder = await axios.get(`http://localhost:5500/apiAdmin/dataOrderan`, {
+        const resDataOrder = await axios.get(`http://localhost:5500/api/dataOrderan`, {
           headers: {
             Authorization: 'Bearer ' + this.token
           }
         });
         this.dataOrder = JSON.parse(resDataOrder.data) // ini diparse kejson krn returnny string dari python;
 
-        const resDataOmset = await axios.get(`http://localhost:5500/apiAdmin/dataOmset/${this.selectedOmset}`, {
+        const resDataOmset = await axios.get(`http://localhost:5500/api/dataOmset/${this.selectedOmset}`, {
           headers:{
             Authorization: 'Bearer ' + this.token
           }
         });
 
-        const resCountUser = await axios.get(`http://localhost:5500/apiAdmin/countUser/`, {
+        const resCountUser = await axios.get(`http://localhost:5500/api/countUser/`, {
           headers:{
             Authorization: 'Bearer ' + this.token
           }

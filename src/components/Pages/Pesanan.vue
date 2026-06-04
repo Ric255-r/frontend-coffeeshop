@@ -121,10 +121,10 @@ export default {
       if(srcData == 'import'){
         return img;
       }
-      return `http://localhost:5500/apiBrg/images/${img}`;
+      return `http://localhost:5500/api/images/${img}`;
     },
     fetchData: function () {
-      axios.get('http://localhost:5500/apiUser/pesanan', {
+      axios.get('http://localhost:5500/api/pesanan', {
         headers: {
           Authorization: 'Bearer ' + this.token
         }
