@@ -1,52 +1,59 @@
 <template>
-    <div class="poppins-regular text-stone-800">
+    <div class="poppins-regular text-stone-800 detail-page">
         <div class=" animate-fade items-center justify-center">
             <div class="flex flex-wrap">
                 <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
                     <!-- Hai -->
                 </div>
-                <div class="lg:w-8/12 lg:px-3 md:w-8/12 md:px-2 w-full px-2 bg-white/95 shadow-2xl shadow-emerald-950/10 border border-white rounded-2xl overflow-hidden">
+                <div class="lg:w-8/12 lg:px-4 md:w-8/12 md:px-3 w-full px-3 bg-white/95 shadow-2xl shadow-emerald-950/10 border border-white rounded-2xl overflow-hidden detail-shell">
                     <div class="flex flex-wrap">
-                        <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya">
+                        <div class="lg:w-3/12 md:w-3/12 w-full brands-listnya product-gallery">
                             <div class="wrappernya lg:py-2 md:py-2 sm:py-2 py-1">
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 md:h-[190px] h-72 object-cover rounded-2xl">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-56 md:h-[220px] h-72 object-cover rounded-2xl">
                                 </div>
                                 <!-- Mesti Load 2x biar kesannnya Infinite Looping Carouselnya -->
                                 <div class="" v-for="(item, index) in dataBarang.gambar" :key="index">
-                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-48 md:h-[190px] h-72 object-cover rounded-2xl">
+                                    <img :src="loadGbrCarousel(item, dataBarang.source_data)" alt="..." class="pl-1 w-full lg:h-56 md:h-[220px] h-72 object-cover rounded-2xl">
                                 </div>
                             </div>
 
                         </div>
 
-                        <div class="lg:w-9/12 lg:pl-2 md:w-9/12 md:pl-2 w-full lg:mt-0 md:mt-0 sm:mt-0 mt-2">
-                            <div class="flex flex-wrap">
-                                <div class="w-full lg:pt-1 font-bold capitalize text-[30px] lg:pl-2 md:pl-2 text-stone-900">
+                        <div class="lg:w-9/12 lg:pl-5 md:w-9/12 md:pl-4 w-full lg:mt-0 md:mt-0 sm:mt-0 mt-3">
+                            <div class="flex flex-wrap product-intro">
+                                <div class="w-full text-xs font-semibold uppercase text-emerald-700 tracking-wide lg:pl-2 md:pl-2">
+                                    Coffee Detail
+                                </div>
+                                <div class="w-full lg:pt-1 font-bold capitalize text-[30px] lg:pl-2 md:pl-2 text-stone-900 leading-tight">
                                     {{ dataBarang.nama_barang }}
                                 </div>
                             </div>
                             <div class="w-full mt-2 text-sm capitalize lg:pl-2 md:pl-2 text-stone-500 leading-relaxed">
                                 {{ dataBarang.deskripsi }}  
                             </div>
-                            <div class="w-full mt-2 text-right text-emerald-700 text-lg">
-                                <b>Rp. {{ dataBarang.harga }}</b>
+                            <div class="w-full mt-4 lg:pl-2 md:pl-2">
+                                <div class="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-100 text-emerald-800 px-4 py-2 font-bold shadow-sm">
+                                    Rp. {{ dataBarang.harga }}
+                                </div>
                             </div>
 
                             <!-- Utk Tampilan Web -->
-                            <div class="w-full mt-2 lg:pl-2 md:pl-2 lg:block md:block  hidden">
+                            <div class="w-full mt-5 lg:pl-2 md:pl-2 lg:block md:block  hidden">
                                 <p class="font-semibold text-stone-900">Variant Tersedia :</p>
                                 <div class="flex flex-wrap mt-3">
 
                                     <div class=" w-6/12">
-                                        <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[10px] px-[20px] w-full rounded-xl shadow-sm transition`" @click="handleVariant('hot')">
+                                        <button :class="`${selectedVariant == 'hot' ? 'bg-red-500 ring-4 ring-red-100' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[12px] px-[20px] w-full rounded-xl shadow-sm transition`" @click="handleVariant('hot')">
                                             <i class="fas fa-sun "></i>
+                                            <span class="text-sm font-semibold ml-2">Hot</span>
                                         </button>
                                     </div>
 
                                     <div class=" w-6/12">
-                                        <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[10px] px-[20px] w-full ml-1 rounded-xl shadow-sm transition`" @click="handleVariant('cold')">
+                                        <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-500 ring-4 ring-cyan-100' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[12px] px-[20px] w-full ml-1 rounded-xl shadow-sm transition`" @click="handleVariant('cold')">
                                             <i class="far fa-snowflake"></i>
+                                            <span class="text-sm font-semibold ml-2">Cold</span>
                                         </button>
                                     </div>
                                 </div>
@@ -56,19 +63,21 @@
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
                         <!-- Utk Tampilan Mobile -->
-                        <div class="w-full mt-5 lg:hidden md:hidden ">
+                        <div class="w-full mt-5 lg:hidden md:hidden option-card">
                             <b class="text-stone-900">Variant Tersedia :</b>
                             <div class="flex flex-wrap mt-3">
 
                                 <div class=" w-6/12">
-                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-400' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[10px] px-[20px] w-full rounded-xl shadow-sm transition`" @click="handleVariant('hot')">
+                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-500 ring-4 ring-red-100' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[12px] px-[20px] w-full rounded-xl shadow-sm transition`" @click="handleVariant('hot')">
                                         <i class="fas fa-sun "></i>
+                                        <span class="text-sm font-semibold ml-2">Hot</span>
                                     </button>
                                 </div>
 
                                 <div class=" w-6/12">
-                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-400' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[10px] px-[20px] w-full ml-1 rounded-xl shadow-sm transition`" @click="handleVariant('cold')">
+                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-500 ring-4 ring-cyan-100' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[12px] px-[20px] w-full ml-1 rounded-xl shadow-sm transition`" @click="handleVariant('cold')">
                                         <i class="far fa-snowflake"></i>
+                                        <span class="text-sm font-semibold ml-2">Cold</span>
                                     </button>
                                 </div>
                             </div>
@@ -76,7 +85,7 @@
 
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full mt-10">
+                        <div class="w-full mt-6 option-card" v-if="showCup.length > 0">
                             <span v-if="showCup.length > 0"><b>Ukuran Cup : </b></span>
 
                             <div class="flex flex-wrap mt-2" v-for="(item, index) in showCup" :key="index">
@@ -99,7 +108,7 @@
 
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full mt-10">
+                        <div class="w-full mt-5 option-card">
                             <span><b>Ice Cube : </b></span>
                             <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
@@ -180,7 +189,7 @@
 
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full mt-10">
+                        <div class="w-full mt-5 option-card">
                             <span><b>Espresso : </b></span>
                             <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
@@ -218,7 +227,7 @@
 
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full mt-10">
+                        <div class="w-full mt-5 option-card">
                             <span><b>Sweetness : </b></span>
                             <div class="flex flex-wrap mt-2">
                                 <div class="w-3/12">
@@ -261,7 +270,7 @@
 
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full mt-10">
+                        <div class="w-full mt-5 option-card" v-if="showMilk.length > 0">
                             <span v-if="showMilk.length > 0"><b>{{ showMilk[0].kategori }}</b></span>
 
                             <div class="flex flex-wrap mt-2">
@@ -303,7 +312,7 @@
 
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full mt-10">
+                        <div class="w-full mt-5 option-card" v-if="showSyrup.length > 0">
                             <span v-if="showSyrup.length > 0"> <b>{{ showSyrup[0].kategori }}</b></span>
 
                             <div class="flex flex-wrap mt-2" v-for="item in showSyrup" :key="item.id">
@@ -325,7 +334,7 @@
 
                         <!-- <div class="w-full bg-gray-700 h-[0.2px] mt-2 mb-2"></div> -->
 
-                        <div class="w-full mt-10 mb-3">
+                        <div class="w-full mt-5 mb-5 option-card" v-if="showTopping.length > 0">
                             <span v-if="showTopping.length > 0"><b>{{ showTopping[0].kategori }}</b></span>
 
                             <div class="flex flex-wrap mt-2" v-for="item in showTopping" :key="item.id">
@@ -347,9 +356,12 @@
                     </div>
                 </div>
                 <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block"> 
-                    <div class="sticky top-1 rounded-2xl py-5 px-2 mt-1 mx-1 bg-white shadow-xl shadow-emerald-950/10 border border-emerald-100">
+                    <div class="sticky top-4 rounded-2xl py-5 px-3 mt-1 mx-1 bg-white shadow-xl shadow-emerald-950/10 border border-emerald-100 order-sidebar">
 
                         <div class="flex flex-wrap" v-if="handleSubTotal()">
+                            <div class="w-full mb-2">
+                                <p class="text-[11px] uppercase tracking-wide text-emerald-700 font-bold">Keranjang</p>
+                            </div>
                             <div class="w-full">
                                 <div class="cursor-pointer mt-1" v-for="(item, index) in loadSameProducts()" :key="index" >
                                     <div class="flex flex-wrap mt-2 rounded-xl group/item hover:bg-emerald-50 transition"
@@ -379,7 +391,7 @@
                                 </div>
                             </div>
 
-                            <div class="w-full text-[10px] font-bold text-right">
+                            <div class="w-full text-[12px] font-bold text-right mt-4 rounded-xl bg-emerald-50 text-emerald-800 px-3 py-2">
                                 <p class="">Subtotal : {{ handleSubTotal() }}</p>
                             </div>
 
@@ -393,7 +405,8 @@
 
                         <div class="flex flex-wrap" v-else>
                             <div class="w-full">
-                                <p class="text-[11px] font-bold text-right pr-2">Subtotal : 0</p>
+                                <p class="text-[11px] uppercase tracking-wide text-emerald-700 font-bold">Keranjang</p>
+                                <p class="text-[12px] font-bold text-right pr-2 mt-3 rounded-xl bg-stone-50 px-3 py-2">Subtotal : 0</p>
                                 <p class="text-right pt-2">
                                     <button 
                                         class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full h-[30px] w-[30px] transition"
@@ -415,7 +428,7 @@
 
             <!-- Menu Responsive -->
 
-            <div class="flex flex-wrap text-white lg:hidden md:hidden  sticky bottom-[53px] bg-white py-2">
+            <div class="flex flex-wrap text-white lg:hidden md:hidden sticky bottom-[53px] bg-white/95 backdrop-blur py-3 px-2 shadow-[0_-12px_30px_rgba(15,23,42,0.08)] border-t border-emerald-100 mobile-order-bar">
                 
                 <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
                     <button @click="handleMinus()" class="rounded-full bg-red-500 hover:bg-red-600 text-white w-[30px] h-[30px] shadow-sm transition" >
@@ -1430,6 +1443,97 @@ export default {
     border: 1px solid red;
 }  */
 
+.detail-page {
+    padding-top: 0.75rem;
+}
+
+.detail-shell {
+    background:
+        linear-gradient(135deg, rgba(236, 253, 245, 0.74), rgba(255, 255, 255, 0.96) 26%),
+        #ffffff;
+}
+
+.product-gallery {
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.1), rgba(255, 255, 255, 0));
+    border-radius: 1.25rem;
+}
+
+.product-intro {
+    position: relative;
+}
+
+.option-card {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid #edf2ef;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
+}
+
+.option-card > span,
+.option-card > b {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #1c1917;
+    font-size: 0.95rem;
+}
+
+.option-card > span::before,
+.option-card > b::before {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 9999px;
+    background: #059669;
+    box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+}
+
+.option-card .flex.flex-wrap.mt-2 {
+    align-items: center;
+    min-height: 2.25rem;
+    border-bottom: 1px solid #f1f5f2;
+    padding: 0.35rem 0;
+}
+
+.option-card .flex.flex-wrap.mt-2:last-child {
+    border-bottom: 0;
+}
+
+.option-card .w-3\/12 {
+    color: #44403c;
+    font-size: 0.9rem;
+}
+
+.option-card .w-8\/12 {
+    color: #047857;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.option-card input[type="radio"],
+.option-card input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    color: #059669;
+    border-color: #cbd5cf;
+}
+
+.option-card input[type="radio"]:focus,
+.option-card input[type="checkbox"]:focus {
+    --tw-ring-color: rgba(5, 150, 105, 0.25);
+}
+
+.order-sidebar {
+    background:
+        linear-gradient(180deg, rgba(236, 253, 245, 0.78), rgba(255, 255, 255, 1) 38%),
+        #ffffff;
+}
+
+.mobile-order-bar {
+    z-index: 20;
+}
+
 .brands-listnya {
     overflow: hidden;
 }
@@ -1454,6 +1558,10 @@ export default {
 
 .wrappernya {
     animation: scroll 10s linear infinite;
+}
+
+.wrappernya:hover {
+    animation-play-state: paused;
 }
 
 /* Buat Hilangkan Arrow di INput Number */

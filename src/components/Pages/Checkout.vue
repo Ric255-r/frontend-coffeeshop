@@ -2,14 +2,31 @@
     <div>
         <!-- Template By JaxStone -->
         <!-- https://tailwindflex.com/@jaxstone/checkout-page-template -->
-        <div class="min-h-screen py-8 poppins-regular" :style="styleBg">
+        <div class="min-h-screen py-8 poppins-regular checkout-page" :style="styleBg">
             <div class="container mx-auto px-4">
-                <h1 class="text-2xl font-semibold mb-4 text-center text-white tracking-wide">Pesanan Sementara</h1>
+                <div class="text-center text-white mb-6">
+                    <div class="text-sm uppercase tracking-wide text-emerald-50/90">CoffeeKu Cart</div>
+                    <h1 class="text-3xl font-bold tracking-wide">Pesanan Sementara</h1>
+                    <p class="text-sm text-emerald-50/80 mt-1">Review pesananmu sebelum lanjut ke pembayaran.</p>
+                </div>
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="md:w-full">
-                        <div class="bg-white/95 rounded-2xl shadow-2xl shadow-emerald-950/10 border border-white p-6 mb-[100px]" style="overflow-x: auto;">
-                            <table class="w-full mb-[30px] whitespace-nowrap">
-                                <thead class="text-stone-700">
+                        <div class="bg-white/95 rounded-2xl shadow-2xl shadow-emerald-950/10 border border-white p-4 lg:p-6 mb-[100px] checkout-shell">
+                            <div class="flex flex-wrap items-center mb-5">
+                                <div class="w-8/12">
+                                    <div class="font-bold text-stone-900">Daftar Minuman</div>
+                                    <div class="text-xs text-stone-500">{{ showCart.cart.length }} item di keranjang</div>
+                                </div>
+                                <div class="w-4/12 text-right">
+                                    <div class="inline-flex rounded-full bg-emerald-50 border border-emerald-100 text-emerald-800 px-4 py-2 text-sm font-bold">
+                                        Rp. {{ showTotalSemua }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="checkout-table-wrap">
+                            <table class="w-full mb-[30px] whitespace-nowrap checkout-table">
+                                <thead class="text-stone-600">
                                     <tr>
                                         <th class="text-left font-semibold">Beverages</th>
                                         <th class="text-left font-semibold">Price</th>
@@ -18,81 +35,88 @@
                                     </tr>
                                     <tr>
                                         <th colspan="4">
-                                            <div class="mt-3 w-full h-[0.1px]"></div>
+                                            <div class="mt-3 w-full h-[1px] bg-stone-100"></div>
                                         </th>
                                     </tr>
                                 </thead>
 
                     
                                 <tbody v-if="showCart.cart.length">
-                                    <tr class="border-b border-stone-100 last:border-0" v-for="(item, index) in showCart.cart" :key="index">
-                                        <td class="py-4">
+                                    <tr class="border-b border-stone-100 last:border-0 checkout-row" v-for="(item, index) in showCart.cart" :key="index">
+                                        <td class="py-4 lg:pr-4">
                                             <div class="flex items-center">
                                                 <template v-for="(item2, index2) in dataBarang" :key="index2">
-                                                    <img class="h-16 w-16 mr-4 lg:block md:block sm:block hidden object-cover rounded-2xl shadow-sm" v-if="item.id_barang == item2.id" :src="getImg(item2.gambar[0], item2.source_data)" alt="Product image">
+                                                    <img class="h-20 w-20 mr-4 lg:block md:block sm:block hidden object-cover rounded-2xl shadow-md shadow-stone-900/10 border border-white" v-if="item.id_barang == item2.id" :src="getImg(item2.gambar[0], item2.source_data)" alt="Product image">
 
                                                 </template>
-                                                <span>
-                                                    <span class="font-semibold text-stone-900">
+                                                <span class="min-w-[230px]">
+                                                    <span class="font-bold text-stone-900 text-base">
                                                         <router-link class="hover:text-emerald-700 transition" :to="{ name: 'BarangDetail', params: { id: item.id_barang},  query: { productOrder: index } }">{{ item.nama_barang }}</router-link> <br />
                                                     </span> 
-                                                    <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.ukuran_cup">
-                                                        Ukuran Cup : {{ item.ukuran_cup }} <br />
+                                                    <span class="checkout-chip" v-if="item.ukuran_cup">
+                                                        Cup: {{ item.ukuran_cup }}
                                                     </span> 
-                                                    <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.ice_cube">
-                                                        Ice Cube : {{ item.ice_cube }} <br />
+                                                    <span class="checkout-chip" v-if="item.ice_cube">
+                                                        Ice: {{ item.ice_cube }}
                                                     </span> 
-                                                    <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.espresso">
-                                                        Espresso : {{ item.espresso }} <br />
+                                                    <span class="checkout-chip" v-if="item.espresso">
+                                                        Espresso: {{ item.espresso }}
                                                     </span> 
-                                                    <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.sweetness">
-                                                        Sweetness : {{ item.sweetness }} <br />
+                                                    <span class="checkout-chip" v-if="item.sweetness">
+                                                        Sweetness: {{ item.sweetness }}
                                                     </span> 
-                                                    <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.variant">
-                                                        Variant : {{ item.variant }} <br />
+                                                    <span class="checkout-chip" v-if="item.variant">
+                                                        Variant: {{ item.variant }}
                                                     </span> 
                                                     <!-- Cara Pertama Utk Hilangkan Kurung Array -->
-                                                    <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px] whitespace-normal" v-if="item.topping.length > 0">
-                                                        Topping : 
+                                                    <span class="checkout-chip whitespace-normal" v-if="item.topping.length > 0">
+                                                        Topping: 
                                                         <span v-for="(items, index) in item.topping" :key="index">
                                                             {{ items }}
                                                             {{  index !== item.topping.length - 1 ? ', ': '' }}
-                                                        </span> <br />
+                                                        </span>
                                                     </span> 
                                                     <!-- Cara Kedua utk Hilangkan Kurung Array -->
-                                                    <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.syrup.length > 0">
-                                                        Syrup : {{ Array.isArray(item.syrup) ? item.syrup.join(', ') : 'Tanpa Syrup' }} <br />
+                                                    <span class="checkout-chip" v-if="item.syrup.length > 0">
+                                                        Syrup: {{ Array.isArray(item.syrup) ? item.syrup.join(', ') : 'Tanpa Syrup' }}
                                                     </span> 
-                                                    <span class="lg:text-[12px] md:text-[12px] sm:text-[12px]   text-[9px]" v-if="item.milk">
-                                                        Milk : {{ item.milk }} <br />
+                                                    <span class="checkout-chip" v-if="item.milk">
+                                                        Milk: {{ item.milk }}
                                                     </span> 
                                                     
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="py-4">Rp. {{ item.harga }}</td>
+                                        <td class="py-4 font-semibold text-stone-700">Rp. {{ item.harga }}</td>
                                         <td class="py-4">
-                                            <div class="flex items-center">
+                                            <div class="flex items-center quantity-control">
                                                 <button 
-                                                    class="border border-stone-200 rounded-lg lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-2 mr-2 hover:bg-stone-100 transition"
+                                                    class="border border-red-100 text-red-600 rounded-full lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-3 mr-2 hover:bg-red-50 transition"
                                                     @click="handleMinus(index, item.qty == null ? 1 : item.qty)">-</button>
 
-                                                <span class="text-center w-8">{{ item.qty == null ? 1 :  item.qty }}</span>
+                                                <span class="text-center w-8 font-bold text-stone-900">{{ item.qty == null ? 1 :  item.qty }}</span>
                                                 <button 
-                                                    class="border border-stone-200 rounded-lg lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-2 ml-2 hover:bg-stone-100 transition" 
+                                                    class="border border-emerald-100 text-emerald-700 rounded-full lg:py-2 lg:px-4 md:py-2 md:px-4 py-1 px-3 ml-2 hover:bg-emerald-50 transition" 
                                                     @click="handlePlus(index, item.qty == null ? 1 : item.qty)">
                                                 +
                                                 </button>
                                             </div>
                                         </td>
-                                        <td class="py-4">Rp {{ showCart.harga[index].totalSeluruh }}</td>
+                                        <td class="py-4 font-bold text-emerald-700">Rp {{ showCart.harga[index].totalSeluruh }}</td>
                                     </tr>
                                     <!-- More product rows -->
 
                                     <tr>
                                         <td colspan="4">
-                                            <form method="post" @submit.prevent="postTransaction">
-                                                <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white py-3 px-4 rounded-xl mt-4 w-full shadow-lg shadow-emerald-900/20 transition">Checkout</button>
+                                            <form method="post" @submit.prevent="postTransaction" class="checkout-action">
+                                                <div class="flex flex-wrap items-center">
+                                                    <div class="w-full md:w-7/12 text-stone-500 text-sm mb-3 md:mb-0">
+                                                        Pastikan semua item sudah sesuai sebelum checkout.
+                                                    </div>
+                                                    <div class="w-full md:w-5/12">
+                                                        <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white py-3 px-4 rounded-xl w-full shadow-lg shadow-emerald-900/20 transition font-semibold">Checkout</button>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </td>
 
@@ -100,12 +124,19 @@
                                 </tbody>
 
                                 <tbody v-else>
-                                    <br><br>
                                     <tr class="text-center">
-                                        <td colspan="4" class="py-5">Tidak Ada List Minuman</td>
+                                        <td colspan="4" class="py-12">
+                                            <div class="mx-auto max-w-sm rounded-2xl bg-stone-50 border border-stone-100 p-6">
+                                                <div class="text-4xl text-emerald-700 mb-3"><i class="fas fa-mug-hot"></i></div>
+                                                <div class="font-bold text-stone-900">Tidak Ada List Minuman</div>
+                                                <div class="text-sm text-stone-500 mt-1">Keranjangmu masih kosong.</div>
+                                                <router-link to="/home" class="inline-block mt-4 rounded-xl bg-emerald-700 px-5 py-2 text-white hover:bg-emerald-800 transition">Pilih Menu</router-link>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                     <!-- <div class="md:w-1/4">
@@ -348,3 +379,81 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.checkout-page {
+    background-attachment: fixed;
+}
+
+.checkout-shell {
+    background:
+        linear-gradient(135deg, rgba(236, 253, 245, 0.72), rgba(255, 255, 255, 0.98) 28%),
+        #ffffff;
+}
+
+.checkout-table-wrap {
+    overflow-x: auto;
+}
+
+.checkout-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.checkout-table th {
+    padding: 0.75rem 1rem;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.checkout-row {
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.checkout-row:hover {
+    background: rgba(236, 253, 245, 0.42);
+}
+
+.checkout-row td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    vertical-align: middle;
+}
+
+.checkout-chip {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    margin: 0.35rem 0.35rem 0 0;
+    padding: 0.25rem 0.55rem;
+    border-radius: 9999px;
+    border: 1px solid #e7eee9;
+    background: #f8faf8;
+    color: #57534e;
+    font-size: 0.72rem;
+    line-height: 1.2;
+}
+
+.quantity-control {
+    width: max-content;
+    border-radius: 9999px;
+    background: #f8faf8;
+    border: 1px solid #edf2ef;
+    padding: 0.25rem;
+}
+
+.checkout-action {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: #f8faf8;
+    border: 1px solid #edf2ef;
+}
+
+@media (max-width: 768px) {
+    .checkout-table {
+        min-width: 760px;
+    }
+}
+</style>
