@@ -3,9 +3,9 @@
   <div class="home poppins-regular pesanan-page">
     <div>
       <div :style="styleBg" class="flex flex-wrap min-h-screen">
-        <div class="lg:w-2/12 w-1/12"></div>
+        <div class="lg:w-2/12 md:w-1/12 hidden md:block"></div>
 
-        <div class="lg:w-8/12 w-10/12 animate-fade-left bg-white/95 rounded-2xl shadow-2xl shadow-emerald-950/10 border border-white mt-10 mb-[100px] overflow-hidden pesanan-shell">
+        <div class="lg:w-8/12 md:w-10/12 w-full px-4 lg:px-0 md:px-0 animate-fade-left bg-white/95 rounded-2xl shadow-2xl shadow-emerald-950/10 border border-white mt-10 mb-[100px] overflow-hidden pesanan-shell">
 
           <div class="flex flex-wrap items-center px-7 py-5 border-b border-emerald-50 pesanan-head">
             <div class="w-8/12">
@@ -31,25 +31,27 @@
 
           <div :class="`flex flex-wrap px-5 py-5 border-b border-stone-100 pesanan-card ${dataPesanan.length > 0 ? '' : ' hidden'}`" v-for="(items, i1) in dataPesanan" :key="i1">
             <div class="w-full rounded-2xl border border-stone-100 bg-stone-50/70 p-4">
-              <div class="flex flex-wrap items-center mb-4">
+              <div class="flex flex-wrap items-center mb-4 pb-3 border-b border-stone-200/40">
                 <div class="w-7/12">
                   <div class="text-xs text-stone-500">Nomor Pesanan</div>
                   <div class="font-bold text-stone-900 text-lg">{{ items.nojual }}</div>
                 </div>
-                <div class="w-5/12 text-right">
+                <div class="w-5/12 text-right flex items-center justify-end gap-2">
                   <span class="rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 px-3 py-1 text-xs font-semibold">{{ items.status_order }}</span>
                 </div>
               </div>
 
               <div class="w-full">
                 <div class="flex flex-wrap mb-3 rounded-2xl bg-white border border-white p-3 pesanan-item" v-for="(items2, i2) in items.jualdetil" :key="i2">
-                  <div class="lg:w-2/12 md:w-2/12 sm:w-3/12 w-4/12 text-center flex items-center justify-center">
-                    <img :src="getImg(JSON.parse(items2.gambar)[0], items2.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-2xl shadow-md shadow-stone-900/10 border border-white" />
+                  <div class="lg:w-2/12 md:w-2/12 sm:w-3/12 w-3/12 text-center flex items-center justify-center">
+                    <img :src="getImg(JSON.parse(items2.gambar)[0], items2.source_data)" alt="" class="object-cover h-[80px] w-[80px] sm:h-[100px] sm:w-[100px] rounded-2xl shadow-md shadow-stone-900/10 border border-white" />
                   </div>
 
-                  <div class="lg:w-10/12 md:w-10/12 sm:w-9/12 w-8/12 pl-3">
-                    <div class="font-bold text-stone-900 text-base">{{ items2.nama_barang }} </div>
-                    <div class="flex flex-wrap mt-2">
+                  <div class="lg:w-10/12 md:w-10/12 sm:w-9/12 w-9/12 pl-3">
+                    <div class="font-bold text-stone-900 text-base leading-tight">{{ items2.nama_barang }}</div>
+                    
+                    <!-- Desktop Order Chips -->
+                    <div class="hidden md:flex flex-wrap mt-2">
                       <span class="order-chip">Variant: {{ items2.variant }}</span>
                       <span class="order-chip">Cup: {{ items2.ukuran_cup }}</span>
                       <span class="order-chip">Ice: {{ items2.ice_cube }}</span>
@@ -59,14 +61,34 @@
                       <span class="order-chip">Syrup: {{ JSON.parse(items2.syrup).length ? JSON.parse(items2.syrup).join(', ') : 'Tanpa Sirup' }}</span>
                       <span class="order-chip">Topping: {{ JSON.parse(items2.topping).length ? JSON.parse(items2.topping).join(', ') : 'Tanpa Topping' }}</span>
                     </div>
+
+                    <!-- Mobile Order Details (Tokopedia Style) -->
+                    <div class="md:hidden text-xs text-stone-500 mt-1.5 leading-relaxed">
+                      <div class="font-semibold text-emerald-800">{{ items2.qty }} barang x Rp. {{ items2.harga_akhir }}</div>
+                      <div class="mt-1 text-[11px] text-stone-400">
+                        {{ items2.variant }} • {{ items2.ukuran_cup }} • Ice: {{ items2.ice_cube }} • Esp: {{ items2.espresso }} • Sweetness: {{ items2.sweetness }} • Milk: {{ items2.milk }}
+                        <template v-if="JSON.parse(items2.syrup).length"> • Syr: {{ JSON.parse(items2.syrup).join(', ') }}</template>
+                        <template v-if="JSON.parse(items2.topping).length"> • Top: {{ JSON.parse(items2.topping).join(', ') }}</template>
+                      </div>
+                    </div>
                   </div>
+                </div>
+              </div>
+
+              <!-- Bottom transaction summary (Tokopedia Style) -->
+              <div class="w-full mt-4 flex items-center justify-between border-t border-stone-200/60 pt-3">
+                <div class="text-[11px] text-stone-400">
+                  Tanggal: {{ items.tgltransaksi }}
+                </div>
+                <div class="text-xs sm:text-sm font-semibold text-stone-900">
+                  Total Belanja: <span class="text-emerald-700 font-bold">Rp. {{ items.grandtotal }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="lg:w-2/12 w-1/12"></div>
+        <div class="lg:w-2/12 md:w-1/12 hidden md:block"></div>
 
         <NavbarBottom class="mt-3"></NavbarBottom>
       </div>

@@ -25,10 +25,10 @@
                 <div class="w-full bg-emerald-50 h-[7px] rounded-full mt-2 mb-4"></div>
 
                 <div class="flex flex-wrap mb-3 rounded-2xl border border-stone-100 bg-stone-50/60 p-3 payment-item" v-for="(item, index) in dataBeli" :key="index">
-                    <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-3/12">
+                    <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-4/12 text-center flex items-center justify-center">
                         <img :src="getImg(item.gambar, item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-2xl shadow-md shadow-stone-900/10 border border-white">
                     </div>
-                    <div class="lg:w-10/12 md:w-10/12 sm:w-10/12 w-9/12 pl-3">
+                    <div class="lg:w-10/12 md:w-10/12 sm:w-10/12 w-8/12 pl-3">
                         <div class="flex flex-wrap">
                             <div class="w-8/12 font-bold mb-2 text-stone-900 text-base">
                                 {{ item.nama_barang }}
@@ -134,8 +134,8 @@
                                 <div class="w-full mb-3 text-stone-600 text-sm">
                                     Pilih salah satu rekening, lalu upload bukti pembayaran.
                                 </div>
-                                <div class="w-6/12">
-                                    <div class="flex flex-wrap border border-stone-200 mr-2 rounded-2xl px-3 py-4 bg-stone-50 bank-card">
+                                <div class="w-full sm:w-6/12 mb-3 sm:mb-0">
+                                    <div class="flex flex-wrap border border-stone-200 sm:mr-2 rounded-2xl px-3 py-4 bg-stone-50 bank-card">
                                         <div class="w-full mb-4">
                                             <img :src="require('@/assets/bca.png')" alt="">
                                         </div>
@@ -155,7 +155,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="w-6/12">
+                                <div class="w-full sm:w-6/12">
                                     <div class="flex flex-wrap border border-stone-200 rounded-2xl px-3 py-4 bg-stone-50 bank-card">
                                         <div class="w-full mb-4">
                                             <img :src="require('@/assets/bni.png')" alt="">

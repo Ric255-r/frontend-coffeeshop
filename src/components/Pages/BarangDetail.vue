@@ -428,49 +428,32 @@
 
             <!-- Menu Responsive -->
 
-            <div class="flex flex-wrap text-white lg:hidden md:hidden sticky bottom-[53px] bg-white/95 backdrop-blur py-3 px-2 shadow-[0_-12px_30px_rgba(15,23,42,0.08)] border-t border-emerald-100 mobile-order-bar">
+            <div class="flex items-center justify-between text-white lg:hidden md:hidden sticky bottom-[68px] bg-white/95 backdrop-blur py-3 px-3 shadow-[0_-12px_30px_rgba(15,23,42,0.08)] border-t border-emerald-100 mobile-order-bar">
                 
-                <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
-                    <button @click="handleMinus()" class="rounded-full bg-red-500 hover:bg-red-600 text-white w-[30px] h-[30px] shadow-sm transition" >
+                <div class="flex items-center gap-2">
+                    <button @click="handleMinus()" class="rounded-full bg-red-500 hover:bg-red-600 text-white w-[30px] h-[30px] shadow-sm transition flex items-center justify-center" >
                         <i class="fas fa-minus"></i>
                     </button>
-                </div>
-                <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-2/12 block lg:hidden md:hidden text-black mt-1">
-                    <input type="number" name="" id="idQtyResp" v-model="qty" class="w-full rounded-xl text-center border-stone-200 focus:border-emerald-500 focus:ring-emerald-500">
-                </div>
-                <div class="lg:w-1/12 md:w-1/12 sm:w-1/12 w-1/12 block lg:hidden md:hidden text-black text-center py-1 mt-1">
-                    <button @click="handlePlus()" class="rounded-full bg-emerald-600 hover:bg-emerald-700 text-white w-[30px] h-[30px] shadow-sm transition">
+                    <input type="number" name="" id="idQtyResp" v-model="qty" class="w-12 rounded-xl text-center border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 p-1 text-black font-semibold">
+                    <button @click="handlePlus()" class="rounded-full bg-emerald-600 hover:bg-emerald-700 text-white w-[30px] h-[30px] shadow-sm transition flex items-center justify-center">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
                 
-                <div :class="`lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12 mt-3 cursor-pointer ${toggleAddBtn == false ? ' hidden' : ''}`" >
-                    <div class="flex flex-wrap">
-                        <div class="w-full text-center">
-                            <span 
-                            class="py-3 px-9 rounded-xl border border-emerald-600 bg-transparent text-emerald-700 hover:bg-emerald-700 hover:text-white transition" 
-                            @click="handleTambahBaru">
-                                Add New?
-                            </span>
-                        </div>
-                    </div>
+                <div class="flex items-center gap-2 flex-1 justify-end">
+                    <button 
+                        v-if="toggleAddBtn"
+                        class="py-2.5 px-4 rounded-xl border border-emerald-600 bg-transparent text-emerald-700 hover:bg-emerald-700 hover:text-white transition text-sm font-semibold whitespace-nowrap" 
+                        @click="handleTambahBaru">
+                        Add New?
+                    </button>
+
+                    <router-link to="/checkout" 
+                        class="relative bg-emerald-700 py-2.5 px-6 rounded-xl hover:bg-emerald-900 shadow-lg shadow-emerald-900/20 transition text-sm font-semibold text-center whitespace-nowrap flex items-center justify-center">
+                        <span>Go To Cart</span>
+                        <span :key="updateBadge" :class="lengthCart > 0 ? 'absolute -top-2 -right-2 bg-red-600 text-white rounded-full min-w-[20px] h-[20px] flex items-center justify-center text-[10px] font-bold px-1' : 'hidden'">{{ lengthCart }}</span>
+                    </router-link>
                 </div>
-
-                <div :class="`${toggleAddBtn == false ? 'lg:w-8/12 md:w-8/12 sm:w-8/12 w-8/12' : 'lg:w-4/12 md:w-4/12 sm:w-4/12 w-4/12'} mt-3 cursor-pointer `">
-                    <div class="flex flex-wrap">
-                        <div class="w-full notification">
-                            <router-link to="/checkout" 
-                                :class="`bg-emerald-700 py-3 rounded-xl hover:bg-emerald-900 shadow-lg shadow-emerald-900/20 transition ${toggleAddBtn == false ? '': ' px-10'}`" :style="`${toggleAddBtn == false ? 'display: inline-block; width: 100%;' : ''}`">
-                                <span>Go To Cart</span>
-                                <span :key="updateBadge" :class="lengthCart > 0 ? ' badge' : ' hidden'">{{ lengthCart }}</span>
-
-                            </router-link>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 hidden lg:block md:block sm:block">
-
-                </div> -->
             </div>
 
             <NavbarBottom></NavbarBottom>
@@ -1577,27 +1560,8 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* Buat Notif Button */
-.notification {
-  color: white;
-  text-decoration: none;
-  text-align: center;
-  position: relative;
-  display: inline-block;
-  border-radius: 2px;
-}
+/* End Buat Notif - Refactored to tailwind */
 
-.notification .badge {
-  position: absolute;
-  top: -20px;
-  right: -5px;
-  padding: 5px 10px;
-  border-radius: 50%;
-  background: red;
-  color: white;
-}
-
-/* End Buat Notif */
 
 /* 
 div {

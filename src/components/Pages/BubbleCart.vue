@@ -1,18 +1,16 @@
 <template>
-    <div v-if="totalHarga.length > 0" class="sticky bottom-[4.5rem] z-20">
+    <div v-if="totalHarga.length > 0" class="sticky bottom-[4.5rem] z-20 px-4 sm:px-0">
         <div class="flex flex-wrap text-white hover:overflow-x-hidden">
             <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 hidden lg:block md:block sm:block">
 
             </div>
             <div class="group lg:w-8/12 md:w-8/12 sm:w-8/12 py-3 w-full bg-emerald-700 hover:bg-emerald-800 cursor-pointer rounded-full shadow-2xl shadow-emerald-900/25 border border-emerald-500/30 transition relative overflow-hidden" @click="handleClick">
-                <div class="flex flex-wrap items-center">
-                    <div class="w-1/12 pl-5">
+                <div class="flex items-center justify-between px-5 font-semibold">
+                    <div class="flex items-center gap-3">
                         <i class="fas fa-shopping-cart"></i>
+                        <span>Checkout {{ totalHarga.length }} Item</span>
                     </div>
-                    <div class="w-9/12 font-semibold">
-                        Checkout {{ totalHarga.length }} Item
-                    </div>
-                    <div class="w-2/12 text-right pr-5 font-semibold">
+                    <div class="whitespace-nowrap">
                         Rp. {{ showTotal }}
                     </div>
                 </div>
