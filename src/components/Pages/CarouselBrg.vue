@@ -7,21 +7,21 @@
       <img class="max-w-full h-auto" :src="require('@/assets/coffee-bread.jpg')" alt="Sample 2">
     </SplideSlide>
   </Splide> -->
-  <div class="splide w-full">
+  <div ref="splide" class="splide coffee-splide w-full">
     <div class="splide__track shadow-xl shadow-emerald-950/15 border border-white/70" style="border-radius: 1.25rem;">
         <ul class="splide__list">
 
             <li class="splide__slide">
-                <img class="min-w-full h-64 lg:px-0 px-2 object-cover" :src="require('@/assets/coffeebanner3.jpg')" alt="Sample 3">
+                <img class="w-full h-full object-cover" :src="require('@/assets/coffeebanner3.jpg')" alt="Sample 3" @load="refreshSplide">
             </li>
             <li class="splide__slide">
-                <img class="min-w-full h-64 lg:px-0 px-2 object-cover" :src="require('@/assets/coffeebanner4.jpg')" alt="Sample 4">
+                <img class="w-full h-full object-cover" :src="require('@/assets/coffeebanner4.jpg')" alt="Sample 4" @load="refreshSplide">
             </li>
             <li class="splide__slide">
-                <img class="min-w-full h-64 lg:px-0 px-2 object-cover" :src="require('@/assets/milklatte-banner.jpg')" alt="Sample 1">
+                <img class="w-full h-full object-cover" :src="require('@/assets/milklatte-banner.jpg')" alt="Sample 1" @load="refreshSplide">
             </li>
             <li class="splide__slide">
-                <img class="min-w-full h-64 lg:px-0 px-2 object-cover" :src="require('@/assets/coffee-bread.jpg')" alt="Sample 2">
+                <img class="w-full h-full object-cover" :src="require('@/assets/coffee-bread.jpg')" alt="Sample 2" @load="refreshSplide">
             </li>
 
             <!-- <li class="splide__slide">Slide 03</li> -->
@@ -56,24 +56,61 @@ export default {
 
     // return { aturan: option }
   },
+  data: function(){
+    return {
+      splide: null
+    }
+  },
   mounted: function(){
     // let banner = document.getElementById('splide01-track');
     // banner.classList.add('rounded-tl-lg');
     // banner.classList.add('rounded-br-lg');
-    var splide = new Splide( '.splide' , {
+    this.$nextTick(() => {
+      this.splide = new Splide(this.$refs.splide, {
         type: 'loop',
-        gap: '1rem',
+        perPage: 1,
+        perMove: 1,
+        gap: 0,
         autoplay: true,
+        arrows: true,
+        pagination: true,
         // heightRatio: 0.2,
         height: '168px',
+      });
+      this.splide.mount();
+
+      setTimeout(() => {
+        this.refreshSplide();
+      }, 150);
     });
-    splide.mount();
+  },
+  beforeUnmount: function(){
+    if(this.splide){
+      this.splide.destroy();
+      this.splide = null;
+    }
+  },
+  methods: {
+    refreshSplide: function(){
+      if(this.splide){
+        this.splide.refresh();
+      }
+    }
   }
 };
 </script>
 
-<style>
-.splide__slide {
-  border-radius: 50px;
+<style scoped>
+.coffee-splide :deep(.splide__track) {
+  overflow: hidden;
+}
+
+.coffee-splide :deep(.splide__slide) {
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+
+.coffee-splide img {
+  display: block;
 }
 </style>
