@@ -7,7 +7,7 @@
 
         <div class="lg:w-8/12 md:w-10/12 w-full px-4 lg:px-0 md:px-0 animate-fade-left bg-white/95 rounded-2xl shadow-2xl shadow-emerald-950/10 border border-white mt-10 mb-[100px] overflow-hidden pesanan-shell">
 
-          <div class="flex flex-wrap items-center px-7 py-5 border-b border-emerald-50 pesanan-head">
+          <div class="flex flex-wrap items-center px-3 lg:px-7 md:px-7 py-5 border-b border-emerald-50 pesanan-head">
             <div class="w-8/12">
               <div class="text-xs uppercase tracking-wide text-emerald-700 font-bold">Order History</div>
               <div class="font-bold text-2xl text-stone-900">Pesanan Anda</div>
@@ -29,7 +29,7 @@
             </div>
           </div>
 
-          <div :class="`flex flex-wrap px-5 py-5 border-b border-stone-100 pesanan-card ${dataPesanan.length > 0 ? '' : ' hidden'}`" v-for="(items, i1) in dataPesanan" :key="i1">
+          <div :class="`flex flex-wrap px-1 lg:px-5 md:px-5 py-5 border-b border-stone-100 pesanan-card ${dataPesanan.length > 0 ? '' : ' hidden'}`" v-for="(items, i1) in dataPesanan" :key="i1">
             <div class="w-full rounded-2xl border border-stone-100 bg-stone-50/70 p-4">
               <div class="flex flex-wrap items-center mb-4 pb-3 border-b border-stone-200/40">
                 <div class="w-7/12">
