@@ -42,18 +42,17 @@
                             <div class="w-full mt-5 lg:pl-2 md:pl-2 lg:block md:block  hidden">
                                 <p class="font-semibold text-stone-900">Variant Tersedia :</p>
                                 <div class="flex flex-wrap mt-3">
-
-                                    <div class=" w-6/12">
-                                        <button :class="`${selectedVariant == 'hot' ? 'bg-red-500 ring-4 ring-red-100' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[12px] px-[20px] w-full rounded-xl shadow-sm transition`" @click="handleVariant('hot')">
-                                            <i class="fas fa-sun "></i>
-                                            <span class="text-sm font-semibold ml-2">Hot</span>
+                                    <div class="w-6/12 pr-1.5">
+                                        <button :class="`${selectedVariant == 'hot' ? 'bg-red-50/80 border-2 border-red-500 text-red-700 font-bold shadow-sm' : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50' } text-base py-2.5 px-4 w-full rounded-xl transition flex items-center justify-center gap-2`" @click="handleVariant('hot')">
+                                            <i class="fas fa-sun text-red-500"></i>
+                                            <span class="text-sm font-semibold">Hot</span>
                                         </button>
                                     </div>
 
-                                    <div class=" w-6/12">
-                                        <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-500 ring-4 ring-cyan-100' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[12px] px-[20px] w-full ml-1 rounded-xl shadow-sm transition`" @click="handleVariant('cold')">
-                                            <i class="far fa-snowflake"></i>
-                                            <span class="text-sm font-semibold ml-2">Cold</span>
+                                    <div class="w-6/12 pl-1.5">
+                                        <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-50/80 border-2 border-cyan-500 text-cyan-700 font-bold shadow-sm' : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50' } text-base py-2.5 px-4 w-full rounded-xl transition flex items-center justify-center gap-2`" @click="handleVariant('cold')">
+                                            <i class="far fa-snowflake text-cyan-500"></i>
+                                            <span class="text-sm font-semibold">Cold</span>
                                         </button>
                                     </div>
                                 </div>
@@ -66,18 +65,17 @@
                         <div class="w-full mt-5 lg:hidden md:hidden option-card">
                             <b class="text-stone-900">Variant Tersedia :</b>
                             <div class="flex flex-wrap mt-3">
-
-                                <div class=" w-6/12">
-                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-500 ring-4 ring-red-100' : 'bg-red-700' } text-lg hover:bg-red-600 text-white py-[12px] px-[20px] w-full rounded-xl shadow-sm transition`" @click="handleVariant('hot')">
-                                        <i class="fas fa-sun "></i>
-                                        <span class="text-sm font-semibold ml-2">Hot</span>
+                                <div class="w-6/12 pr-1.5">
+                                    <button :class="`${selectedVariant == 'hot' ? 'bg-red-50/80 border-2 border-red-500 text-red-700 font-bold shadow-sm' : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50' } text-base py-2.5 px-4 w-full rounded-xl transition flex items-center justify-center gap-2`" @click="handleVariant('hot')">
+                                        <i class="fas fa-sun text-red-500"></i>
+                                        <span class="text-sm font-semibold">Hot</span>
                                     </button>
                                 </div>
 
-                                <div class=" w-6/12">
-                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-500 ring-4 ring-cyan-100' : 'bg-cyan-700' } text-lg hover:bg-cyan-600 text-white py-[12px] px-[20px] w-full ml-1 rounded-xl shadow-sm transition`" @click="handleVariant('cold')">
-                                        <i class="far fa-snowflake"></i>
-                                        <span class="text-sm font-semibold ml-2">Cold</span>
+                                <div class="w-6/12 pl-1.5">
+                                    <button :class="`${selectedVariant == 'cold' ? 'bg-cyan-50/80 border-2 border-cyan-500 text-cyan-700 font-bold shadow-sm' : 'bg-white border border-stone-200 text-stone-600 hover:bg-stone-50' } text-base py-2.5 px-4 w-full rounded-xl transition flex items-center justify-center gap-2`" @click="handleVariant('cold')">
+                                        <i class="far fa-snowflake text-cyan-500"></i>
+                                        <span class="text-sm font-semibold">Cold</span>
                                     </button>
                                 </div>
                             </div>
