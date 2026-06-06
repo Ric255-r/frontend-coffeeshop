@@ -53,9 +53,9 @@
 
             </div>
             
-            <div class="lg:w-1/12 md:w-1/12 w-3/12 text-center flex items-center justify-center">   
-                <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
-                    <img :src="getImg(item.gambar[0], item.source_data)" alt="" class="object-cover lg:h-[100px] lg:w-[100px] md:h-[100px] md:w-[100px] h-[88px] w-[88px] rounded-2xl shadow-md shadow-stone-900/10 border border-white">
+            <div class="lg:w-1/12 md:w-1/12 w-3/12 text-center flex items-center lg:justify-start md:justify-start justify-center">   
+                <router-link class="block w-full" :to="{ name: 'BarangDetail', params: { id: item.id } }">
+                    <img :src="getImg(item.gambar[0], item.source_data)" alt="" class="object-cover lg:h-[124px] lg:w-full lg:max-w-[124px] md:h-[100px] md:w-[100px] h-[88px] w-[88px] rounded-2xl shadow-md shadow-stone-900/10 border border-white">
                 </router-link>
             </div>
 
