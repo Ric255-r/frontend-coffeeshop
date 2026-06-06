@@ -35,7 +35,7 @@
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
 
             </div>
-            <div class="lg:w-8/12 md:w-8/12 lg:pl-0 md:pl-0 pl-4 w-full">
+            <div class="lg:w-8/12 md:w-8/12 lg:px-0 md:px-0 px-3 w-full">
                 <div class="flex items-center justify-between">
                     <span class="font-semibold text-stone-900">Choose Your Favourite</span>
                     <span class="text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-1">Fresh today</span>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap mb-3" v-for="(item, index) in dataBarang" :key="index">
+        <div class="flex flex-wrap mb-3 lg:px-0 md:px-0 px-3" v-for="(item, index) in dataBarang" :key="index">
 
             <div class="lg:w-2/12 md:w-2/12 hidden lg:block md:block">
 
@@ -55,7 +55,7 @@
             
             <div class="lg:w-1/12 md:w-1/12 w-3/12 text-center flex items-center justify-center">   
                 <router-link :to="{ name: 'BarangDetail', params: { id: item.id } }">
-                    <img :src="getImg(item.gambar[0], item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-2xl shadow-md shadow-stone-900/10 border border-white">
+                    <img :src="getImg(item.gambar[0], item.source_data)" alt="" class="object-cover lg:h-[100px] lg:w-[100px] md:h-[100px] md:w-[100px] h-[88px] w-[88px] rounded-2xl shadow-md shadow-stone-900/10 border border-white">
                 </router-link>
             </div>
 
