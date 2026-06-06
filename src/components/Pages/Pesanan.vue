@@ -20,12 +20,14 @@
             </div>
           </div>
 
-          <div :class="`text-center animate-fade-left py-12 px-5 ${dataPesanan.length > 0 ? ' hidden' : ''}` ">
-            <div class="mx-auto max-w-sm rounded-2xl bg-stone-50 border border-stone-100 p-6">
-              <div class="text-4xl text-emerald-700 mb-3"><i class="fas fa-receipt"></i></div>
-              <div class="font-bold text-stone-900">Anda Belum Memiliki Pesanan</div>
-              <div class="text-sm text-stone-500 mt-1">Pesanan yang sudah diproses akan muncul di sini.</div>
-              <router-link to="/home" class="inline-block mt-4 rounded-xl bg-emerald-700 px-5 py-2 text-white hover:bg-emerald-800 transition">Pilih Menu</router-link>
+          <div :class="`text-center animate-fade-left py-8 px-3 lg:px-7 md:px-7 ${dataPesanan.length > 0 ? ' hidden' : ''}` ">
+            <div class="mx-auto w-full rounded-2xl bg-stone-50 border border-stone-100 p-6 lg:p-10 min-h-[260px] flex items-center justify-center">
+              <div class="max-w-sm">
+                <div class="text-4xl text-emerald-700 mb-3"><i class="fas fa-receipt"></i></div>
+                <div class="font-bold text-stone-900">Anda Belum Memiliki Pesanan</div>
+                <div class="text-sm text-stone-500 mt-1">Pesanan yang sudah diproses akan muncul di sini.</div>
+                <router-link to="/home" class="inline-block mt-4 rounded-xl bg-emerald-700 px-5 py-2 text-white hover:bg-emerald-800 transition">Pilih Menu</router-link>
+              </div>
             </div>
           </div>
 
