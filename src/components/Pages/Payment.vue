@@ -24,7 +24,7 @@
 
                 <div class="w-full bg-emerald-50 h-[7px] rounded-full mt-2 mb-4"></div>
 
-                <div class="flex flex-wrap mb-3 rounded-2xl border border-stone-100 bg-stone-50/60 p-3 payment-item" v-for="(item, index) in dataBeli" :key="index">
+                <div class="w-full flex flex-wrap mb-3 rounded-2xl border border-stone-100 bg-stone-50/60 p-3 payment-item" v-for="(item, index) in dataBeli" :key="index">
                     <!-- Desktop View -->
                     <div class="hidden md:flex w-full">
                         <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-4/12 text-center flex items-center justify-center">
