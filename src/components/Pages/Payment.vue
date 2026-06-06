@@ -25,26 +25,98 @@
                 <div class="w-full bg-emerald-50 h-[7px] rounded-full mt-2 mb-4"></div>
 
                 <div class="flex flex-wrap mb-3 rounded-2xl border border-stone-100 bg-stone-50/60 p-3 payment-item" v-for="(item, index) in dataBeli" :key="index">
-                    <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-4/12 text-center flex items-center justify-center">
-                        <img :src="getImg(item.gambar, item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-2xl shadow-md shadow-stone-900/10 border border-white">
+                    <!-- Desktop View -->
+                    <div class="hidden md:flex w-full">
+                        <div class="lg:w-2/12 md:w-2/12 sm:w-2/12 w-4/12 text-center flex items-center justify-center">
+                            <img :src="getImg(item.gambar, item.source_data)" alt="" class="object-cover h-[100px] w-[100px] rounded-2xl shadow-md shadow-stone-900/10 border border-white">
+                        </div>
+                        <div class="lg:w-10/12 md:w-10/12 sm:w-10/12 w-8/12 pl-3">
+                            <div class="flex flex-wrap">
+                                <div class="w-8/12 font-bold mb-2 text-stone-900 text-base">
+                                    {{ item.nama_barang }}
+                                </div>
+                                <div class="w-4/12 text-right font-bold text-emerald-700">
+                                    Rp.{{ item.harga_seluruh }}
+                                </div>
+                                <!-- Desktop view chips -->
+                                <div class="w-full flex flex-wrap gap-x-2 gap-y-1.5 mt-2">
+                                    <span class="payment-chip" v-if="JSON.parse(item.topping).length">Topping: {{ JSON.parse(item.topping).toString().replace(/[{}]/g, '') }}</span>
+                                    <span class="payment-chip" v-if="JSON.parse(item.syrup).length">Syrup: {{ JSON.parse(item.syrup).toString().replace(/[{}]/g, '') }}</span>
+                                    <span class="payment-chip" v-if="item.ice_cube">Ice: {{ item.ice_cube === 'NONE' ? 'No Ice' : item.ice_cube }}</span>
+                                    <span class="payment-chip" v-if="item.espresso">Espresso: {{ item.espresso === '0' ? 'Normal' : item.espresso }}</span>
+                                    <span class="payment-chip" v-if="item.variant">Variant: {{ item.variant }}</span>
+                                    <span class="payment-chip" v-if="item.sweetness">Sweetness: {{ item.sweetness }}</span>
+                                    <span class="payment-chip" v-if="item.milk">Milk: {{ item.milk }}</span>
+                                    <span class="payment-chip payment-chip-qty">Qty: {{ item.qty }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="lg:w-10/12 md:w-10/12 sm:w-10/12 w-8/12 pl-3">
-                        <div class="flex flex-wrap">
-                            <div class="w-8/12 font-bold mb-2 text-stone-900 text-base">
-                                {{ item.nama_barang }}
+
+                    <!-- Mobile View (Tokopedia & Sketch Style) -->
+                    <div class="md:hidden flex flex-col gap-3 w-full">
+                        <div class="flex gap-3">
+                            <!-- Product Image -->
+                            <img :src="getImg(item.gambar, item.source_data)" alt="" class="object-cover h-20 w-20 rounded-2xl shadow-md shadow-stone-900/10 border border-white flex-shrink-0" />
+                            
+                            <!-- Product Details -->
+                            <div class="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+                                <div class="flex items-start justify-between gap-2">
+                                    <div class="font-bold text-stone-900 text-base leading-tight truncate">
+                                        {{ item.nama_barang }}
+                                    </div>
+                                </div>
+                                
+                                <!-- Separator Line -->
+                                <div class="h-[1px] bg-stone-100 my-1.5 w-full"></div>
+                                
+                                <!-- Qty & Total Price -->
+                                <div class="flex justify-between items-center text-xs font-semibold">
+                                    <span class="text-stone-500 font-medium">{{ item.qty }} barang</span>
+                                    <span class="text-emerald-700 font-bold">Rp. {{ item.harga_seluruh }}</span>
+                                </div>
                             </div>
-                            <div class="w-4/12 text-right font-bold text-emerald-700">
-                                Rp.{{ item.harga_seluruh }}
+                        </div>
+                        
+                        <!-- Structured Customization Grid (3 Columns) -->
+                        <div class="mt-2 flex flex-wrap text-[10px] text-stone-500 bg-stone-50 border border-stone-100/60 rounded-xl p-2.5">
+                            <div class="w-1/3 pr-1 mb-1.5 flex items-center">
+                                <i :class="`${item.variant === 'hot' ? 'fas fa-sun text-red-500' : 'far fa-snowflake text-cyan-500'} w-4 text-center mr-1.5`" title="Variant"></i>
+                                <span class="font-medium text-stone-700 capitalize">{{ item.variant }}</span>
                             </div>
-                            <div class="w-full">
-                                <span class="payment-chip">Topping: {{ JSON.parse(item.topping).toString().length > 0 ? JSON.parse(item.topping).toString().replace(/[{}]/g, '') : 'Tidak Memilih Topping' }}</span>
-                                <span class="payment-chip">Syrup: {{ JSON.parse(item.syrup).toString().length > 0 ? JSON.parse(item.syrup).toString().replace(/[{}]/g, '') : 'Tidak Memilih Sirup' }}</span>
-                                <span class="payment-chip">Ice: {{ item.ice_cube }}</span>
-                                <span class="payment-chip">Espresso: {{ item.espresso }}</span>
-                                <span class="payment-chip">Variant: {{ item.variant }}</span>
-                                <span class="payment-chip">Sweetness: {{ item.sweetness }}</span>
-                                <span class="payment-chip">Milk: {{ item.milk }}</span>
-                                <span class="payment-chip payment-chip-qty">Qty: {{ item.qty }}</span>
+                            <div class="w-1/3 px-0.5 mb-1.5 flex items-center">
+                                <i class="fas fa-mug-hot w-4 text-center mr-1.5 text-stone-400" title="Cup Size"></i>
+                                <span class="font-medium text-stone-700 uppercase" v-if="item.ukuran_cup">Cup {{ item.ukuran_cup }}</span>
+                                <span class="font-medium text-stone-700 uppercase" v-else>Cup R</span>
+                            </div>
+                            <div class="w-1/3 pl-1 mb-1.5 flex items-center">
+                                <i class="fas fa-cube w-4 text-center mr-1.5 text-stone-400" title="Ice"></i>
+                                <span class="font-medium text-stone-700 capitalize">{{ item.ice_cube === 'NONE' ? 'No Ice' : item.ice_cube.toLowerCase() + ' ice' }}</span>
+                            </div>
+                            <div class="w-1/3 pr-1 mb-1.5 flex items-center">
+                                <i class="fas fa-coffee w-4 text-center mr-1.5 text-stone-400" title="Espresso"></i>
+                                <span class="font-medium text-stone-700 capitalize">{{ item.espresso === '0' ? 'Normal' : item.espresso }}</span>
+                            </div>
+                            <div class="w-1/3 px-0.5 mb-1.5 flex items-center">
+                                <i class="fas fa-cubes w-4 text-center mr-1.5 text-stone-400" title="Sweetness"></i>
+                                <span class="font-medium text-stone-700 capitalize">{{ item.sweetness.toLowerCase() + ' sweetness' }}</span>
+                            </div>
+                            <div class="w-1/3 pl-1 mb-1.5 flex items-center">
+                                <i class="fas fa-cow w-4 text-center mr-1.5 text-stone-400" title="Milk"></i>
+                                <span class="font-medium text-stone-700 capitalize">{{ item.milk.toLowerCase() + ' milk' }}</span>
+                            </div>
+                            
+                            <div class="w-full mt-1.5 pt-1.5 border-t border-stone-200/50 flex items-start">
+                                <i class="fas fa-prescription-bottle w-4 text-center mr-1.5 mt-0.5 text-stone-400" title="Syrup"></i>
+                                <span class="font-medium text-stone-700 text-left flex-1">
+                                    {{ JSON.parse(item.syrup).length ? JSON.parse(item.syrup).join(', ') : 'Tanpa Syrup' }}
+                                </span>
+                            </div>
+                            <div class="w-full mt-1 flex items-start">
+                                <i class="fas fa-cookie-bite w-4 text-center mr-1.5 mt-0.5 text-stone-400" title="Topping"></i>
+                                <span class="font-medium text-stone-700 text-left flex-1">
+                                    {{ JSON.parse(item.topping).length ? JSON.parse(item.topping).join(', ') : 'Tanpa Topping' }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -447,11 +519,10 @@ export default {
 .payment-chip {
     display: inline-flex;
     align-items: center;
-    margin: 0.25rem 0.3rem 0 0;
-    padding: 0.25rem 0.55rem;
+    padding: 0.25rem 0.65rem;
     border-radius: 9999px;
-    border: 1px solid #e7eee9;
-    background: #ffffff;
+    border: 1px solid #e2ece6;
+    background: #f8faf8;
     color: #57534e;
     font-size: 0.72rem;
     line-height: 1.2;

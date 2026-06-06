@@ -50,38 +50,40 @@
                                                     </template>
                                                     <span class="min-w-[230px]">
                                                         <span class="font-bold text-stone-900 text-base">
-                                                            <router-link class="hover:text-emerald-700 transition" :to="{ name: 'BarangDetail', params: { id: item.id_barang},  query: { productOrder: index } }">{{ item.nama_barang }}</router-link> <br />
+                                                            <router-link class="hover:text-emerald-700 transition" :to="{ name: 'BarangDetail', params: { id: item.id_barang},  query: { productOrder: index } }">{{ item.nama_barang }}</router-link>
                                                         </span> 
-                                                        <span class="checkout-chip" v-if="item.ukuran_cup">
-                                                            Cup: {{ item.ukuran_cup }}
-                                                        </span> 
-                                                        <span class="checkout-chip" v-if="item.ice_cube">
-                                                            Ice: {{ item.ice_cube }}
-                                                        </span> 
-                                                        <span class="checkout-chip" v-if="item.espresso">
-                                                            Espresso: {{ item.espresso }}
-                                                        </span> 
-                                                        <span class="checkout-chip" v-if="item.sweetness">
-                                                            Sweetness: {{ item.sweetness }}
-                                                        </span> 
-                                                        <span class="checkout-chip" v-if="item.variant">
-                                                            Variant: {{ item.variant }}
-                                                        </span> 
-                                                        <!-- Cara Pertama Utk Hilangkan Kurung Array -->
-                                                        <span class="checkout-chip whitespace-normal" v-if="item.topping.length > 0">
-                                                            Topping: 
-                                                            <span v-for="(items, index) in item.topping" :key="index">
-                                                                {{ items }}
-                                                                {{  index !== item.topping.length - 1 ? ', ': '' }}
-                                                            </span>
-                                                        </span> 
-                                                        <!-- Cara Kedua utk Hilangkan Kurung Array -->
-                                                        <span class="checkout-chip" v-if="item.syrup.length > 0">
-                                                            Syrup: {{ Array.isArray(item.syrup) ? item.syrup.join(', ') : 'Tanpa Syrup' }}
-                                                        </span> 
-                                                        <span class="checkout-chip" v-if="item.milk">
-                                                            Milk: {{ item.milk }}
-                                                        </span> 
+                                                        <div class="flex flex-wrap gap-x-2 gap-y-1.5 mt-1">
+                                                            <span class="checkout-chip" v-if="item.ukuran_cup">
+                                                                Cup: {{ item.ukuran_cup }}
+                                                            </span> 
+                                                            <span class="checkout-chip" v-if="item.ice_cube">
+                                                                Ice: {{ item.ice_cube === 'NONE' ? 'No Ice' : item.ice_cube }}
+                                                            </span> 
+                                                            <span class="checkout-chip" v-if="item.espresso">
+                                                                Espresso: {{ item.espresso === '0' ? 'Normal' : item.espresso }}
+                                                            </span> 
+                                                            <span class="checkout-chip" v-if="item.sweetness">
+                                                                Sweetness: {{ item.sweetness }}
+                                                            </span> 
+                                                            <span class="checkout-chip" v-if="item.variant">
+                                                                Variant: {{ item.variant }}
+                                                            </span> 
+                                                            <!-- Cara Pertama Utk Hilangkan Kurung Array -->
+                                                            <span class="checkout-chip whitespace-normal" v-if="item.topping && item.topping.length > 0">
+                                                                Topping: 
+                                                                <span v-for="(items, index) in item.topping" :key="index">
+                                                                    {{ items }}
+                                                                    {{  index !== item.topping.length - 1 ? ', ': '' }}
+                                                                </span>
+                                                            </span> 
+                                                            <!-- Cara Kedua utk Hilangkan Kurung Array -->
+                                                            <span class="checkout-chip" v-if="item.syrup && item.syrup.length > 0">
+                                                                Syrup: {{ Array.isArray(item.syrup) ? item.syrup.join(', ') : 'Tanpa Syrup' }}
+                                                            </span> 
+                                                            <span class="checkout-chip" v-if="item.milk">
+                                                                Milk: {{ item.milk }}
+                                                            </span> 
+                                                        </div>
                                                     </span>
                                                 </div>
                                             </td>
@@ -116,24 +118,58 @@
                                         </template>
                                         
                                         <!-- Product details -->
-                                        <div class="flex-1 min-w-0">
+                                        <div class="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                                             <div class="font-bold text-stone-900 text-base truncate">
                                                 <router-link class="hover:text-emerald-700 transition" :to="{ name: 'BarangDetail', params: { id: item.id_barang},  query: { productOrder: index } }">{{ item.nama_barang }}</router-link>
                                             </div>
-                                            <div class="text-xs text-emerald-700 font-semibold mt-1">
+                                            
+                                            <!-- Separator line -->
+                                            <div class="h-[1px] bg-stone-100 my-1.5 w-full"></div>
+                                            
+                                            <div class="text-xs text-emerald-700 font-semibold">
                                                 Rp. {{ item.harga }}
                                             </div>
-                                            
-                                            <div class="flex flex-wrap gap-1 mt-2">
-                                                <span class="checkout-chip" v-if="item.ukuran_cup">Cup: {{ item.ukuran_cup }}</span>
-                                                <span class="checkout-chip" v-if="item.ice_cube">Ice: {{ item.ice_cube }}</span>
-                                                <span class="checkout-chip" v-if="item.espresso">Espresso: {{ item.espresso }}</span>
-                                                <span class="checkout-chip" v-if="item.sweetness">Sweetness: {{ item.sweetness }}</span>
-                                                <span class="checkout-chip" v-if="item.variant">Variant: {{ item.variant }}</span>
-                                                <span class="checkout-chip" v-if="item.milk">Milk: {{ item.milk }}</span>
-                                                <span class="checkout-chip" v-if="item.syrup && item.syrup.length > 0">Syrup: {{ Array.isArray(item.syrup) ? item.syrup.join(', ') : 'Tanpa Syrup' }}</span>
-                                                <span class="checkout-chip" v-if="item.topping && item.topping.length > 0">Topping: {{ Array.isArray(item.topping) ? item.topping.join(', ') : 'Tanpa Topping' }}</span>
-                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Structured Customization Grid (3 Columns) -->
+                                    <div class="mt-2 flex flex-wrap text-[10px] text-stone-500 bg-stone-50 border border-stone-100/60 rounded-xl p-2.5">
+                                        <div class="w-1/3 pr-1 mb-1.5 flex items-center">
+                                            <i :class="`${item.variant === 'hot' ? 'fas fa-sun text-red-500' : 'far fa-snowflake text-cyan-500'} w-4 text-center mr-1.5`" title="Variant"></i>
+                                            <span class="font-medium text-stone-700 capitalize">{{ item.variant }}</span>
+                                        </div>
+                                        <div class="w-1/3 px-0.5 mb-1.5 flex items-center">
+                                            <i class="fas fa-mug-hot w-4 text-center mr-1.5 text-stone-400" title="Cup Size"></i>
+                                            <span class="font-medium text-stone-700 uppercase">Cup {{ item.ukuran_cup }}</span>
+                                        </div>
+                                        <div class="w-1/3 pl-1 mb-1.5 flex items-center">
+                                            <i class="fas fa-cube w-4 text-center mr-1.5 text-stone-400" title="Ice"></i>
+                                            <span class="font-medium text-stone-700 capitalize">{{ item.ice_cube === 'NONE' ? 'No Ice' : item.ice_cube.toLowerCase() + ' ice' }}</span>
+                                        </div>
+                                        <div class="w-1/3 pr-1 mb-1.5 flex items-center">
+                                            <i class="fas fa-coffee w-4 text-center mr-1.5 text-stone-400" title="Espresso"></i>
+                                            <span class="font-medium text-stone-700 capitalize">{{ item.espresso === '0' ? 'Normal' : item.espresso }}</span>
+                                        </div>
+                                        <div class="w-1/3 px-0.5 mb-1.5 flex items-center">
+                                            <i class="fas fa-cubes w-4 text-center mr-1.5 text-stone-400" title="Sweetness"></i>
+                                            <span class="font-medium text-stone-700 capitalize">{{ item.sweetness.toLowerCase() + ' sweetness' }}</span>
+                                        </div>
+                                        <div class="w-1/3 pl-1 mb-1.5 flex items-center">
+                                            <i class="fas fa-cow w-4 text-center mr-1.5 text-stone-400" title="Milk"></i>
+                                            <span class="font-medium text-stone-700 capitalize">{{ item.milk.toLowerCase() + ' milk' }}</span>
+                                        </div>
+                                        
+                                        <div class="w-full mt-1.5 pt-1.5 border-t border-stone-200/50 flex items-start">
+                                            <i class="fas fa-prescription-bottle w-4 text-center mr-1.5 mt-0.5 text-stone-400" title="Syrup"></i>
+                                            <span class="font-medium text-stone-700 text-left flex-1">
+                                                {{ item.syrup && item.syrup.length > 0 ? (Array.isArray(item.syrup) ? item.syrup.join(', ') : item.syrup) : 'Tanpa Syrup' }}
+                                            </span>
+                                        </div>
+                                        <div class="w-full mt-1 flex items-start">
+                                            <i class="fas fa-cookie-bite w-4 text-center mr-1.5 mt-0.5 text-stone-400" title="Topping"></i>
+                                            <span class="font-medium text-stone-700 text-left flex-1">
+                                                {{ item.topping && item.topping.length > 0 ? (Array.isArray(item.topping) ? item.topping.join(', ') : item.topping) : 'Tanpa Topping' }}
+                                            </span>
                                         </div>
                                     </div>
                                     
@@ -437,10 +473,9 @@ export default {
     display: inline-flex;
     align-items: center;
     max-width: 100%;
-    margin: 0.35rem 0.35rem 0 0;
-    padding: 0.25rem 0.55rem;
+    padding: 0.25rem 0.65rem;
     border-radius: 9999px;
-    border: 1px solid #e7eee9;
+    border: 1px solid #e2ece6;
     background: #f8faf8;
     color: #57534e;
     font-size: 0.72rem;
