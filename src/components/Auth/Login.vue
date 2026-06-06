@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!klikRegis" class="animate-flip-up flex flex-wrap poppins-regular bg-white/95 rounded-2xl shadow-2xl shadow-emerald-900/20 border border-white/70 px-6 py-8">
+        <div v-if="!klikRegis" class="animate-flip-up flex flex-wrap poppins-regular bg-white/95 rounded-2xl shadow-xl shadow-emerald-900/10 border border-white/70 px-6 py-8">
             <div class="w-full text-center"><span class="text-sm tracking-wide text-emerald-700">Selamat Datang di</span><h3 class="font-bold text-5xl text-stone-900 mt-1"> CoffeeKu</h3></div>
 
             <form action="" class="w-full mt-8" method="post" @submit.prevent="buatLogin()">
@@ -13,13 +13,13 @@
                     <input type="password" v-model="password" name="" id="" class="w-full rounded-xl border-stone-200 bg-stone-50 focus:border-emerald-500 focus:ring-emerald-500 mt-1">
                 </div>
                 
-                <button class="w-full text-white bg-emerald-700 hover:bg-emerald-800 mt-5 py-3 rounded-xl shadow-lg shadow-emerald-900/20 transition">Submit</button>
+                <button class="w-full text-white bg-emerald-700 hover:bg-emerald-800 mt-5 py-3 rounded-xl transition">Submit</button>
             </form>
             
             <button class="w-full mt-3 rounded-xl py-3 text-emerald-700 hover:bg-emerald-50 transition" @click="formRegis">Register</button>
         </div>
 
-        <div v-if="klikRegis" class="animate-flip-up bg-white/95 rounded-2xl shadow-2xl shadow-emerald-900/20 border border-white/70 px-6 py-8">
+        <div v-if="klikRegis" class="animate-flip-up bg-white/95 rounded-2xl shadow-xl shadow-emerald-900/10 border border-white/70 px-6 py-8">
             <Register v-model:klikRegis="klikRegis"></Register>
             <div class="mt-5 text-sm text-stone-600">Already Have An Account? <button @click="formRegis" class="text-emerald-700 font-semibold hover:text-emerald-900" >Login Now</button></div>
         </div>

@@ -3,7 +3,7 @@
     <div class="flex flex-wrap items-center justify-center h-screen">
         <div class="lg:w-[400px] w-full h-auto">
             <!-- Box div wrapping child elements -->
-            <div class="rounded-lg shadow-2xl">
+            <div class="rounded-lg">
                 <div class="flex py-[50px] flex-wrap items-center justify-center">
                     <!-- <div class="w-2/6">
                         <img :src="require('@/assets/coffeehome.png')" alt="" class="object-cover animate-fade-left">
