@@ -57,6 +57,7 @@
 <script>
 import store from '@/router/store'
 import {toast} from 'vue3-toastify'
+import { clearLogoutCartView } from '@/utils/cartStorage'
 
 export default {
   name: 'dashboard-admin',
@@ -125,6 +126,7 @@ export default {
             autoClose: 2500,
             type: 'success'
         });
+        clearLogoutCartView();
         store.commit('setLoggedIn', false);
         this.$router.push('/');
       }

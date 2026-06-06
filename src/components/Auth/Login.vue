@@ -31,6 +31,7 @@ import axios from 'axios';
 import Register from './Register.vue';
 import store from '@/router/store'
 import {toast} from 'vue3-toastify'
+import { clearLegacyCart } from '@/utils/cartStorage'
 
 export default {
     name: 'login-component',
@@ -60,7 +61,11 @@ export default {
                 // alert('Bisa Login');
                 // console.log(res);
                 // localStorage.setItem('token', res.data.access_token);
-                store.commit('setLoggedIn', res.data.access_token);
+                clearLegacyCart();
+                store.commit('setLoggedIn', {
+                    token: res.data.access_token,
+                    user: res.data.usernya
+                });
 
                 // tembak ke halaman lain
                 if(res.data.usernya.roles == 'Admin'){

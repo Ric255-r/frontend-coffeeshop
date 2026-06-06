@@ -17,6 +17,7 @@
 
         <div class="flex flex wrap">
           <div class="w-full text-right pr-2" v-if="disableInput">
+            <button class="text-sm text-red-600 font-semibold hover:text-red-700 mr-4" @click="handleLogout">Logout</button>
             <button class="text-sm text-emerald-700 font-semibold hover:text-emerald-900" @click="handleBtnEdit">Edit Profile</button>
           </div>
 
@@ -136,6 +137,8 @@
 import axios from 'axios'
 import debounce from "lodash/debounce"
 import {toast} from 'vue3-toastify'
+import store from '@/router/store'
+import { clearLogoutCartView } from '@/utils/cartStorage'
 
 export default {
   name: 'profile-user',
@@ -245,6 +248,21 @@ export default {
     handleBtnEdit: function(){
       document.getElementById('nama').focus();
       this.disableInput = false
+    },
+    handleLogout: function(){
+      let acc = confirm("Apa anda Yakin Ingin Logout?");
+
+      if(acc){
+        clearLogoutCartView();
+        store.commit('setLoggedIn', false);
+
+        toast("Success Logout", {
+          autoClose: 1800,
+          type: 'success'
+        });
+
+        this.$router.push('/');
+      }
     },
     handleProfile: function(event){
       // Referensi :

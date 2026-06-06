@@ -286,6 +286,7 @@ import NavbarBottom from "./NavbarBottom.vue";
 import { Modal } from "flowbite";
 import ConfirmDialog from 'primevue/confirmdialog';
 import {toast} from 'vue3-toastify'
+import { clearCurrentCart } from '@/utils/cartStorage'
 
 export default {
     name: "payment-component",
@@ -469,8 +470,7 @@ export default {
                         window.location.href = '/home';
                     }, 1500);
 
-                    localStorage.removeItem('cart');
-                    localStorage.removeItem('totalHarga');
+                    clearCurrentCart();
                 }).catch((err) => {
                     toast("Gagal bayar", {
                         autoClose: 2500,

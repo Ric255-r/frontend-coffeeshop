@@ -25,11 +25,13 @@
 </template>
 
 <script>
+import { getTotalHarga } from '@/utils/cartStorage'
+
 export default {
     name: "bubble-cart",
     data: function(){
         return {
-            totalHarga: JSON.parse(localStorage.getItem("totalHarga")) || []
+            totalHarga: getTotalHarga()
         }
     },
     computed: {

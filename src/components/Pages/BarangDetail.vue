@@ -469,7 +469,8 @@
 import NavbarBottom from './NavbarBottom.vue';
 import axios from 'axios';
 import BubbleCartVue from './BubbleCart.vue';
-import {toast} from 'vue3-toastify';
+import {toast} from 'vue3-toastify'
+import { getCart, setCart, getTotalHarga, setTotalHarga, hasCart } from '@/utils/cartStorage';
 // import { initFlowbite } from 'flowbite';
 
 export default {
@@ -555,8 +556,8 @@ export default {
             let totalTopping = 0;
             let totalEspresso = 0;
 
-            if(localStorage.getItem("cart") !== null){
-                let ls = JSON.parse(localStorage.getItem("cart"));
+            if(hasCart()){
+                let ls = getCart();
 
                 // Menu Responsive. buat check cartlength
                 // this.lengthCart = ls.length;
@@ -702,8 +703,8 @@ export default {
         },
         handleHapus: function(index){
             // alert("Trigger Handle Hapus");
-            let cartObj = JSON.parse(localStorage.getItem('cart')) || [];
-            let total = JSON.parse(localStorage.getItem('totalHarga')) || [];
+            let cartObj = getCart();
+            let total = getTotalHarga();
 
             cartObj.splice(index, 1);
             total.splice(index, 1);
@@ -720,8 +721,8 @@ export default {
             }
             console.log(`ini di func handleHapus reset index ${resetIndex} ini selectedProduct ${this.selectedProducts}`)
 
-            localStorage.setItem('cart', JSON.stringify(cartObj));
-            localStorage.setItem('totalHarga', JSON.stringify(total));
+            setCart(cartObj);
+            setTotalHarga(total);
 
             if(resetIndex === undefined){
                 this.selectedProducts = -1;
@@ -735,7 +736,7 @@ export default {
                 this.handleSelectedProducts(resetIndex);
             }
 
-            let cekLength = JSON.parse(localStorage.getItem('cart')).length;
+            let cekLength = getCart().length;
             this.lengthCart = cekLength;
 
             if(cekLength == 0){
@@ -745,7 +746,7 @@ export default {
         handleSelectedProducts: function(index){
             // alert("Trigger SelectedProduct");
 
-            let cartObj = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartObj = getCart();
             let existsObjIndex;
 
             let cekExists = cartObj.some((item) => item.id_barang == this.params);
@@ -785,8 +786,8 @@ export default {
             this.componentKey += 1;
         },
         handleTambahBaru: function(){
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            let totalHarga = JSON.parse(localStorage.getItem('totalHarga')) || [];
+            let cart = getCart();
+            let totalHarga = getTotalHarga();
             let filter = cart.filter((item) => item.id_barang == this.params);
 
             if(filter){
@@ -817,11 +818,11 @@ export default {
                     totalSeluruh: this.hargaAwal // buat akumulasi qty * totalharga
                 });
 
-                localStorage.setItem('cart', JSON.stringify(newCart));
-                localStorage.setItem('totalHarga', JSON.stringify(newTotalHarga));
+                setCart(newCart);
+                setTotalHarga(newTotalHarga);
 
                 // Ambil Index terakhir dari data
-                let cart2 = JSON.parse(localStorage.getItem('cart')) || [];
+                let cart2 = getCart();
                 let filter2 = cart2.map((item) => item.id_barang);
                 let lastIndex = filter2.lastIndexOf(this.params);
                 
@@ -840,7 +841,7 @@ export default {
             }
         },
         handleSubTotal: function(){
-            let total = JSON.parse(localStorage.getItem('totalHarga')) || [];
+            let total = getTotalHarga();
             let arrSubtotal = 0;
             
             for (let i = 0; i < total.length; i++) {
@@ -895,7 +896,7 @@ export default {
             }
         },
         loadSameProducts: function(){
-            let la = JSON.parse(localStorage.getItem('cart')) || [];
+            let la = getCart();
             return la;
         },
         changeCup: function(){
@@ -903,10 +904,10 @@ export default {
             // Aku ringkas jadi changeProcedure. krn kurleb semuany.
             // this.changeProcedure();
 
-            if(localStorage.getItem("cart") === null){
-                localStorage.setItem("cart", JSON.stringify([this.allObj]));
+            if(!hasCart()){
+                setCart([this.allObj]);
             }
-            let cartObj = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartObj = getCart();
 
             let totalCup = 0;
             for(let i = 0; i < this.dataTopping.length; i++ ){
@@ -915,17 +916,17 @@ export default {
                 }
             }
 
-            localStorage.setItem("cart", JSON.stringify(cartObj));
+            setCart(cartObj);
             // console.log(cartObj);
             return totalCup;
         },
         changeEspresso: function(){
             // this.changeProcedure();
 
-            if(localStorage.getItem("cart") === null){
-                localStorage.setItem("cart", JSON.stringify([this.allObj]));
+            if(!hasCart()){
+                setCart([this.allObj]);
             }
-            let cartObj = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartObj = getCart();
 
             let totalEspresso = 0;
             for(let i = 0; i < this.dataTopping.length; i++){
@@ -934,17 +935,14 @@ export default {
                 }
             }
 
-            localStorage.setItem("cart", JSON.stringify(cartObj));
+            setCart(cartObj);
             return totalEspresso;
         },  
         changeMilk: function(){
-            let cart;
-
-            if(localStorage.getItem("cart") === null){
-                localStorage.setItem("cart", JSON.stringify([this.allObj]));
+            if(!hasCart()){
+                setCart([this.allObj]);
             }
-            cart = localStorage.getItem("cart");
-            let cartObj = JSON.parse(cart) || [];
+            let cartObj = getCart();
             let existsObjIndex = -1;
 
             // Ketika user mau tambahkan produk yg sama dgn variant berbeda.
@@ -991,19 +989,15 @@ export default {
                 }
             }
 
-            localStorage.setItem("cart", JSON.stringify(cartObj));
+            setCart(cartObj);
 
             return totalMilk;
         },
         changeSyrup: function(){
-            let cart;
-
-            if(localStorage.getItem("cart") === null){
-                localStorage.setItem("cart", JSON.stringify([this.allObj]));
+            if(!hasCart()){
+                setCart([this.allObj]);
             }
-            cart = localStorage.getItem("cart");
-
-            let cartObj = JSON.parse(cart) || [];
+            let cartObj = getCart();
             let existsObjIndex = -1;
 
             // Ketika User mau tambah produk yg sama dgn variant lain
@@ -1061,16 +1055,16 @@ export default {
             for (let i = 0; i < hargaAwal.length; i++) {
                 total += hargaAwal[i]
             }
-            localStorage.setItem("cart", JSON.stringify(cartObj));
+            setCart(cartObj);
 
             return total;
         },
         changeTopping: function(){
-            if(localStorage.getItem("cart") === null){
-                localStorage.setItem("cart", JSON.stringify([this.allObj]));
+            if(!hasCart()){
+                setCart([this.allObj]);
             }
 
-            let cartObj = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartObj = getCart();
 
             // Cari Indexnya
 
@@ -1131,12 +1125,12 @@ export default {
                 total += hargaAwal[i];
             }
 
-            localStorage.setItem("cart", JSON.stringify(cartObj));
+            setCart(cartObj);
 
             return total;
         },
         // isMilkSelected: function(milk, nama_brg){
-        //     let cart = JSON.parse(localStorage.getItem("cart"));
+        //     let cart = getCart();
 
         //     // console.log(cart && cart.some(item => item.milk == milk && item.nama_barang == nama_brg));
         //     // ini kondisi and. cek kalo cart ada dan cart.some returns true, maka true.. kekbiasa
@@ -1146,11 +1140,11 @@ export default {
         changeProcedure: function(){
             // alert("Trigger ChangeProcedure");
 
-            if(localStorage.getItem("cart") === null){
-                localStorage.setItem("cart", JSON.stringify([this.allObj]));
+            if(!hasCart()){
+                setCart([this.allObj]);
             }
 
-            let cartObj = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartObj = getCart();
 
             let existsObjIndex = -1;
 
@@ -1198,7 +1192,7 @@ export default {
 
 
 
-            localStorage.setItem("cart", JSON.stringify(cartObj));
+            setCart(cartObj);
 
         },
 
@@ -1210,7 +1204,7 @@ export default {
             this.totalHarga = this.hargaAwal + this.changeCup() + this.changeEspresso() + this.changeMilk() + this.changeSyrup() + this.changeTopping();
             // console.log(this.totalHarga);
 
-            let items = JSON.parse(localStorage.getItem("totalHarga")) || [];
+            let items = getTotalHarga();
             let newItem = {
                 id_barang: this.params,
                 totalHarga: this.totalHarga,
@@ -1235,7 +1229,7 @@ export default {
                 items.push(newItem);
             }
 
-            localStorage.setItem("totalHarga", JSON.stringify(items));
+            setTotalHarga(items);
 
             // Referensi
             // https://michaelnthiessen.com/force-re-render/
@@ -1244,7 +1238,7 @@ export default {
             // Pas ubah topping, tampilkan length cart jg
             // Buat Akumulasi Quantity menu Responsive
 
-            let cartObj = JSON.parse(localStorage.getItem('cart'));
+            let cartObj = getCart();
             let sumQty = 0;
             for (let i = 0; i < cartObj.length; i++) {
                 sumQty += cartObj[i].qty 
@@ -1257,8 +1251,8 @@ export default {
             this.qty = this.qty += 1;
             this.changeTotalSemua(); // utk trigger totalHarga
 
-            let cart = JSON.parse(localStorage.getItem('cart')) || []
-            let cartTotal = JSON.parse(localStorage.getItem('totalHarga')) || [];
+            let cart = getCart()
+            let cartTotal = getTotalHarga();
 
             // Buat Akumulasi Quantity menu Responsive
             let sumQty = 0;
@@ -1294,8 +1288,8 @@ export default {
             cart[resetIndex].qty = this.qty;
             cartTotal[resetIndex].totalSeluruh = hitung;
 
-            localStorage.setItem("cart", JSON.stringify(cart));
-            localStorage.setItem("totalHarga", JSON.stringify(cartTotal));
+            setCart(cart);
+            setTotalHarga(cartTotal);
 
 
             // console.log(this.totalHarga * this.qty);
@@ -1304,8 +1298,8 @@ export default {
         },
 
         handleMinus: function(){
-            let cart = JSON.parse(localStorage.getItem('cart')) || []
-            let cartTotal = JSON.parse(localStorage.getItem('totalHarga')) || [];
+            let cart = getCart()
+            let cartTotal = getTotalHarga();
 
             // Buat Akumulasi Quantity menu Responsive
             let sumQty = 0;
@@ -1397,8 +1391,8 @@ export default {
                 cart[resetIndex].qty = this.qty;
                 cartTotal[resetIndex].totalSeluruh = hitung;
 
-                localStorage.setItem("cart", JSON.stringify(cart));
-                localStorage.setItem("totalHarga", JSON.stringify(cartTotal));
+                setCart(cart);
+                setTotalHarga(cartTotal);
 
 
                 // console.log(this.totalHarga * this.qty);
@@ -1566,3 +1560,4 @@ div {
     border: 1px solid black;
 } */
 </style>
+

@@ -228,6 +228,7 @@
 <script>
 import axios from 'axios';
 import NavbarBottom from './NavbarBottom.vue';
+import { getCart, setCart, getTotalHarga, setTotalHarga } from '@/utils/cartStorage'
 
 export default {
     name: 'checkout-component',
@@ -236,9 +237,9 @@ export default {
     },
     data: function(){
         return {
-            dataCart: JSON.parse(localStorage.getItem('cart')) || [],
+            dataCart: getCart(),
             dataBarang: [],
-            dataTotal: JSON.parse(localStorage.getItem('totalHarga')) || [],
+            dataTotal: getTotalHarga(),
             dataNota: '',
             quantity: 0,
             styleBg: ''
@@ -329,8 +330,8 @@ export default {
 
             console.log(dataCart);
 
-            localStorage.setItem('cart', JSON.stringify(dataCart));
-            localStorage.setItem('totalHarga', JSON.stringify(dataTotal));
+            setCart(dataCart);
+            setTotalHarga(dataTotal);
         },
         handleMinus: function(index, qty){
             let dataCart = this.dataCart;
@@ -346,8 +347,8 @@ export default {
                 dataTotal[index].totalSeluruh = dataTotal[index].totalHarga * dataCart[index].qty; 
             }
 
-            localStorage.setItem('cart', JSON.stringify(dataCart));
-            localStorage.setItem('totalHarga', JSON.stringify(dataTotal));
+            setCart(dataCart);
+            setTotalHarga(dataTotal);
         },
         getBrgNota: async function(){
             let token = localStorage.getItem('token');
@@ -375,7 +376,7 @@ export default {
         },
         postTransaction: async function(){
             let token = localStorage.getItem('token');
-            let dataCart = JSON.parse(localStorage.getItem('cart')) || []
+            let dataCart = getCart()
 
             try {
                 const resNota = await axios.post(`http://localhost:5500/api/bukaNota/${this.dataNota}`, {
